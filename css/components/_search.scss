@@ -1,0 +1,30 @@
+.search {
+  background-color: #e7e7e7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0;
+  padding: 0 22px;
+  border-radius: 5px;
+
+  input[type="text"] {
+    background-color: #e7e7e7;
+    height: 69px;
+    flex: 1;
+    outline: none;
+    border: none;
+    line-height: 100% !important;
+    font-size: 18px;
+    text-align: left;
+
+    &::placeholder {
+      text-align: left;
+    }
+    // &:focus {
+    //   border: 1px solid red;
+    // }
+  }
+  i {
+    font-size: 32px;
+  }
+}
