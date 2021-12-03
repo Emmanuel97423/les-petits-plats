@@ -162,7 +162,6 @@ h3 {
 
 input[type=text] {
   font-family: "Lato", sans-serif;
-  text-align: center;
 }
 
 i {
@@ -225,9 +224,6 @@ ul li span {
   font-size: 18px;
   text-align: left;
 }
-.search input[type=text]::placeholder {
-  text-align: left;
-}
 .search i {
   font-size: 32px;
 }
@@ -251,6 +247,7 @@ ul li span {
   color: #fff;
 }
 .filter__btn--blue {
+  display: none !important;
   background-color: #3282f7;
 }
 .filter__btn--green {
@@ -258,6 +255,48 @@ ul li span {
 }
 .filter__btn--red {
   background-color: #ed6454;
+}
+
+.modal {
+  width: 670px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #3282f7;
+  border-radius: 5px;
+  padding: 0 19px 23px 19px;
+}
+.modal__input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  color: #fff;
+}
+.modal__input input[type=text] {
+  flex: 1;
+  padding: 1rem;
+  border: none;
+  outline: none;
+  background-color: #3282f7;
+  color: #fff;
+}
+.modal__input input[type=text]::placeholder {
+  color: #fff;
+  opacity: 50%;
+}
+.modal__tag {
+  display: flex;
+  column-gap: 50px;
+}
+.modal__tag--col-1 {
+  width: 30%;
+}
+.modal__tag--links li {
+  font-size: 18px;
+  font-weight: 400;
+  color: #fff;
+  margin: 0 0 1rem 0;
 }
 
 /*# sourceMappingURL=style.css.map */

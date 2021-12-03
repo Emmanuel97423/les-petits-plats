@@ -1,0 +1,44 @@
+.modal {
+  width: 670px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #3282f7;
+  border-radius: 5px;
+  padding: 0 19px 23px 19px;
+  &__input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    color: #fff;
+    // background-color: red;
+    input[type="text"] {
+      flex: 1;
+      padding: 1rem;
+      border: none;
+      outline: none;
+      background-color: #3282f7;
+      color: #fff;
+      &::placeholder {
+        color: #fff;
+        opacity: 50%;
+      }
+    }
+  }
+  &__tag {
+    display: flex;
+    column-gap: 50px;
+    &--col-1 {
+      width: 30%;
+    }
+    &--links {
+      li {
+        font-size: 18px;
+        font-weight: 400;
+        color: #fff;
+        margin: 0 0 1rem 0;
+      }
+    }
+  }
+}
