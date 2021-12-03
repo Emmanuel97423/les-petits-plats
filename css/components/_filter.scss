@@ -1,0 +1,33 @@
+.filter {
+  display: flex;
+  column-gap: 20px;
+  margin: 0 0 1rem 0;
+  &__btn {
+    // display: flex;
+    button {
+      //   width: 170px;
+      //   height: 69px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      column-gap: 42px;
+      padding: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      i {
+        color: #fff;
+      }
+    }
+    &--blue {
+      display: none !important;
+      background-color: #3282f7;
+    }
+    &--green {
+      background-color: #68d9a4;
+    }
+    &--red {
+      background-color: #ed6454;
+    }
+  }
+}
