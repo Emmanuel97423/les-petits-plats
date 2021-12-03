@@ -1,12 +1,15 @@
 .filter {
+  // position: absolute;
   display: flex;
   column-gap: 20px;
   margin: 0 0 1rem 0;
   &__btn {
+    position: relative;
     // display: flex;
     button {
       //   width: 170px;
       //   height: 69px;
+
       display: flex;
       justify-content: center;
       align-items: center;
@@ -20,7 +23,7 @@
       }
     }
     &--blue {
-      display: none !important;
+      // display: none !important;
       background-color: #3282f7;
     }
     &--green {
