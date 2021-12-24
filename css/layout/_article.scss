@@ -1,7 +1,17 @@
 @import "../components/card";
-main {
-  z-index: auto;
+#main {
+  z-index: -1;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 50px;
+  // div:nth-child(n + 2) {
+  //   background-color: red;
+  //   margin: 20px;
+  // }
+
+  // path {
+  //   width: 100%;
+  //   background-color: red;
+  // }
 }

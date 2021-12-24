@@ -1,9 +1,9 @@
 .dropdown {
   // position: absolute;
-  z-index: 1;
-  width: 670px;
+  z-index: 100;
+  // width: 100%;
   height: auto;
-  display: flex;
+  display: none;
   flex-direction: column;
   background-color: #3282f7;
   border-radius: 5px;
@@ -30,7 +30,7 @@
   }
   &__tag {
     display: flex;
-    column-gap: 50px;
+    // column-gap: 50px;
     &--col-1 {
       width: 30%;
     }

@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/style.css">
     <script src="https://kit.fontawesome.com/8851cf4a7c.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <script async src="app.js" type="module"></script>
     <title>Les Petit Plats</title>
 </head>
 
@@ -37,15 +38,16 @@
     </div>
     <!-- Nav filter -->
     <section class="filter">
-        <div class="filter__btn ">
+        <div class="filter__btn filter__btn--blue">
             <button class="filter__btn--blue">
-                <h2>Ingrédients</h2><i class="fas fa-chevron-down"></i>
+                <input type=text placeholder="Ingredient">
+                <i class="fas fa-chevron-down"></i><i class="fas fa-chevron-up"></i>
             </button>
             <!-- Filter modal -->
             <div class="dropdown">
-                <div class="dropdown__input"><input type="text" placeholder="Recherche un ingrédient"><i
+                <!-- <div class="dropdown__input"><input type="text" placeholder="Recherche un ingrédient"><i
                         class="fas fa-chevron-up"></i>
-                </div>
+                </div> -->
                 <div class="dropdown__tag">
                     <div class="dropdown__tag--col-1">
                         <ul class="dropdown__tag--links">
@@ -105,7 +107,7 @@
     </section>
 
     <!-- Recipe content -->
-    <main>
+    <main id="main">
         <!-- Card -->
         <div class="card">
             <!-- <img src="#" alt=""> -->
