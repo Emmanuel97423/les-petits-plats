@@ -50,7 +50,7 @@ export class RecipesView {
             <div class="card__container">
                 <div class="card__container--title">
                     <h3>${n.name}</h3>
-                    <i class="far fa-clock"><span>  ${n.time}</span></i>
+                    <i class="far fa-clock"><span> ${n.time}</span></i>
                 </div>
                 <div class="card__container--list">
                     <ul>
