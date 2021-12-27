@@ -1,5 +1,8 @@
-import { ManageIngredient, ManageRecipe } from './Model.js'
-import { Recipes } from './View.js'
+// import { ManageIngredient, ManageRecipe } from './Model.js'
+import { RecipesView } from './View.js'
+import { RecipeModel } from './Model.js';
+import recipes from "./db/recipes.js"
+
 
 //DOM elements
 const arrowDown = document.querySelector('.fa-chevron-down');
@@ -7,27 +10,35 @@ const dropdown = document.querySelector('.dropdown');
 const filterSection = document.querySelector('.filter__btn--blue');
 const filterBtn = document.querySelector('.filter__btn--blue button:nth-child(1)')
 const arrowUp = document.querySelector('.fa-chevron-up')
-const searchInput = document.querySelector('.filter__btn--blue > input')
+const searchInput = document.querySelector('.search__input')
 const mainDOM = document.getElementById('main')
 
-//View
-const view = new Recipes()
+
 
 //Fetch all Recipes
-const recette = new ManageRecipe()
+const recette = new RecipeModel(recipes);
+recette.data();
+// console.log(recette.obj)
+//View
+const view = new RecipesView(recette.obj, mainDOM);
+view.ui();
 
-recette.fetchData().then((result) => {
-    //Import model to View
-    console.log('Recette:', result)
-    view.ui(result, mainDOM)
 
-}).catch((err) => { console.log(err) })
+//Filter Recipes
+searchInput.addEventListener('input', (e) => {
+    e.preventDefault()
 
-//Fetch all Ingredients
-const ingredients = new ManageIngredient()
-ingredients.fetchData().then((result) => {
-    console.log('Ingrédients:', result)
-}).catch((err) => { console.log(err) })
+    const filterRecipe = new RecipeModel(recipes, e.target.value)
+    filterRecipe.dataFilter().then((result) => {
+
+        const filterView = new RecipesView(result, mainDOM)
+        filterView.ui()
+
+    })
+
+})
+
+
 
 
 

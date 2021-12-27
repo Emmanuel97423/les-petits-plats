@@ -331,10 +331,11 @@ ul li span {
 }
 
 .card {
-  flex: 33%;
+  flex: 30%;
+  height: auto;
   display: flex;
   flex-direction: column;
-  margin: 0 10px;
+  margin: 10px 10px;
 }
 .card__container {
   background-color: #e7e7e7;
@@ -365,13 +366,15 @@ ul li span {
 }
 .card__container--text {
   width: 50%;
+  text-align: justify;
 }
 
 .card {
-  flex: 33%;
+  flex: 30%;
+  height: auto;
   display: flex;
   flex-direction: column;
-  margin: 0 10px;
+  margin: 10px 10px;
 }
 .card__container {
   background-color: #e7e7e7;
@@ -402,14 +405,15 @@ ul li span {
 }
 .card__container--text {
   width: 50%;
+  text-align: justify;
 }
 
 #main {
-  z-index: -1;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 50px;
+  flex-wrap: wrap;
 }
 
 /*# sourceMappingURL=style.css.map */

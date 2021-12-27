@@ -1,14 +1,44 @@
-export class Recipes {
+export class RecipesView {
     constructor(recipe, elementDOM) {
-        console.log('recipe:', recipe)
+        // console.log('recipe:', recipe)
+
+
         this._recipe = recipe
         this._elementDOM = elementDOM
     }
 
+    get recipe() {
+        return this._recipe
+    }
+    set recipe(newRecipe) {
+        this._recipe = newRecipe
+    }
+
+    get elementDOM() {
+        return this._elementDOM
+    }
+    set elementDOM(newElementDOM) {
+        this._elementDOM = newElementDOM
+    }
+
     ui() {
         let htmlTemplate = "";
-        this._recipe.forEach(n => {
-            console.log('n:', n)
+
+        this._recipe.map(n => {
+            // console.log('n:', n)
+            let ingredientTemplate = "";
+            let ingredients = n.ingredients
+            ingredients.forEach(i => {
+                // console.log('i:', i)
+                if (i.unit) {
+                    ingredientTemplate += `<li><span>${i.ingredient}: </span>${i.quantity} ${i.unit}</li>`
+                } else {
+                    ingredientTemplate += `<li><span>${i.ingredient}: </span>${i.quantity}</li>`
+                }
+
+            })
+
+
             htmlTemplate += `
     <div class="card">
             <!-- <img src="#" alt=""> -->
@@ -19,21 +49,15 @@ export class Recipes {
 
             <div class="card__container">
                 <div class="card__container--title">
-                    <h3>Limonade de coco</h3>
-                    <i class="far fa-clock"><span>10 min</span></i>
+                    <h3>${n.name}</h3>
+                    <i class="far fa-clock"><span>  ${n.time}</span></i>
                 </div>
                 <div class="card__container--list">
                     <ul>
-                        <li><span>Lait de coco: </span>400ml</li>
-                        <li><span>Jus de citron: </span>2</li>
-                        <li><span>Créme de coco: </span>4 cuillières</li>
-                        <li><span>Sucre: </span>20g</li>
-                        <li><span>Glaçon: </span>2</li>
+                       ${ingredientTemplate}
                     </ul>
                     <div class="card__container--text">
-                        <p>Mettre les glaçons à votre goût dans le blender, ajouter le lait, la crème de coco, le
-                            jus de 2 citrons et le sucre.
-                            Mixer jusqu'à avoir la consistence désirée</p>
+                        <p>${n.description}</p>
                     </div>
                 </div>
 
@@ -41,7 +65,8 @@ export class Recipes {
 
         </div>
     `
-            elemenDOM.innerHTML = htmlTemplate
+            this._elementDOM.innerHTML = htmlTemplate
+
         })
     }
 

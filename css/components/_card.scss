@@ -1,8 +1,10 @@
 .card {
-  flex: 33%;
+  flex: 30%;
+  height: auto;
   display: flex;
   flex-direction: column;
-  margin: 0 10px;
+  margin: 10px 10px;
+  
 
   //   background-color: red;
   // svg {
@@ -37,6 +39,8 @@
     }
     &--text {
       width: 50%;
+      text-align: justify;
+
     }
   }
 }

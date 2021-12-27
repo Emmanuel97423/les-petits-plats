@@ -1,10 +1,16 @@
 @import "../components/card";
 #main {
-  z-index: -1;
+  // z-index: -1;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 50px;
+  flex-wrap: wrap;
+  // :nth-child(n){
+  //   // flex: 10%;
+  //   background-color: red;
+    
+  // }
   // div:nth-child(n + 2) {
   //   background-color: red;
   //   margin: 20px;
