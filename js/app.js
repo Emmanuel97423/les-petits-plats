@@ -19,10 +19,11 @@ class App {
         this._$arrowUp = document.querySelector('.fa-chevron-up')
         this._$dropdown = document.querySelector('.dropdown');
         this._$filterSection = document.querySelector('.filter__btn--blue');
-        this._$filterBtn = document.querySelector('.filter__btn--blue button:nth-child(1)')
+        this._$filterBtn = document.querySelector('.filter__btn--blue button:nth-child(1)');
+        this._$recipeCard = document.querySelectorAll('.card');
         //Data
         this._recipesApi = new RecipeApi(data);
-    }
+    };
 
     async main() {
 
@@ -40,20 +41,15 @@ class App {
         // //Filter Recipes
         this._$searchInput.addEventListener('input', async (e) => {
             e.preventDefault()
-            // this._$mainDOM.remove()
+            this._$mainDOM.innerHTML = '';
+
             const recipesInputData = await this._recipesApi.get()
-            // console.log('recipesInputData:', recipesInputData)
-            // recipesInputData.map(recipe => {
-            // console.log('recipe:', recipe)
             const result = new RecipesFactory(recipesInputData, 'global', e.target.value)
-            console.log('result:', result.filter)
-            // return result.filter
-
-
-            const templateInput = new RecipeCard(result.filter)
-            this._$mainDOM.appendChild(templateInput.ui())
-
-            // });
+            result.filter.map(recipe => {
+                const templateInput = new RecipeCard(recipe)
+                this._$mainDOM.appendChild(templateInput.ui())
+                // this._$mainDOM.innerHTML = templateInput.getUi
+            });
         });
 
         //Click arrow down to open filter section
@@ -72,7 +68,7 @@ class App {
 
 
 
-        })
+        });
         //Click arrow up to close filter section
         this._$arrowUp.addEventListener('click', (e) => {
             e.preventDefault();
@@ -85,25 +81,25 @@ class App {
             this._$searchInput.style.opacity = '100%';
             this._$mainDOM.style.marginTop = "50px"
 
-        })
+        });
         //CSS varations
         this._$searchInput.addEventListener('focus', (e) => {
             e.preventDefault();
             this._$searchInput.style.opacity = '100%'
-        })
+        });
         this._$searchInput.addEventListener('blur', (e) => {
             e.preventDefault();
             this._$searchInput.style.opacity = '50%'
             this._$searchInput.placeholder = 'Recherche un ingrédient';
 
-        })
+        });
 
     }
 
 }
 
-const app = new App()
-app.main()
+const app = new App();
+app.main();
 
 // //Fetch all Recipes
 // const recette = new RecipeModel(recipes);

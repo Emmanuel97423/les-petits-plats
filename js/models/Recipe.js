@@ -31,7 +31,7 @@ export class Recipe {
         this._data = data;
     }
     get getFilterRecipes() {
-        return this.filterRecipeMethod()
+        return this.filterRecipeMethod();
     }
 
     set request(request) {
@@ -39,7 +39,7 @@ export class Recipe {
     }
 
     get request() {
-        return this._request
+        return this._request;
     }
 
     // //Methods
@@ -48,13 +48,10 @@ export class Recipe {
 
         const result = this._data.filter(el => {
 
-            return el.name.toLowerCase().indexOf(this._request.toLowerCase()) !== -1
+            return el.name.toLowerCase().indexOf(this._request.toLowerCase()) !== -1;
         });
 
-        return result
+        return result;
 
     }
 }
-
-
-// return el.name.toLowerCase().indexOf(this._request.toLowerCase()) !== -1

@@ -1,34 +1,34 @@
 export class RecipeCard {
     constructor(recipes) {
-
-        console.log('recipes:', recipes)
-
-        this._recipes = recipes;
-
-
+        this._recipes = recipes
     }
+    set setRecipes(recipes) {
+        this._recipes = recipes;
+    };
+    get getRecipes() {
+        return this._recipes;
+    };
+    get getUi() {
+        return this.ui();
+    };
 
     ui() {
-        // let htmlTemplate = "";
         const $wrapper = document.createElement('div');
-        $wrapper.classList.add('card')
-
+        $wrapper.classList.add('card');
         let ingredientTemplate = "";
-        let ingredients = this._recipes.ingredients
-        console.log('ingredients:', ingredients)
-
+        let ingredients = this._recipes.ingredients;
+        //View of array ingredients
         ingredients.map(i => {
-            // console.log('i:', i)
             if (i.unit) {
-                ingredientTemplate += `<li><span>${i.ingredient}: </span>${i.quantity} ${i.unit}</li>`
+                ingredientTemplate += `<li><span>${i.ingredient}: </span>${i.quantity} ${i.unit}</li>`;
             } else if (i.quantity) {
-                ingredientTemplate += `<li><span>${i.ingredient}: </span>${i.quantity}</li>`
+                ingredientTemplate += `<li><span>${i.ingredient}: </span>${i.quantity}</li>`;
             } else {
-                ingredientTemplate += `<li><span>${i.ingredient}</li>`
-            }
+                ingredientTemplate += `<li><span>${i.ingredient}</li>`;
+            };
 
-        })
-
+        });
+        //View recipe card
         const recipeCard = `
             
                        <!-- <img src="#" alt=""> -->
@@ -53,8 +53,7 @@ export class RecipeCard {
 
             </div>
             
-        `
-        // this._$elementDOM.innerHTML = recipeCard
+        `;
         $wrapper.innerHTML = recipeCard;
         return $wrapper;
     }
