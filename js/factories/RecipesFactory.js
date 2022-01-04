@@ -1,4 +1,5 @@
 import { Recipe } from '../models/recipe.js'
+import { Ingredients } from '../models/ingredients.js'
 
 
 export class RecipesFactory {
@@ -19,13 +20,10 @@ export class RecipesFactory {
     //Data filter
     get filter() {
         if (this._input === 'global' || this._request) {
-
             return this.filterRecipe();
-
-        } else {
-            return false;
+        } else if (this._input === 'ingredients') {
+            return this.filterIngredients();
         };
-
     };
     //Filter Method
     filterRecipe() {
@@ -33,5 +31,14 @@ export class RecipesFactory {
         const recipe = new Recipe(this._data, this._request);
         const result = recipe.getFilterRecipes;
         return result;
+    };
+
+    filterIngredients() {
+        //Call ingredients Classe
+        const ingredient = new Ingredients(this._data, this._request);
+        const resultIngredients = ingredient.getIngredients;
+        // console.log('resultIngredients:', resultIngredients)
+        return resultIngredients
+
     };
 };

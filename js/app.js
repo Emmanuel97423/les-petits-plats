@@ -1,5 +1,5 @@
 //Classes
-import { RecipeCard } from './template/RecipeCard.js'
+import { RecipeCard, ingredientsDropdown } from './view/View.js'
 import { RecipeApi } from "./api/Api.js"
 import { RecipesFactory } from "./factories/RecipesFactory.js"
 
@@ -24,7 +24,6 @@ class App {
     };
 
     async main() {
-
         //Call api
         const recipesData = await this._recipesApi.get();
         //Ui all Recipes
@@ -45,8 +44,6 @@ class App {
                 this._$mainDOM.appendChild(templateInput.ui())
             });
         });
-
-
         const $chevronDown = this._$filterBtnBlue.childNodes[3];
         //Click arrow down to open filter section
         $chevronDown.addEventListener('click', (e) => {
@@ -63,11 +60,23 @@ class App {
             this._$mainDOM.style.marginTop = "-300px"
 
             //Filter ingredients
-            console.log('this._$filterBtn:', this._$filterBtnBlue.childNodes[3]);
+
+            const ingredients = new RecipesFactory(recipesData, 'ingredients')
+
+            const ingFilter = ingredients.filter
+            ingFilter.map(i => {
+                i.map(n => {
+                    const templateIng = new ingredientsDropdown(n)
+                    this._$dropdown.appendChild(templateIng.ui())
+
+                })
+
+            })
+
+
 
         });
         //Click arrow up to close filter section
-
         this._$arrowUp.addEventListener('click', (e) => {
             e.preventDefault();
             this._$dropdown.style.display = 'none';

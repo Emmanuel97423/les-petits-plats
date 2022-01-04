@@ -1,8 +1,8 @@
 export class RecipeCard {
     constructor(recipes) {
         this._recipes = recipes
-    }
-    set setRecipes(recipes) {
+    };
+    set getRecipes(recipes) {
         this._recipes = recipes;
     };
     get getRecipes() {
@@ -56,5 +56,39 @@ export class RecipeCard {
         `;
         $wrapper.innerHTML = recipeCard;
         return $wrapper;
+    }
+}
+
+export class ingredientsDropdown {
+    constructor(ingredients) {
+        console.log('ingredients:', ingredients)
+        this._ingredients = ingredients;
+    }
+    set getIngredient(ingredients) {
+        this._ingredients = ingredients;
+    }
+    get getIngredient() {
+        return this._ingredients
+    }
+    get getUi() {
+        return this.ui()
+    }
+
+    ui() {
+        const $dropdown = document.createElement('div');
+        $dropdown.classList.add('dropdown__tag');
+
+        const dropdownTemplate = `
+            
+                    <div class="dropdown__tag--col-1">
+                        <ul class="dropdown__tag--links">
+                            <li>${this._ingredients}</li>
+                        </ul>
+                    </div>
+                
+        `;
+
+        $dropdown.innerHTML = dropdownTemplate;
+        return $dropdown;
     }
 }
