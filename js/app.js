@@ -1,14 +1,12 @@
-
-
+//Classes
 import { RecipeCard } from './template/RecipeCard.js'
-
 import { RecipeApi } from "./api/Api.js"
 import { RecipesFactory } from "./factories/RecipesFactory.js"
 
-// const recipesJSON = '../data/recipes.json'
+// Data
 import data from '../../data/recipes.js'
 
-
+//Application
 class App {
     constructor() {
         //DOM elements
@@ -19,7 +17,7 @@ class App {
         this._$arrowUp = document.querySelector('.fa-chevron-up')
         this._$dropdown = document.querySelector('.dropdown');
         this._$filterSection = document.querySelector('.filter__btn--blue');
-        this._$filterBtn = document.querySelector('.filter__btn--blue button:nth-child(1)');
+        this._$filterBtnBlue = document.querySelector('.filter__btn--blue button:nth-child(1)');
         this._$recipeCard = document.querySelectorAll('.card');
         //Data
         this._recipesApi = new RecipeApi(data);
@@ -29,47 +27,47 @@ class App {
 
         //Call api
         const recipesData = await this._recipesApi.get();
-
+        //Ui all Recipes
         recipesData.map(recipe => {
-            new RecipesFactory(recipe, 'global')
-            const template = new RecipeCard(recipe)
-            template.ui()
-            // this._$mainDOM.innerHTML = template
-            this._$mainDOM.appendChild(template.ui())
+            new RecipesFactory(recipe, 'global');
+            const template = new RecipeCard(recipe);
+            template.ui();
+            this._$mainDOM.appendChild(template.ui());
         });
-
-        // //Filter Recipes
+        //Filter Recipes
         this._$searchInput.addEventListener('input', async (e) => {
-            e.preventDefault()
+            e.preventDefault();
             this._$mainDOM.innerHTML = '';
-
-            const recipesInputData = await this._recipesApi.get()
-            const result = new RecipesFactory(recipesInputData, 'global', e.target.value)
+            const recipesInputData = await this._recipesApi.get();
+            const result = new RecipesFactory(recipesInputData, 'global', e.target.value);
             result.filter.map(recipe => {
                 const templateInput = new RecipeCard(recipe)
                 this._$mainDOM.appendChild(templateInput.ui())
-                // this._$mainDOM.innerHTML = templateInput.getUi
             });
         });
 
-        //Click arrow down to open filter section
-        this._$arrowDown.addEventListener('click', (e) => {
 
+        const $chevronDown = this._$filterBtnBlue.childNodes[3];
+        //Click arrow down to open filter section
+        $chevronDown.addEventListener('click', (e) => {
             e.preventDefault();
+            //CSS Manipulation
             this._$dropdown.style.display = 'flex';
             this._$filterSection.style.width = '40%';
-            this._$filterBtn.style.width = '100%'
-            this._$filterBtn.style.justifyContent = 'space-between';
+            this._$filterBtnBlue.style.width = '100%'
+            this._$filterBtnBlue.style.justifyContent = 'space-between';
             this._$arrowDown.style.display = 'none';
             this._$arrowUp.style.display = 'flex';
             this._$searchInput.placeholder = 'Recherche un ingrédient';
             this._$searchInput.style.opacity = '50%'
             this._$mainDOM.style.marginTop = "-300px"
 
-
+            //Filter ingredients
+            console.log('this._$filterBtn:', this._$filterBtnBlue.childNodes[3]);
 
         });
         //Click arrow up to close filter section
+
         this._$arrowUp.addEventListener('click', (e) => {
             e.preventDefault();
             this._$dropdown.style.display = 'none';
@@ -80,6 +78,7 @@ class App {
             this._$searchInputGlobal.placeholder = 'Recherche un ingrédient'
             this._$searchInput.style.opacity = '100%';
             this._$mainDOM.style.marginTop = "50px"
+
 
         });
         //CSS varations
@@ -94,41 +93,13 @@ class App {
 
         });
 
-    }
+    };
 
-}
+};
 
 const app = new App();
 app.main();
 
-// //Fetch all Recipes
-// const recette = new RecipeModel(recipes);
-// recette.data();
-// // console.log(recette.obj)
-// //View
-// const view = new RecipesView(recette.obj, mainDOM);
-// view.ui();
-
-
-// //Filter Recipes
-// searchInput.addEventListener('input', (e) => {
-//     e.preventDefault()
-
-//     const filterRecipe = new RecipeModel(recipes, e.target.value)
-//     filterRecipe.dataFilter().then((result) => {
-
-//         const filterView = new RecipesView(result, mainDOM)
-//         filterView.ui()
-
-//     })
-
-// })
-
-// //Ingredient
-// const ing = new Ingredient(recipes)
-// ing.data().then((result) => {
-//     console.log(result)
-// })
 
 
 
