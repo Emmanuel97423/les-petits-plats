@@ -2,7 +2,10 @@ export class Ingredients {
     constructor(data, request) {
         this._data = data;
         this._request = request;
+        this._arr = [];
     }
+
+
     set data(data) {
         this._data = data;
     }
@@ -20,18 +23,73 @@ export class Ingredients {
     get getIngredients() {
         return this.ingredients();
     }
+    get arr() { return this._arr; }
+
+    get getFilter() {
+        return this.filter()
+    }
 
     ingredients() {
-        return this._data.map(n => {
+
+        // console.log(this._data.length)
+        this._data.map(n => {
             const ingredients = n.ingredients;
 
-            return ingredients.map(i => {
-                const listItem = i.ingredient;
+            ingredients.map(i => {
 
-                return listItem;
+                const ingredient = i.ingredient;
+
+                if (this._arr.indexOf(ingredient.toLowerCase()) >= 1) {
+                    return false;
+                } else {
+                    this._arr.push(ingredient.toLowerCase());
+                }
+
             })
-            // return ingredients
+
         })
+        console.log('arr:', this._arr);
+        return this._arr;
+    }
+
+    // Filter
+    filter() {
+
+
+        const result = this._data.map(e => {
+
+            const recipeId = e.id
+
+
+            e.ingredients.filter(i => {
+
+                // return i.ingredient.toLowerCase().indexOf(this._request.toLowerCase()) !== -1;
+
+                if (i.ingredient.toLowerCase().indexOf(this._request.toLowerCase()) !== -1) {
+                    console.log('i.ingredient:', i.ingredient)
+                    console.log('this._request:', this._request)
+                    console.log('recipeId:', recipeId)
+                }
+
+            })
+
+        })
+
+        return result;
+        // const result = this._data.filter(e => {
+
+        //     e.ingredients.map(i => {
+        //         console.log('i:', i)
+
+        //     })
+
+        //     e.ingredient === 'coco'
+        // })
+        // console.log('result:', result)
+        // return this._data.map(n => {
+        //     console.log('n:', n.ingredients)
+
+        // })
     }
 
 }

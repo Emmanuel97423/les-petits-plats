@@ -61,7 +61,7 @@ export class RecipeCard {
 
 export class ingredientsDropdown {
     constructor(ingredients) {
-        console.log('ingredients:', ingredients)
+
         this._ingredients = ingredients;
     }
     set getIngredient(ingredients) {
@@ -75,20 +75,41 @@ export class ingredientsDropdown {
     }
 
     ui() {
-        const $dropdown = document.createElement('div');
-        $dropdown.classList.add('dropdown__tag');
+        const $dropdown = document.createElement('li');
+        // $dropdown.classList.add('dropdown__tag--links');
 
-        const dropdownTemplate = `
-            
-                    <div class="dropdown__tag--col-1">
-                        <ul class="dropdown__tag--links">
-                            <li>${this._ingredients}</li>
-                        </ul>
-                    </div>
-                
+        const dropdownTemplate = `       
+                            ${this._ingredients}                   
         `;
 
         $dropdown.innerHTML = dropdownTemplate;
         return $dropdown;
+    }
+}
+
+export class Tags {
+    constructor(tag) {
+
+        this._tag = tag;
+    }
+    set getTag(tag) {
+        this._tag = tag;
+    }
+    get getTag() { return this._tag };
+
+    get getUi() {
+        return this.ui()
+    }
+
+    ui() {
+        const $tagWrapper = document.createElement('div');
+        $tagWrapper.classList.add('tag');
+
+        const tagTemplate = `
+                <p>${this._tag}</p><i class="far fa-times-circle"></i>
+        `;
+        $tagWrapper.innerHTML = tagTemplate;
+
+        return $tagWrapper;
     }
 }

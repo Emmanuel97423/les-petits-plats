@@ -4,6 +4,7 @@ import { Ingredients } from '../models/ingredients.js'
 
 export class RecipesFactory {
     constructor(data, input, request) {
+
         this._data = data;
         this._request = request;
         this._input = input;
@@ -19,9 +20,12 @@ export class RecipesFactory {
 
     //Data filter
     get filter() {
-        if (this._input === 'global' || this._request) {
+
+        if (this._input === 'global' && this._request) {
+
             return this.filterRecipe();
-        } else if (this._input === 'ingredients') {
+        } else if (this._input === 'ingrédients' && this._request) {
+
             return this.filterIngredients();
         };
     };
@@ -36,9 +40,8 @@ export class RecipesFactory {
     filterIngredients() {
         //Call ingredients Classe
         const ingredient = new Ingredients(this._data, this._request);
-        const resultIngredients = ingredient.getIngredients;
-        // console.log('resultIngredients:', resultIngredients)
-        return resultIngredients
+        const resultIngredients = ingredient.getFilter;
 
+        return resultIngredients
     };
 };

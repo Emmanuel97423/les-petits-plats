@@ -1,5 +1,5 @@
 //Classes
-import { RecipeCard, ingredientsDropdown } from './view/View.js'
+import { RecipeCard, ingredientsDropdown, Tags } from './view/View.js'
 import { RecipeApi } from "./api/Api.js"
 import { RecipesFactory } from "./factories/RecipesFactory.js"
 
@@ -16,11 +16,18 @@ class App {
         this._$arrowDown = document.querySelector('.fa-chevron-down');
         this._$arrowUp = document.querySelector('.fa-chevron-up')
         this._$dropdown = document.querySelector('.dropdown');
+        this._$dropdownList = document.querySelector('.dropdown__tag--links');
         this._$filterSection = document.querySelector('.filter__btn--blue');
         this._$filterBtnBlue = document.querySelector('.filter__btn--blue button:nth-child(1)');
         this._$recipeCard = document.querySelectorAll('.card');
         //Data
         this._recipesApi = new RecipeApi(data);
+        //Input Button
+        this._$searchInputIngredient = document.getElementById('input__ingredient');
+        //Tags
+        this._$tagSelect = document.querySelector('.tags');
+
+
     };
 
     async main() {
@@ -44,6 +51,25 @@ class App {
                 this._$mainDOM.appendChild(templateInput.ui())
             });
         });
+        //Filter Ingredients
+        this._$searchInputIngredient.addEventListener('input', (e) => {
+            e.preventDefault();
+            console.log('value', e.target.value);
+            this._$dropdownList.innerHTML = `<li>${e.target.value}</li>`;
+            this._$mainDOM.style.marginTop = "50px";
+
+        })
+        // Tags section
+        this._$searchInputIngredient.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const tag = new Tags(e.target.value);
+                this._$tagSelect.innerHTML = '';
+                this._$tagSelect.appendChild(tag.getUi);
+                const filterIngredients = new RecipesFactory(recipesData, "ingrédients", e.target.value)
+                filterIngredients.filter
+
+            }
+        })
         const $chevronDown = this._$filterBtnBlue.childNodes[3];
         //Click arrow down to open filter section
         $chevronDown.addEventListener('click', (e) => {
@@ -61,19 +87,12 @@ class App {
 
             //Filter ingredients
 
-            const ingredients = new RecipesFactory(recipesData, 'ingredients')
-
-            const ingFilter = ingredients.filter
+            const ingredients = new RecipesFactory(recipesData, 'ingredients');
+            const ingFilter = ingredients.filter;
             ingFilter.map(i => {
-                i.map(n => {
-                    const templateIng = new ingredientsDropdown(n)
-                    this._$dropdown.appendChild(templateIng.ui())
-
-                })
-
-            })
-
-
+                const templateIng = new ingredientsDropdown(i);
+                this._$dropdownList.appendChild(templateIng.ui());
+            });
 
         });
         //Click arrow up to close filter section

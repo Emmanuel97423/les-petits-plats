@@ -48,11 +48,13 @@
       color: #fff;
       font-size: 18px;
       font-weight: 700;
+      letter-spacing: .5px;
       &::placeholder {
         color: #fff;
         font-family: "Lato", sans-serif;
         font-weight: 700;
         font-size: 18px;
+        
       }
       &:focus::placeholder {
         color: transparent;

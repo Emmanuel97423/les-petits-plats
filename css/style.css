@@ -274,6 +274,7 @@ ul li span {
   color: #fff;
   font-size: 18px;
   font-weight: 700;
+  letter-spacing: 0.5px;
 }
 .filter__btn input[type=text]::placeholder {
   color: #fff;
@@ -293,7 +294,9 @@ ul li span {
   z-index: 100;
   height: auto;
   display: none;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
   background-color: #3282f7;
   border-radius: 5px;
   padding: 0 19px 23px 19px;
@@ -316,18 +319,28 @@ ul li span {
 .dropdown__input input[type=text]::placeholder {
   color: #fff;
   opacity: 50%;
+  letter-spacing: 1px;
 }
 .dropdown__tag {
   display: flex;
 }
 .dropdown__tag--col-1 {
-  width: 30%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.dropdown__tag--links {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
 }
 .dropdown__tag--links li {
   font-size: 18px;
   font-weight: 400;
   color: #fff;
-  margin: 0 0 1rem 0;
+  margin: 0 25px 1rem 0;
+  cursor: pointer;
 }
 
 .card {
@@ -414,6 +427,22 @@ ul li span {
   align-items: center;
   margin-top: 50px;
   flex-wrap: wrap;
+}
+
+.tag {
+  width: 107px;
+  height: 37px;
+  background-color: #3282f7;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px 10px;
+  border-radius: 5px;
+  color: #fff;
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1px;
 }
 
 /*# sourceMappingURL=style.css.map */
