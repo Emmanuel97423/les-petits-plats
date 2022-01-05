@@ -46,12 +46,17 @@ class App {
             this._$mainDOM.innerHTML = '';
             const recipesInputData = await this._recipesApi.get();
             const result = new RecipesFactory(recipesInputData, 'global', e.target.value);
-            result.filter.map(recipe => {
-                const templateInput = new RecipeCard(recipe)
-                this._$mainDOM.appendChild(templateInput.ui())
-            });
+            if (result.filter) {
+                result.filter.map(recipe => {
+
+                    const templateInput = new RecipeCard(recipe)
+                    this._$mainDOM.appendChild(templateInput.ui())
+
+                });
+            }
         });
-        //Filter Ingredients
+
+        // Tags section
         this._$searchInputIngredient.addEventListener('input', (e) => {
             e.preventDefault();
             console.log('value', e.target.value);
@@ -59,14 +64,44 @@ class App {
             this._$mainDOM.style.marginTop = "50px";
 
         })
-        // Tags section
+        //Filter Ingredients
         this._$searchInputIngredient.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 const tag = new Tags(e.target.value);
                 this._$tagSelect.innerHTML = '';
                 this._$tagSelect.appendChild(tag.getUi);
                 const filterIngredients = new RecipesFactory(recipesData, "ingrédients", e.target.value)
-                filterIngredients.filter
+                let arrRecipe = [];
+                const resultIng = filterIngredients.filter.map(i => {
+
+
+                    return recipesData.filter(recipe => {
+
+                        if (recipe.id === i) {
+                            // console.log('recipe:', recipe)
+                            arrRecipe.push(recipe)
+                            console.log('arrRecipe:', arrRecipe)
+                            this._$mainDOM.innerHTML = "";
+                            arrRecipe.map(n => {
+                                const templateIngredientsResult = new RecipeCard(n);
+                                this._$mainDOM.appendChild(templateIngredientsResult.ui())
+                            })
+
+                        }
+
+
+                    })
+                });
+                // console.log('resultIng:', resultIng)
+                return resultIng
+
+
+
+                // .map(ingredient => {
+                //     const templateFilterIngredients = new RecipeCard(ingredient);
+                //     this._$mainDOM.innerHTML = '';
+                //     this._$mainDOM.appendChild(templateFilterIngredients.getUi)
+                // })
 
             }
         })

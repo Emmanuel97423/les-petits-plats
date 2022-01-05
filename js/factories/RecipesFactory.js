@@ -40,8 +40,11 @@ export class RecipesFactory {
     filterIngredients() {
         //Call ingredients Classe
         const ingredient = new Ingredients(this._data, this._request);
-        const resultIngredients = ingredient.getFilter;
 
-        return resultIngredients
+        ingredient.getFilter;
+        ingredient.getArrayId;
+        // console.log('ingredient:', ingredient.getArrayId)
+        // console.log('resultIngredients.getArrayId:', resultIngredients.getArrayId)
+        return ingredient.getArrayId
     };
 };

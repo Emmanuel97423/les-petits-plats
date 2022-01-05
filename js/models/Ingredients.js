@@ -3,6 +3,7 @@ export class Ingredients {
         this._data = data;
         this._request = request;
         this._arr = [];
+        this._arrId = [];
     }
 
 
@@ -26,7 +27,11 @@ export class Ingredients {
     get arr() { return this._arr; }
 
     get getFilter() {
-        return this.filter()
+        return this.filter();
+    }
+
+    get getArrayId() {
+        return this._arrId;
     }
 
     ingredients() {
@@ -56,26 +61,35 @@ export class Ingredients {
     filter() {
 
 
-        const result = this._data.map(e => {
+        return this._data.map(e => {
 
             const recipeId = e.id
 
 
-            e.ingredients.filter(i => {
+            return e.ingredients.filter(i => {
 
                 // return i.ingredient.toLowerCase().indexOf(this._request.toLowerCase()) !== -1;
 
                 if (i.ingredient.toLowerCase().indexOf(this._request.toLowerCase()) !== -1) {
-                    console.log('i.ingredient:', i.ingredient)
-                    console.log('this._request:', this._request)
-                    console.log('recipeId:', recipeId)
+                    // console.log('i.ingredient:', i.ingredient)
+                    // console.log('this._request:', this._request)
+
+                    this._arrId.push(recipeId)
+
+                    return this._arrId;
+
+
+
                 }
+
 
             })
 
+
         })
 
-        return result;
+
+
         // const result = this._data.filter(e => {
 
         //     e.ingredients.map(i => {
