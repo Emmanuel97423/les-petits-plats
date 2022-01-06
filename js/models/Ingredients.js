@@ -72,7 +72,7 @@ export class Ingredients {
                 // return i.ingredient.toLowerCase().indexOf(this._request.toLowerCase()) !== -1;
 
                 if (i.ingredient.toLowerCase().indexOf(this._request.toLowerCase()) !== -1) {
-                    console.log('i.ingredient:', i.ingredient)
+
                     // console.log('this._request:', this._request)
 
                     this._arrId.push(recipeId)
@@ -89,22 +89,6 @@ export class Ingredients {
 
         })
 
-
-
-        // const result = this._data.filter(e => {
-
-        //     e.ingredients.map(i => {
-        //         console.log('i:', i)
-
-        //     })
-
-        //     e.ingredient === 'coco'
-        // })
-        // console.log('result:', result)
-        // return this._data.map(n => {
-        //     console.log('n:', n.ingredients)
-
-        // })
     }
 
 }

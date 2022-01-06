@@ -18,28 +18,37 @@ export class RecipesFactory {
     set input(input) { this._input = input };
     get input() { return this._input };
 
-    //Data filter
+    //Getter Data filter (factory)
     get filter() {
 
         if (this._input === 'global' && this._request) {
-
             return this.filterRecipe();
-        } else if (this._input === 'ingrédients' && this._request) {
+        }
 
+        else if (this._input === 'RecipesByDescription') {
+            return this.filterRecipeByDescription();
+        }
+
+        else if (this._input === 'ingrédients' && this._request) {
             return this.filterIngredients();
         };
     };
+    //Getter listing ingredients
     get getListIngredients() {
         return this.listIngredients();
-    }
-    //Filter Method
+    };
+    //Filter Recipes Method
     filterRecipe() {
         //Call Recipe Classe
         const recipe = new Recipe(this._data, this._request);
         const result = recipe.getFilterRecipes;
         return result;
     };
-
+    filterRecipeByDescription() {
+        const recipe = new Recipe(this._data, this._request);
+        return recipe.getFilterRecipesByDescription;
+    }
+    //Filter Ingredients method
     filterIngredients() {
         //Call ingredients Classe
         const ingredient = new Ingredients(this._data, this._request);
@@ -50,6 +59,7 @@ export class RecipesFactory {
         // console.log('resultIngredients.getArrayId:', resultIngredients.getArrayId)
         return ingredient.getArrayId
     };
+    //listing all ingrédients method
     listIngredients() {
         const listIngredient = new Ingredients(this._data, this._request);
         return listIngredient.getIngredients;

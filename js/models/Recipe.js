@@ -31,7 +31,10 @@ export class Recipe {
         this._data = data;
     }
     get getFilterRecipes() {
-        return this.filterRecipeMethod();
+        return this.filterRecipeMethodByTitle();
+    }
+    get getFilterRecipesByDescription() {
+        return this.filterRecipeMethodByDescription()
     }
 
     set request(request) {
@@ -42,16 +45,30 @@ export class Recipe {
         return this._request;
     }
 
-    // //Methods
-    // //Filter 
-    filterRecipeMethod() {
+    // Methods
+    // Filter By title
+    filterRecipeMethodByTitle() {
 
         const result = this._data.filter(el => {
 
-            return el.name.toLowerCase().indexOf(this._request.toLowerCase()) !== -1;
+            if (el.name) {
+                return el.name.toLowerCase().indexOf(this._request.toLowerCase()) !== -1;
+            }
+
         });
 
         return result;
+
+    }
+
+    // Filter by description
+    filterRecipeMethodByDescription() {
+        return this._data.filter(el => {
+            if (el.description) {
+
+                return el.description.toLowerCase().indexOf(this._request.toLowerCase()) !== -1;
+            }
+        })
 
     }
 }

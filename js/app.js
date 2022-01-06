@@ -26,8 +26,6 @@ class App {
         this._$searchInputIngredient = document.getElementById('input__ingredient');
         //Tags
         this._$tagSelect = document.querySelector('.tags');
-
-
     };
 
     async main() {
@@ -40,20 +38,40 @@ class App {
             template.ui();
             this._$mainDOM.appendChild(template.ui());
         });
-        //Filter Recipes
+        //Filter Recipes global search input
         this._$searchInput.addEventListener('input', async (e) => {
             e.preventDefault();
             this._$mainDOM.innerHTML = '';
             const recipesInputData = await this._recipesApi.get();
             const result = new RecipesFactory(recipesInputData, 'global', e.target.value);
-            if (result.filter) {
+            const recipeByDesc = new RecipesFactory(recipesData, 'RecipesByDescription', e.target.value);
+            if (result.filter && recipeByDesc.filter) {
+                //Filter By title
                 result.filter.map(recipe => {
-
-                    const templateInput = new RecipeCard(recipe)
-                    this._$mainDOM.appendChild(templateInput.ui())
-
+                    const templateInput = new RecipeCard(recipe);
+                    this._$mainDOM.appendChild(templateInput.ui());
                 });
-            }
+                //Filter By description
+                recipeByDesc.filter.map(recipe => {
+                    const templateInputDesc = new RecipeCard(recipe);
+                    this._$mainDOM.appendChild(templateInputDesc.ui());
+                });
+                //Filter by ingredients
+                const recipeByIng = new RecipesFactory(recipesData, "ingrédients", e.target.value);
+                let arrRecipeByIng = [];
+                recipeByIng.filter.map(i => {
+                    recipesData.filter(recipe => {
+                        if (recipe.id === i) {
+                            arrRecipeByIng.push(recipe);
+                            this._$mainDOM.innerHTML = "";
+                            arrRecipeByIng.map(n => {
+                                const templateIngredientsResult = new RecipeCard(n);
+                                this._$mainDOM.appendChild(templateIngredientsResult.ui());
+                            });
+                        };
+                    });
+                });
+            };
         });
 
         // Tags section
@@ -67,43 +85,24 @@ class App {
         //Filter Ingredients
         this._$searchInputIngredient.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
-                console.log('e.key :', e.key)
                 const tag = new Tags(e.target.value);
                 this._$tagSelect.innerHTML = '';
                 this._$tagSelect.appendChild(tag.getUi);
                 const filterIngredients = new RecipesFactory(recipesData, "ingrédients", e.target.value)
                 let arrRecipe = [];
-                const resultIng = filterIngredients.filter.map(i => {
-
-
-                    return recipesData.filter(recipe => {
-
+                filterIngredients.filter.map(i => {
+                    recipesData.filter(recipe => {
                         if (recipe.id === i) {
-                            // console.log('recipe:', recipe)
-                            arrRecipe.push(recipe)
-
+                            arrRecipe.push(recipe);
                             this._$mainDOM.innerHTML = "";
                             arrRecipe.map(n => {
                                 const templateIngredientsResult = new RecipeCard(n);
-                                this._$mainDOM.appendChild(templateIngredientsResult.ui())
-                            })
-
-                        }
-
-
-                    })
+                                this._$mainDOM.appendChild(templateIngredientsResult.ui());
+                            });
+                        };
+                    });
                 });
-                // console.log('resultIng:', resultIng)
-                return resultIng
-
-
-
-                // .map(ingredient => {
-                //     const templateFilterIngredients = new RecipeCard(ingredient);
-                //     this._$mainDOM.innerHTML = '';
-                //     this._$mainDOM.appendChild(templateFilterIngredients.getUi)
-                // })
-
+                // return resultIng;
             }
         })
         const $chevronDown = this._$filterBtnBlue.childNodes[3];
@@ -163,11 +162,8 @@ class App {
             this._$searchInput.placeholder = 'Recherche un ingrédient';
 
         });
-
     };
-
 };
-
 const app = new App();
 app.main();
 
