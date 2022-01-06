@@ -29,6 +29,9 @@ export class RecipesFactory {
             return this.filterIngredients();
         };
     };
+    get getListIngredients() {
+        return this.listIngredients();
+    }
     //Filter Method
     filterRecipe() {
         //Call Recipe Classe
@@ -47,4 +50,10 @@ export class RecipesFactory {
         // console.log('resultIngredients.getArrayId:', resultIngredients.getArrayId)
         return ingredient.getArrayId
     };
+    listIngredients() {
+        const listIngredient = new Ingredients(this._data, this._request);
+        return listIngredient.getIngredients;
+
+
+    }
 };

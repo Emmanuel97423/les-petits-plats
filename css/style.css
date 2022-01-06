@@ -319,7 +319,6 @@ ul li span {
 .dropdown__input input[type=text]::placeholder {
   color: #fff;
   opacity: 50%;
-  letter-spacing: 1px;
 }
 .dropdown__tag {
   display: flex;

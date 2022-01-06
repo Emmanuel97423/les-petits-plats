@@ -33,7 +33,7 @@ export class Ingredients {
     get getArrayId() {
         return this._arrId;
     }
-
+    //List ingredients method
     ingredients() {
 
         // console.log(this._data.length)
@@ -53,9 +53,10 @@ export class Ingredients {
             })
 
         })
-        console.log('arr:', this._arr);
+        // console.log('arr:', this._arr);
         return this._arr;
     }
+
 
     // Filter
     filter() {
@@ -71,7 +72,7 @@ export class Ingredients {
                 // return i.ingredient.toLowerCase().indexOf(this._request.toLowerCase()) !== -1;
 
                 if (i.ingredient.toLowerCase().indexOf(this._request.toLowerCase()) !== -1) {
-                    // console.log('i.ingredient:', i.ingredient)
+                    console.log('i.ingredient:', i.ingredient)
                     // console.log('this._request:', this._request)
 
                     this._arrId.push(recipeId)

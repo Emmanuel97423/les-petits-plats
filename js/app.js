@@ -67,6 +67,7 @@ class App {
         //Filter Ingredients
         this._$searchInputIngredient.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
+                console.log('e.key :', e.key)
                 const tag = new Tags(e.target.value);
                 this._$tagSelect.innerHTML = '';
                 this._$tagSelect.appendChild(tag.getUi);
@@ -80,7 +81,7 @@ class App {
                         if (recipe.id === i) {
                             // console.log('recipe:', recipe)
                             arrRecipe.push(recipe)
-                            console.log('arrRecipe:', arrRecipe)
+
                             this._$mainDOM.innerHTML = "";
                             arrRecipe.map(n => {
                                 const templateIngredientsResult = new RecipeCard(n);
@@ -123,11 +124,18 @@ class App {
             //Filter ingredients
 
             const ingredients = new RecipesFactory(recipesData, 'ingredients');
-            const ingFilter = ingredients.filter;
-            ingFilter.map(i => {
+
+            ingredients.getListIngredients.map(i => {
                 const templateIng = new ingredientsDropdown(i);
                 this._$dropdownList.appendChild(templateIng.ui());
-            });
+            })
+
+
+
+            // ingFilter.map(i => {
+            //     const templateIng = new ingredientsDropdown(i);
+            //     this._$dropdownList.appendChild(templateIng.ui());
+            // });
 
         });
         //Click arrow up to close filter section
