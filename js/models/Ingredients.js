@@ -29,7 +29,9 @@ export class Ingredients {
     get getFilter() {
         return this.filter();
     }
-
+    get getFilterList() {
+        return this.filterList();
+    }
     get getArrayId() {
         return this._arrId;
     }
@@ -37,58 +39,46 @@ export class Ingredients {
     ingredients() {
 
         // console.log(this._data.length)
-        this._data.map(n => {
-            const ingredients = n.ingredients;
+        if (this._request) {
+            console.log('this._request:', this._request)
 
-            ingredients.map(i => {
+        } else {
+            this._data.map(n => {
+                const ingredients = n.ingredients;
 
-                const ingredient = i.ingredient;
 
-                if (this._arr.indexOf(ingredient.toLowerCase()) >= 1) {
-                    return false;
-                } else {
-                    this._arr.push(ingredient.toLowerCase());
-                }
+                ingredients.map(i => {
+
+                    const ingredient = i.ingredient;
+
+                    if (this._arr.indexOf(ingredient.toLowerCase()) >= 1) {
+                        return false;
+                    } else {
+                        this._arr.push(ingredient.toLowerCase());
+                    }
+
+                })
 
             })
-
-        })
-        // console.log('arr:', this._arr);
-        return this._arr;
+            return this._arr;
+        }
     }
-
-
     // Filter
     filter() {
 
-
         return this._data.map(e => {
-
-            const recipeId = e.id
-
-
+            const recipeId = e.id;
             return e.ingredients.filter(i => {
-
-                // return i.ingredient.toLowerCase().indexOf(this._request.toLowerCase()) !== -1;
-
                 if (i.ingredient.toLowerCase().indexOf(this._request.toLowerCase()) !== -1) {
-
-                    // console.log('this._request:', this._request)
-
-                    this._arrId.push(recipeId)
-
+                    this._arrId.push(recipeId);
                     return this._arrId;
-
-
-
                 }
+            });
+        });
+    };
 
-
-            })
-
-
-        })
-
+    filterList() {
+        console.log('this._arr:', this._arr)
     }
 
 }
