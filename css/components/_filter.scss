@@ -34,9 +34,11 @@
     }
     &--green {
       background-color: #68d9a4;
+      border-radius: 5px;
     }
     &--red {
       background-color: #ed6454;
+      border-radius: 5px;
     }
     input[type="text"] {
       width: 100%;
@@ -64,4 +66,7 @@
 }
 .fa-chevron-up {
   display: none;
+}
+#input__appliances{
+  background-color:#68d9a4;
 }

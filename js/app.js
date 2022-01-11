@@ -9,12 +9,14 @@ import data from '../../data/recipes.js'
 //Application
 class App {
     constructor() {
+        //Ui
+
         //DOM elements
         this._$mainDOM = document.getElementById('main');
         this._$searchInput = document.querySelector('.search__input');
         this._$searchInputGlobal = document.getElementById('search__global')
         this._$arrowDown = document.querySelector('.fa-chevron-down');
-        this._$arrowUp = document.querySelector('.fa-chevron-up')
+        this._$arrowUp = document.querySelector('.fa-chevron-up');
         this._$dropdown = document.querySelector('.dropdown');
         this._$dropdownList = document.querySelector('.dropdown__tag--links');
         this._$filterSection = document.querySelector('.filter__btn--blue');
@@ -26,6 +28,12 @@ class App {
         this._$searchInputIngredient = document.getElementById('input__ingredient');
         //Tags
         this._$tagSelect = document.querySelector('.tags');
+        //btn green
+        this._btnAppliance = document.querySelector('.filter__btn--green');
+        console.log('this._btnAppliance:', this._btnAppliance.childNodes[1].childNodes[3]);
+
+        //Arrays datas
+        this._arrRecipeByIng = [];
     };
     //Getters
     get getDropdownShow() {
@@ -37,6 +45,7 @@ class App {
     async main() {
         //Call api
         const recipesData = await this._recipesApi.get();
+
         //Ui all Recipes
         recipesData.map(recipe => {
             new RecipesFactory(recipe, 'global');
@@ -63,14 +72,16 @@ class App {
                     this._$mainDOM.appendChild(templateInputDesc.ui());
                 });
                 //Filter by ingredients
-                const recipeByIng = new RecipesFactory(recipesData, "ingrédients", e.target.value);
+                const recipeByIng = new RecipesFactory(recipesData, "ingredients", e.target.value);
                 let arrRecipeByIng = [];
                 recipeByIng.filter.map(i => {
                     recipesData.filter(recipe => {
                         if (recipe.id === i) {
                             arrRecipeByIng.push(recipe);
+                            // console.log('this._arrRecipeByIng:', [...new Set(this._arrRecipeByIng)])
                             this._$mainDOM.innerHTML = "";
                             arrRecipeByIng.map(n => {
+
                                 const templateIngredientsResult = new RecipeCard(n);
                                 this._$mainDOM.appendChild(templateIngredientsResult.ui());
                             });
@@ -86,12 +97,13 @@ class App {
         //     this._$dropdownList.innerHTML = `<li>${e.target.value}</li>`;
         //     this._$mainDOM.style.marginTop = "50px";
         // })
-        //Filter Ingredients
+        //Filter Ingredients button
         this._$searchInputIngredient.addEventListener('input', (e) => {
             e.preventDefault();
 
             if (e.target.value) {
-                let arrItemSelected = [];
+                let arrItemSelected = [...new Set(this._arrRecipeByIng0)];
+                console.log('arrItemSelected:', arrItemSelected)
                 //Filter ingredients
                 const ingredients = new RecipesFactory(recipesData, 'ingredients');
                 ingredients.getListIngredients.filter(n => {
@@ -118,7 +130,8 @@ class App {
                     const templateIng = new ingredientsDropdown(i);
                     this._$dropdownList.appendChild(templateIng.ui());
                 })
-            }
+            };
+
 
         })
         // const $chevronDown = this._$filterBtnBlue.childNodes[3];
@@ -132,7 +145,8 @@ class App {
             ingredients.getListIngredients.map(i => {
                 const templateIng = new ingredientsDropdown(i);
                 this._$dropdownList.appendChild(templateIng.ui());
-            })
+            });
+            this.listingSearchDropdown(recipesData, 'ingredients');
 
         });
         //show dropdown with arrow buttons
@@ -143,7 +157,9 @@ class App {
             ingredients.getListIngredients.map(i => {
                 const templateIng = new ingredientsDropdown(i);
                 this._$dropdownList.appendChild(templateIng.ui());
-            })
+            });
+            this.listingSearchDropdown(recipesData, 'ingredients');
+
         })
         //Click arrow up to close filter section
         this._$arrowUp.addEventListener('click', (e) => {
@@ -188,6 +204,30 @@ class App {
         this._$searchInput.style.opacity = '100%';
         this._$mainDOM.style.marginTop = "50px";
     };
+    //listing search
+    listingSearchDropdown(data, section) {
+        this._$dropdownList.childNodes.forEach(i => {
+            i.addEventListener('click', (e) => {
+                e.preventDefault();
+                this._$mainDOM.innerHTML = null;
+                console.log('this._$mainDOM.innerHTML:', this._$mainDOM.innerHTML)
+                // console.log('e.target:', e.target.innerText)
+                const filterIngredientsDropdown = new RecipesFactory(data, section, e.target.innerText)
+                filterIngredientsDropdown.filter.map(i => {
+                    data.filter(recipe => {
+                        let arr = [];
+                        if (recipe.id === i) {
+                            arr.push(recipe);
+                            arr.map(n => {
+                                const templateIngredientsResult = new RecipeCard(n);
+                                this._$mainDOM.appendChild(templateIngredientsResult.ui());
+                            });
+                        };
+                    });
+                })
+            })
+        })
+    }
     async recipesData() {
         const recipesData = await this._recipesApi.get();
         return recipesData;

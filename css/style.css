@@ -260,9 +260,11 @@ ul li span {
 }
 .filter__btn--green {
   background-color: #68d9a4;
+  border-radius: 5px;
 }
 .filter__btn--red {
   background-color: #ed6454;
+  border-radius: 5px;
 }
 .filter__btn input[type=text] {
   width: 100%;
@@ -288,6 +290,10 @@ ul li span {
 
 .fa-chevron-up {
   display: none;
+}
+
+#input__appliances {
+  background-color: #68d9a4;
 }
 
 .dropdown {

@@ -1,10 +1,10 @@
-import { Recipe } from '../models/recipe.js'
-import { Ingredients } from '../models/ingredients.js'
+import { Recipe } from '../models/recipe.js';
+import { Ingredients } from '../models/ingredients.js';
+import { Appliances } from '../models/Appliances.js';
 
 
 export class RecipesFactory {
     constructor(data, input, request) {
-
         this._data = data;
         this._request = request;
         this._input = input;
@@ -29,9 +29,11 @@ export class RecipesFactory {
             return this.filterRecipeByDescription();
         }
 
-        else if (this._input === 'ingrédients' && this._request) {
+        else if (this._input === 'ingredients' && this._request) {
             return this.filterIngredients();
-        };
+        } else if (this._input === 'appliances') {
+            return this.filterAppliances();
+        }
     };
     //Getter listing ingredients
     get getListIngredients() {
@@ -63,8 +65,6 @@ export class RecipesFactory {
         const listIngredient = new Ingredients(this._data, this._request);
         return listIngredient.getIngredients;
     }
-    // filterListIngredients() {
-    //     const filterListIng = new Ingredients(this._data, this._request);
-    //     return filterListIng.getFilterList
-    // }
+    //Filter by aplliance
+
 };
