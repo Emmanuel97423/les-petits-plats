@@ -74,11 +74,14 @@ class App {
                 //Filter by ingredients
                 const recipeByIng = new RecipesFactory(recipesData, "ingredients", e.target.value);
                 let arrRecipeByIng = [];
+                this._arrRecipeByIng = [];
                 recipeByIng.filter.map(i => {
                     recipesData.filter(recipe => {
                         if (recipe.id === i) {
                             arrRecipeByIng.push(recipe);
-                            // console.log('this._arrRecipeByIng:', [...new Set(this._arrRecipeByIng)])
+                            this._arrRecipeByIng.push(recipe);
+                            console.log('this._arrRecipeByIng:', this._arrRecipeByIng)
+
                             this._$mainDOM.innerHTML = "";
                             arrRecipeByIng.map(n => {
 
@@ -101,52 +104,84 @@ class App {
         this._$searchInputIngredient.addEventListener('input', (e) => {
             e.preventDefault();
 
-            if (e.target.value) {
-                let arrItemSelected = [...new Set(this._arrRecipeByIng0)];
-                console.log('arrItemSelected:', arrItemSelected)
+            let arrItemSelected = [];
+            if (e.target.value && this._arrRecipeByIng.length > 0) {
+                console.log('hello tableau non vide')
                 //Filter ingredients
-                const ingredients = new RecipesFactory(recipesData, 'ingredients');
+                const ingredients = new RecipesFactory(this._arrRecipeByIng, 'ingredients');
+                // this._arrRecipeByIng = [];
                 ingredients.getListIngredients.filter(n => {
-
                     if (n.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1) {
-
                         arrItemSelected.push(n);
-
                         this._$dropdownList.innerHTML = '';
                         this._$mainDOM.style.marginTop = "50px";
-                        arrItemSelected.map(item => {
+                        [...new Set(arrItemSelected)].map(item => {
                             // console.log('item:', item)
                             const templateIng = new ingredientsDropdown(item);
                             this._$dropdownList.appendChild(templateIng.ui());
-                        })
-                    }
-                })
-            } else if (this._$dropdownList === '') {
-                this.dropdownShow();
+                        });
+                    };
+                });
+            } else if (e.target.value && this._arrRecipeByIng.length === 0) {
 
-                //Filter ingredients
-                const ingredients = new RecipesFactory(recipesData, 'ingredients');
-                ingredients.getListIngredients.map(i => {
-                    const templateIng = new ingredientsDropdown(i);
-                    this._$dropdownList.appendChild(templateIng.ui());
-                })
+                const ingredientsArrNull = new RecipesFactory(recipesData, 'ingredients');
+                // this._arrRecipeByIng = [];
+                ingredientsArrNull.getListIngredients.filter(n => {
+                    if (n.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1) {
+                        arrItemSelected.push(n);
+                        this._$dropdownList.innerHTML = '';
+                        this._$mainDOM.style.marginTop = "50px";
+                        [...new Set(arrItemSelected)].map(item => {
+                            console.log('item:', item)
+                            const templateIng = new ingredientsDropdown(item);
+                            this._$dropdownList.appendChild(templateIng.ui());
+                        });
+                    };
+                });
+            } else if (this._$dropdownList === '') {
+                // this.dropdownShow();
+                console.log('liste vide')
+
+                // //Filter ingredients
+                // const ingredients = new RecipesFactory([...new Set(arrItemSelected)], 'ingredients');
+                // // console.log('this._arrRecipeByIng:', this._arrRecipeByIng)
+
+                // ingredients.getListIngredients.map(i => {
+                //     const templateIng = new ingredientsDropdown(i);
+                //     this._$dropdownList.appendChild(templateIng.ui());
+                // })
             };
+
+
 
 
         })
         // const $chevronDown = this._$filterBtnBlue.childNodes[3];
-        //Click arrow down to open filter section
+        //Click into filter section ingredients
         this._$searchInputIngredient.addEventListener('click', (e) => {
             e.preventDefault();
+
             this.dropdownShow();
 
             //Filter ingredients
-            const ingredients = new RecipesFactory(recipesData, 'ingredients');
-            ingredients.getListIngredients.map(i => {
-                const templateIng = new ingredientsDropdown(i);
-                this._$dropdownList.appendChild(templateIng.ui());
-            });
-            this.listingSearchDropdown(recipesData, 'ingredients');
+            if (this._arrRecipeByIng.length > 0) {
+                console.log('Hello tableau non vide')
+                const ingredients = new RecipesFactory(this._arrRecipeByIng, 'ingredients');
+                [...new Set(ingredients.getListIngredients)].map(i => {
+                    const templateIng = new ingredientsDropdown(i);
+                    this._$dropdownList.appendChild(templateIng.ui());
+                });
+                this.listingSearchDropdown(this._arrRecipeByIng, 'ingredients');
+
+            } else if (this._arrRecipeByIng.length === 0) {
+                console.log('Hello tableau vide')
+                const ingredients = new RecipesFactory(recipesData, 'ingredients');
+                ingredients.getListIngredients.map(i => {
+                    const templateIng = new ingredientsDropdown(i);
+                    this._$dropdownList.appendChild(templateIng.ui());
+                });
+                this.listingSearchDropdown(recipesData, 'ingredients');
+            }
 
         });
         //show dropdown with arrow buttons
