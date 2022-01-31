@@ -5,6 +5,8 @@ import { Appliances } from '../models/Appliances.js';
 
 export class RecipesFactory {
     constructor(data, input, request) {
+
+
         this._data = data;
         this._request = request;
         this._input = input;

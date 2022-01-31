@@ -66,11 +66,24 @@ export class Ingredients {
     // Filter
     filter() {
 
+        // return this._data.map(e => {
+        //     const recipeId = e.id;
+        //     return e.ingredients.filter(i => {
+        //         if (i.ingredient.toLowerCase().indexOf(this._request.toLowerCase()) !== -1) {
+        //             this._arrId.push(recipeId);
+        //             return this._arrId;
+        //         }
+        //     });
+        // });
+
         return this._data.map(e => {
             const recipeId = e.id;
             return e.ingredients.filter(i => {
-                if (i.ingredient.toLowerCase().indexOf(this._request.toLowerCase()) !== -1) {
+                if (i.ingredient.toLowerCase() === this._request.toLowerCase()) {
+                    console.log('this._request:', this._request)
+                    console.log('recipeId:', recipeId)
                     this._arrId.push(recipeId);
+
                     return this._arrId;
                 }
             });
