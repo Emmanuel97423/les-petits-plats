@@ -1,5 +1,6 @@
 export class RecipeCard {
     constructor(recipes) {
+
         this._recipes = recipes
     };
     set getRecipes(recipes) {
