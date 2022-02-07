@@ -58,8 +58,9 @@ class App {
         //Filter Recipes global search input
         this._$searchInput.addEventListener('input', async (e) => {
             e.preventDefault();
+
             if (e.target.value.length > 2) {
-                console.log('target', e.target.value.length)
+
                 const recipesInputData = await this._recipesApi.get();
                 const result = new RecipesFactory(recipesInputData, 'global', e.target.value);
                 const recipeByDesc = new RecipesFactory(recipesData, 'RecipesByDescription', e.target.value);
@@ -67,18 +68,20 @@ class App {
 
                 if (result.filter && recipeByDesc.filter) {
 
-                    this._$mainDOM.innerHTML = '';
+
                     this._arrRecipeByIng = [];
 
                     //Filter By title
-                    result.filter.map(recipe => {
+                    [...new Set(result.filter)].map(recipe => {
+                        this._$mainDOM.innerHTML = '';
 
                         const templateInput = new RecipeCard(recipe);
                         this._$mainDOM.appendChild(templateInput.ui());
                     });
                     //Filter By description
-                    recipeByDesc.filter.map(recipe => {
-
+                    [...new Set(recipeByDesc.filter)].map(recipe => {
+                        console.log('recipe:', recipe)
+                        // this._$mainDOM.innerHTML = '';
 
                         arrRecipeByIng.push(recipe);
                         this._arrRecipeByIng.push(recipe);
@@ -95,11 +98,8 @@ class App {
                             if (recipe.id === i) {
                                 arrRecipeByIng.push(recipe);
                                 this._arrRecipeByIng.push(recipe);
-
-
                                 this._$mainDOM.innerHTML = "";
                                 arrRecipeByIng.map(n => {
-
                                     const templateIngredientsResult = new RecipeCard(n);
                                     this._$mainDOM.appendChild(templateIngredientsResult.ui());
                                 });
@@ -273,11 +273,11 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
         this._$dropdownList.childNodes.forEach(i => {
             i.addEventListener('click', (e) => {
                 e.preventDefault();
-                this._$mainDOM.innerHTML = null;
+                this._$mainDOM.innerHTML = '';
                 console.log('this._$mainDOM.innerHTML:', this._$mainDOM.innerHTML)
                 // console.log('e.target:', e.target.innerText)
-                const filterIngredientsDropdown = new RecipesFactory(data, section, e.target.innerText)
-                filterIngredientsDropdown.filter.map(i => {
+                const filterIngredientsDropdown = new RecipesFactory(data, section, e.target.innerText);
+                [...new Set(filterIngredientsDropdown.filter)].map(i => {
                     data.filter(recipe => {
                         let arr = [];
                         if (recipe.id === i) {

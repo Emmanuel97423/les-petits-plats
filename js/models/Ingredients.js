@@ -65,7 +65,6 @@ export class Ingredients {
     }
     // Filter
     filter() {
-
         // return this._data.map(e => {
         //     const recipeId = e.id;
         //     return e.ingredients.filter(i => {
@@ -83,9 +82,8 @@ export class Ingredients {
                     console.log('this._request:', this._request)
                     console.log('recipeId:', recipeId)
                     this._arrId.push(recipeId);
-
                     return this._arrId;
-                }
+                };
             });
         });
     };
