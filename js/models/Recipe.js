@@ -18,7 +18,6 @@ export class Recipe {
     set request(request) {
         this._request = request;
     }
-
     get request() {
         return this._request;
     }

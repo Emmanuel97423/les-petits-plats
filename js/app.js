@@ -58,13 +58,13 @@ class App {
         //Filter Recipes global search input
         this._$searchInput.addEventListener('input', async (e) => {
             e.preventDefault();
-            this._$mainDOM.innerHTML = '';
             if (e.target.value.length >= 2) {
+                this._$mainDOM.innerHTML = '';
                 const recipesInputData = await this._recipesApi.get();
                 const result = new RecipesFactory(recipesInputData, 'global', e.target.value);
                 if (result.filter) {
                     //Filter By title
-                    [...new Set(result.filter)].map(recipe => {
+                    result.filter.map(recipe => {
                         const templateInput = new RecipeCard(recipe);
                         this._$mainDOM.appendChild(templateInput.ui());
                     });
@@ -76,7 +76,6 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                 }
             }
         });
-
         // Tags section
         // this._$searchInputIngredient.addEventListener('input', (e) => {
         //     e.preventDefault();
