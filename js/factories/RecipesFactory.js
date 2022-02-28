@@ -45,8 +45,11 @@ export class RecipesFactory {
     filterRecipe() {
         //Call Recipe Classe
         const recipe = new Recipe(this._data, this._request);
-        const result = recipe.getFilterRecipes;
-        return result;
+
+        return recipe.getFilterRecipes;
+
+
+
     };
     filterRecipeByDescription() {
         const recipe = new Recipe(this._data, this._request);

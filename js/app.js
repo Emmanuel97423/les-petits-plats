@@ -59,53 +59,20 @@ class App {
         this._$searchInput.addEventListener('input', async (e) => {
             e.preventDefault();
             if (e.target.value.length > 2) {
-                console.log('target', e.target.value.length)
+                this._$mainDOM.innerHTML = '';
                 const recipesInputData = await this._recipesApi.get();
                 const result = new RecipesFactory(recipesInputData, 'global', e.target.value);
-                const recipeByDesc = new RecipesFactory(recipesData, 'RecipesByDescription', e.target.value);
-                let arrRecipeByIng = [];
 
-                if (result.filter && recipeByDesc.filter) {
-
-                    this._$mainDOM.innerHTML = '';
-                    this._arrRecipeByIng = [];
+                if (result.filter) {
 
                     //Filter By title
                     result.filter.map(recipe => {
 
                         const templateInput = new RecipeCard(recipe);
                         this._$mainDOM.appendChild(templateInput.ui());
+
                     });
-                    //Filter By description
-                    recipeByDesc.filter.map(recipe => {
 
-
-                        arrRecipeByIng.push(recipe);
-                        this._arrRecipeByIng.push(recipe);
-                        // console.log('this._arrRecipeByIng:', [...new Set(this._arrRecipeByIng)])
-                        const templateInputDesc = new RecipeCard(recipe);
-                        this._$mainDOM.appendChild(templateInputDesc.ui());
-                    });
-                    //Filter by ingredients
-                    const recipeByIng = new RecipesFactory(recipesData, "ingredients", e.target.value);
-                    // let arrRecipeByIng = [];
-                    // this._arrRecipeByIng = [];
-                    recipeByIng.filter.map(i => {
-                        recipesData.filter(recipe => {
-                            if (recipe.id === i) {
-                                arrRecipeByIng.push(recipe);
-                                this._arrRecipeByIng.push(recipe);
-
-
-                                this._$mainDOM.innerHTML = "";
-                                arrRecipeByIng.map(n => {
-
-                                    const templateIngredientsResult = new RecipeCard(n);
-                                    this._$mainDOM.appendChild(templateIngredientsResult.ui());
-                                });
-                            };
-                        });
-                    });
                     if (result.filter.length === 0 && recipeByDesc.filter.length === 0) {
                         console.log(' Aucune recette')
                         this._$mainDOM.innerHTML = `<h4>« Aucune recette ne correspond à votre critère… vous pouvez
