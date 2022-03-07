@@ -87,10 +87,8 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
             e.preventDefault();
             let arrItemSelected = [];
             if (e.target.value && this._arrRecipeByIng.length > 0) {
-                console.log('hello tableau non vide')
                 //Filter ingredients
                 const ingredients = new RecipesFactory(this._arrRecipeByIng, 'ingredients');
-                // this._arrRecipeByIng = [];
                 ingredients.getListIngredients.filter(n => {
                     if (n.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1) {
                         arrItemSelected.push(n);
@@ -221,7 +219,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
         this._$dropdownList.innerHTML = '';
         this._$dropdown.style.display = 'none';
         this._$arrowDown.style.display = 'flex';
-        this._$arrowUp.style.display = 'none'
+        this._$arrowUp.style.display = 'none';
         this._$filterSection.style.width = '12%';
         this._$searchInput.placeholder = 'Ingrédient';
         this._$searchInputGlobal.placeholder = 'Recherche un ingrédient';
