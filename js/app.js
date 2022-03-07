@@ -94,25 +94,32 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
         // })
         //Filter Ingredients button
         this._$searchInputIngredient.addEventListener('input', (e) => {
+
             e.preventDefault();
             let arrItemSelected = [];
-            if (this._selectedRecipes >= 0) {
+            if (this._selectedRecipes.length > 0) {
+
                 console.log('hello tableau non vide')
                 //Filter ingredients
-                const ingredients = new RecipesFactory(this._arrRecipeByIng, 'ingredients');
+                const ingredients = new RecipesFactory(this._selectedRecipes, 'ingredients');
                 // this._arrRecipeByIng = [];
                 ingredients.getListIngredients.filter(n => {
+
                     if (n.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1) {
                         arrItemSelected.push(n);
                         this._$dropdownList.innerHTML = '';
                         this._$mainDOM.style.marginTop = "50px";
                         [...new Set(arrItemSelected)].map(item => {
+
                             const templateIng = new ingredientsDropdown(item);
                             this._$dropdownList.appendChild(templateIng.ui());
                         });
                     };
                 });
-            } else if (e.target.value && this._selectedRecipes === 0) {
+                console.log('this._selectedRecipes:', this._selectedRecipes)
+                this.listingSearchDropdown(this._selectedRecipes, 'ingredients');
+            } else if (e.target.value && this._selectedRecipes.length === 0) {
+                console.log('hello tableau vide')
                 const ingredientsArrNull = new RecipesFactory(recipesData, 'ingredients');
                 // this._arrRecipeByIng = [];
                 ingredientsArrNull.getListIngredients.filter(n => {
@@ -121,11 +128,12 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                         this._$dropdownList.innerHTML = '';
                         this._$mainDOM.style.marginTop = "50px";
                         [...new Set(arrItemSelected)].map(item => {
-                            console.log('item:', item)
+
                             const templateIng = new ingredientsDropdown(item);
                             this._$dropdownList.appendChild(templateIng.ui());
                         });
                     };
+                    this.listingSearchDropdown(recipesData, 'ingredients');
                 });
             } else if (!e.target.value) {
                 // this.dropdownShow();
@@ -154,23 +162,9 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                     const templateIng = new ingredientsDropdown(ingred);
                     this._$dropdownList.appendChild(templateIng.ui());
                 })
-                // this._selectedRecipes.map((recipes) => {
-                //     recipes.ingredients.map((ingred) => {
-                //         this._arrRecipeByIng.push(ingred.ingredient);
-                //     });
-
-                // });
-
-                // const i = new RecipesFactory(this._arrRecipeByIng, 'ingredients', e.target.value);
-                // // console.log('this._arrRecipeByIng:', this._arrRecipeByIng);
-                // [...new Set(i.getListIngredients)].map(i => {
-
-                //     const templateIng = new ingredientsDropdown(i);
-                //     this._$dropdownList.appendChild(templateIng.ui());
-                // });
                 this.listingSearchDropdown(this._selectedRecipes, 'ingredients');
 
-            } else if (!this._selectedRecipes.length) {
+            } else if (this._selectedRecipes.length === 0) {
                 console.log('Tableau de recette vide')
                 const n = new RecipesFactory(recipesData, 'ingredients');
                 [...new Set(n.getListIngredients)].map(i => {
@@ -256,15 +250,16 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
     };
     //listing search
     listingSearchDropdown(data, section) {
-        console.log('data:', data)
+        console.log('section:', section)
+
         this._$dropdownList.childNodes.forEach(i => {
 
             i.addEventListener('click', (e) => {
+                console.log('e:', e)
 
                 e.preventDefault();
                 this._$mainDOM.innerHTML = null;
-                console.log('this._$mainDOM.innerHTML:', this._$mainDOM.innerHTML)
-                // console.log('e.target:', e.target.innerText)
+                console.log('this._$mainDOM.innerHTML:', this._$mainDOM.innerHTML)// console.log('e.target:', e.target.innerText)
                 const filterIngredientsDropdown = new RecipesFactory(data, section, e.target.innerText)
 
                 filterIngredientsDropdown.filter.map(i => {
