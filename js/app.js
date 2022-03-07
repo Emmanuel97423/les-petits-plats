@@ -35,6 +35,7 @@ class App {
 
         //Arrays datas
         this._arrRecipeByIng = [];
+        this._selectedRecipes = [];
 
     };
     //Getters
@@ -58,27 +59,30 @@ class App {
         //Filter Recipes global search input
         this._$searchInput.addEventListener('input', async (e) => {
             e.preventDefault();
+            this._arrRecipeByIng = [];
+            this._selectedRecipes = [];
             if (e.target.value.length > 2) {
+
                 this._$mainDOM.innerHTML = '';
                 const recipesInputData = await this._recipesApi.get();
                 const result = new RecipesFactory(recipesInputData, 'global', e.target.value);
 
                 if (result.filter) {
-
                     //Filter By title
                     result.filter.map(recipe => {
-
+                        this._selectedRecipes.push(recipe);
                         const templateInput = new RecipeCard(recipe);
                         this._$mainDOM.appendChild(templateInput.ui());
 
                     });
 
-                    if (result.filter.length === 0 && recipeByDesc.filter.length === 0) {
-                        console.log(' Aucune recette')
-                        this._$mainDOM.innerHTML = `<h4>« Aucune recette ne correspond à votre critère… vous pouvez
+                };
+                if (result.filter.length === 0) {
+                    console.log(' Aucune recette')
+                    this._$mainDOM.innerHTML = `<h4>« Aucune recette ne correspond à votre critère… vous pouvez
 chercher « tarte aux pommes », « poisson ».</h4>`;
-                    };
-                }
+                };
+
             }
         });
 
@@ -92,7 +96,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
         this._$searchInputIngredient.addEventListener('input', (e) => {
             e.preventDefault();
             let arrItemSelected = [];
-            if (e.target.value && this._arrRecipeByIng.length > 0) {
+            if (this._selectedRecipes >= 0) {
                 console.log('hello tableau non vide')
                 //Filter ingredients
                 const ingredients = new RecipesFactory(this._arrRecipeByIng, 'ingredients');
@@ -108,7 +112,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                         });
                     };
                 });
-            } else if (e.target.value && this._arrRecipeByIng.length === 0) {
+            } else if (e.target.value && this._selectedRecipes === 0) {
                 const ingredientsArrNull = new RecipesFactory(recipesData, 'ingredients');
                 // this._arrRecipeByIng = [];
                 ingredientsArrNull.getListIngredients.filter(n => {
@@ -142,21 +146,35 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
             e.preventDefault();
             this.dropdownShow();
             //Filter ingredients
-            if (this._arrRecipeByIng.length > 0) {
+            if (this._selectedRecipes.length > 0) {
                 console.log('Tableau de recette non vide')
-                const i = new RecipesFactory(this._arrRecipeByIng, 'ingredients', e.target.value);
-                console.log('this._arrRecipeByIng:', this._arrRecipeByIng);
-                [...new Set(i.getListIngredients)].map(i => {
-
-                    const templateIng = new ingredientsDropdown(i);
+                //Map recipes for export ingredients 
+                const i = new RecipesFactory(this._selectedRecipes, 'ingredients');
+                [...new Set(i.getListIngredients)].map((ingred) => {
+                    const templateIng = new ingredientsDropdown(ingred);
                     this._$dropdownList.appendChild(templateIng.ui());
-                });
-                this.listingSearchDropdown(this._arrRecipeByIng, 'ingredients');
-            } else if (this._arrRecipeByIng.length === 0) {
+                })
+                // this._selectedRecipes.map((recipes) => {
+                //     recipes.ingredients.map((ingred) => {
+                //         this._arrRecipeByIng.push(ingred.ingredient);
+                //     });
+
+                // });
+
+                // const i = new RecipesFactory(this._arrRecipeByIng, 'ingredients', e.target.value);
+                // // console.log('this._arrRecipeByIng:', this._arrRecipeByIng);
+                // [...new Set(i.getListIngredients)].map(i => {
+
+                //     const templateIng = new ingredientsDropdown(i);
+                //     this._$dropdownList.appendChild(templateIng.ui());
+                // });
+                this.listingSearchDropdown(this._selectedRecipes, 'ingredients');
+
+            } else if (!this._selectedRecipes.length) {
                 console.log('Tableau de recette vide')
                 const n = new RecipesFactory(recipesData, 'ingredients');
                 [...new Set(n.getListIngredients)].map(i => {
-                    console.log('i:', i)
+
 
                     const templateIng = new ingredientsDropdown(i);
                     this._$dropdownList.appendChild(templateIng.ui());
@@ -168,9 +186,10 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
         this._$arrowDown.addEventListener('click', (e) => {
             e.preventDefault();
             this.dropdownShow();
-            // console.log('recipesData:', recipesData)
-            // console.log('this._arrRecipeByIng:', this._arrRecipeByIng)
-            if (this._arrRecipeByIng.length === 0) {
+
+            console.log('this._selectedRecipe:', this._selectedRecipes)
+            if (this._selectedRecipes.length === 0) {
+
                 this._$mainDOM.style.marginTop = "-1176px"
                 const ingredients = new RecipesFactory(recipesData, 'ingredients');
                 ingredients.getListIngredients.map(i => {
@@ -178,16 +197,17 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                     this._$dropdownList.appendChild(templateIng.ui());
                 });
                 this.listingSearchDropdown(recipesData, 'ingredients');
-            } else if (this._arrRecipeByIng.length > 0) {
+            } else if (this._selectedRecipes.length > 0) {
+
                 this._$mainDOM.style.marginTop = "-300px"
-                const ingredients = new RecipesFactory(this._arrRecipeByIng, 'ingredients');
+                const ingredients = new RecipesFactory(this._selectedRecipes, 'ingredients');
 
                 ingredients.getListIngredients.map(i => {
                     // console.log('i:', i)
                     const templateIng = new ingredientsDropdown(i);
                     this._$dropdownList.appendChild(templateIng.ui());
                 });
-                this.listingSearchDropdown(this._arrRecipeByIng, 'ingredients');
+                this.listingSearchDropdown(this._selectedRecipes, 'ingredients');
             }
 
         })
@@ -236,14 +256,17 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
     };
     //listing search
     listingSearchDropdown(data, section) {
-
+        console.log('data:', data)
         this._$dropdownList.childNodes.forEach(i => {
+
             i.addEventListener('click', (e) => {
+
                 e.preventDefault();
                 this._$mainDOM.innerHTML = null;
                 console.log('this._$mainDOM.innerHTML:', this._$mainDOM.innerHTML)
                 // console.log('e.target:', e.target.innerText)
                 const filterIngredientsDropdown = new RecipesFactory(data, section, e.target.innerText)
+
                 filterIngredientsDropdown.filter.map(i => {
                     data.filter(recipe => {
                         let arr = [];
