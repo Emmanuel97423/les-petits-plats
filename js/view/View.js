@@ -1,8 +1,13 @@
 export class RecipeCard {
-    constructor(recipes) {
+    constructor(recipes, tags) {
 
         this._recipes = recipes
+        this._tags = tags
     };
+    set tags(tags) {
+        this.tags = tags;
+    }
+    get tags() { return this._tags }
     set getRecipes(recipes) {
         this._recipes = recipes;
     };
@@ -18,7 +23,6 @@ export class RecipeCard {
         $wrapper.classList.add('card');
         let ingredientTemplate = "";
         let ingredients = this._recipes.ingredients;
-
         //View of array ingredients
         ingredients.map(i => {
             if (i.unit) {
@@ -91,6 +95,7 @@ export class ingredientsDropdown {
 
 export class Tags {
     constructor(tag) {
+
 
         this._tag = tag;
     }

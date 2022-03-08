@@ -434,8 +434,13 @@ ul li span {
   flex-wrap: wrap;
 }
 
+.tags__section {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .tag {
-  width: 107px;
+  width: 150px;
   height: 37px;
   background-color: #3282f7;
   display: flex;

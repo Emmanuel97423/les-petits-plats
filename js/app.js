@@ -27,7 +27,7 @@ class App {
         //Input Button
         this._$searchInputIngredient = document.getElementById('input__ingredient');
         //Tags
-        this._$tagDOM = document.querySelector('.tags');
+        this._$tagDOM = document.querySelector('.tags__section');
         this._tagsSelected = [];
         //btn green
         this._btnAppliance = document.querySelector('.filter__btn--green');
@@ -86,12 +86,6 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
             }
         });
 
-        // Tags section
-        // this._$searchInputIngredient.addEventListener('input', (e) => {
-        //     e.preventDefault();
-        //     this._$dropdownList.innerHTML = `<li>${e.target.value}</li>`;
-        //     this._$mainDOM.style.marginTop = "50px";
-        // })
         //Filter Ingredients button
         this._$searchInputIngredient.addEventListener('input', (e) => {
 
@@ -102,6 +96,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                 console.log('hello tableau non vide')
                 //Filter ingredients
                 const ingredients = new RecipesFactory(this._selectedRecipes, 'ingredients');
+
                 // this._arrRecipeByIng = [];
                 ingredients.getListIngredients.filter(n => {
 
@@ -116,7 +111,6 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                         });
                     };
                 });
-                console.log('this._selectedRecipes:', this._selectedRecipes)
                 this.listingSearchDropdown(this._selectedRecipes, 'ingredients');
             } else if (e.target.value && this._selectedRecipes.length === 0) {
                 console.log('hello tableau vide')
@@ -154,7 +148,9 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
             e.preventDefault();
             this.dropdownShow();
             //Filter ingredients
+
             if (this._selectedRecipes.length > 0) {
+                this._selectedRecipes = []
                 console.log('Tableau de recette non vide')
                 //Map recipes for export ingredients 
                 const i = new RecipesFactory(this._selectedRecipes, 'ingredients');
@@ -162,6 +158,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                     const templateIng = new ingredientsDropdown(ingred);
                     this._$dropdownList.appendChild(templateIng.ui());
                 })
+
                 this.listingSearchDropdown(this._selectedRecipes, 'ingredients');
 
             } else if (this._selectedRecipes.length === 0) {
@@ -173,6 +170,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                     const templateIng = new ingredientsDropdown(i);
                     this._$dropdownList.appendChild(templateIng.ui());
                 });
+
                 this.listingSearchDropdown(recipesData, 'ingredients');
             };
         });
@@ -250,33 +248,91 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
     };
     //listing search
     listingSearchDropdown(data, section) {
-        console.log('section:', section)
 
         this._$dropdownList.childNodes.forEach(i => {
 
             i.addEventListener('click', (e) => {
-                console.log('e:', e)
-
                 e.preventDefault();
                 this._$mainDOM.innerHTML = null;
-                console.log('this._$mainDOM.innerHTML:', this._$mainDOM.innerHTML)// console.log('e.target:', e.target.innerText)
-                const filterIngredientsDropdown = new RecipesFactory(data, section, e.target.innerText)
 
-                filterIngredientsDropdown.filter.map(i => {
-                    data.filter(recipe => {
-                        let arr = [];
-                        if (recipe.id === i) {
-                            arr.push(recipe);
-                            arr.map(n => {
-                                const templateIngredientsResult = new RecipeCard(n);
-                                this._$mainDOM.appendChild(templateIngredientsResult.ui());
+                // console.log('this._tagsSelected:', [...new Set(this._tagsSelected)])
+                let tagTemp = e.target.innerText;
+                if (this._tagsSelected.length === 0) {
+
+                    console.log('this._selectedRecipes:', [...new Set(this._selectedRecipes)])
+                    this._tagsSelected.push(tagTemp);
+                    const tagsTemplate = new Tags(this._tagsSelected);
+                    this._$tagDOM.appendChild(tagsTemplate.getUi)
+
+
+                    if (this._selectedRecipes.length === 0) {
+                        // const allRecipes = new RecipesFactory(this._recipesApi, 'ingredients', tagTemp)
+
+
+                        const filterIngredientsDropdown = new RecipesFactory(data, section, tagTemp)
+                        filterIngredientsDropdown.filter.map(i => {
+                            data.filter(recipe => {
+                                if (recipe.id === i) {
+                                    this._selectedRecipes.push(recipe);
+                                    this._$mainDOM.innerHTML = null;
+                                    [...new Set(this._selectedRecipes)].map(n => {
+                                        const templateIngredientsResult = new RecipeCard(n);
+                                        this._$mainDOM.appendChild(templateIngredientsResult.ui());
+                                    });
+                                };
                             });
-                        };
+                        });
+
+                    }
+                } else if (this._tagsSelected.length > 0) {
+
+                    this._tagsSelected.filter(el => {
+                        if (el === tagTemp) {
+                            return;
+                        } else {
+                            this._tagsSelected.push(tagTemp);
+                            this._$tagDOM.innerHTML = "";
+                            [...new Set(this._tagsSelected)].map(tag => {
+                                const tagsTemplate = new Tags(tag);
+                                this._$tagDOM.appendChild(tagsTemplate.getUi)
+                            });
+                        }
                     });
-                })
-            })
-        })
+                    // const allRecipes = new RecipesFactory(this._recipesApi, 'ingredients', tagTemp)
+
+
+                    const filterIngredientsDropdown = new RecipesFactory(this._selectedRecipes, section, tagTemp)
+                    filterIngredientsDropdown.filter.map(i => {
+                        this._selectedRecipes.filter(recipe => {
+
+                            if (recipe.id === i) {
+                                [...new Set(this._selectedRecipes)].push(recipe);
+                                console.log('this._selectedRecipes:', [...new Set(this._selectedRecipes)]);
+                                this._$mainDOM.innerHTML = null;
+                                [...new Set(this._selectedRecipes)].map(n => {
+
+                                    const templateIngredientsResult = new RecipeCard(n);
+                                    this._$mainDOM.appendChild(templateIngredientsResult.ui());
+                                });
+                            } else {
+                                return
+                            };
+                        });
+                    });
+                }
+
+
+
+                // console.log('this._$mainDOM.innerHTML:', this._$mainDOM.innerHTML)// console.log('e.target:', e.target.innerText)
+
+            });
+        });
     };
+    searchByTags() {
+        const tags = new Tags(this._tagsSelected);
+
+
+    }
     async recipesData() {
         const recipesData = await this._recipesApi.get();
         return recipesData;

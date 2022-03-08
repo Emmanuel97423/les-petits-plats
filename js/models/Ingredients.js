@@ -5,8 +5,6 @@ export class Ingredients {
         this._arr = [];
         this._arrId = [];
     }
-
-
     set data(data) {
         this._data = data;
     }
@@ -80,8 +78,7 @@ export class Ingredients {
             const recipeId = e.id;
             return e.ingredients.filter(i => {
                 if (i.ingredient.toLowerCase() === this._request.toLowerCase()) {
-                    console.log('this._request:', this._request)
-                    console.log('recipeId:', recipeId)
+
                     this._arrId.push(recipeId);
 
                     return this._arrId;
