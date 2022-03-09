@@ -68,6 +68,7 @@ export class RecipeCard {
 export class ingredientsDropdown {
     constructor(ingredients) {
 
+
         this._ingredients = ingredients;
     }
     set getIngredient(ingredients) {
