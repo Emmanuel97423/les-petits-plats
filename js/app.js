@@ -32,23 +32,25 @@ class App {
         //btn green
         this._btnAppliance = document.querySelector('.filter__btn--green');
         // console.log('this._btnAppliance:', this._btnAppliance.childNodes[1].childNodes[3]);
-        //Toggle
-        this._$dropdownToggle = false;
+
 
         //Arrays datas
         // this._arrRecipeByIng = [];
         this._selectedRecipes = [];
         this._selectedIngredients = [];
+        //Close button
+        this._closeTag = document.querySelectorAll('.far')
+
 
 
     };
     //Getters
-    get getDropdownShow() {
-        return this.dropDownShow();
-    };
-    get getRecipesData() {
-        return this.recipesData();
-    };
+    // get getDropdownShow() {
+    //     return this.dropDownShow();
+    // };
+    // get getRecipesData() {
+    //     return this.recipesData();
+    // };
     async main() {
         //Call api
         const recipesData = await this._recipesApi.get();
@@ -67,7 +69,16 @@ class App {
             e.preventDefault();
             // this._arrRecipeByIng = [];
             this._selectedRecipes = [];
+
             if (e.target.value.length > 2) {
+                this.dropdownHide()
+                this._$tagDOM.innerHTML = '';
+                this._tagsSelected = [];
+
+                if (this._selectedRecipes.length > 0) {
+                    console.log('this._selectedRecipes:', this._selectedRecipes)
+
+                }
 
                 this._$mainDOM.innerHTML = '';
                 const recipesInputData = await this._recipesApi.get();
@@ -102,6 +113,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
             e.preventDefault();
             this.dropdownShow();
             //Filter ingredients
+
             this.dropdownToggleMethod()
 
         });
@@ -160,9 +172,9 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
             this._$searchInput.placeholder = 'Recherche un ingrédient';
         });
     };
-    //methods
+    //********************************************   methods    **************************************************
 
-    //DropDown show
+    //DropDown show*****************************************************************************************
     dropdownShow() {
         this._$dropdownList.innerHTML = '';
         this._$dropdown.style.display = 'flex';
@@ -176,7 +188,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
         // this._$mainDOM.style.marginTop = "-300px"
 
     };
-    //dropdown hide button
+    //dropdown hide button**********************************************************************************
     dropdownHide() {
         this._$dropdownList.innerHTML = '';
         this._$dropdown.style.display = 'none';
@@ -189,11 +201,11 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
         this._$mainDOM.style.marginTop = "50px";
     };
 
-    //listing search method in dropdown
+    //listing search method in dropdown*********************************************************************
 
     listingSearchDropdown(data, section) {
 
-        //Listen tag
+        //Listen tag****************************************************************************************
 
         this._$dropdownList.childNodes.forEach(i => {
 
@@ -202,20 +214,19 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                 e.preventDefault();
                 this._$mainDOM.innerHTML = null;
 
-                // console.log('this._tagsSelected:', [...new Set(this._tagsSelected)])
+
                 let tagTemp = e.target.innerText;
 
-                //Check if tags empty
+                //Check if tags empty*********************************************************************
 
                 if (this._tagsSelected.length === 0) {
                     this._tagsSelected.push(tagTemp);
                     const tagsTemplate = new Tags(this._tagsSelected);
                     this._$tagDOM.appendChild(tagsTemplate.getUi)
 
-
                     if (this._selectedRecipes.length === 0) {
 
-                        // const allRecipes = new RecipesFactory(this._recipesApi, 'ingredients', tagTemp)
+
                         const filterIngredientsDropdown = new RecipesFactory(data, section, tagTemp)
                         filterIngredientsDropdown.filter.map(i => {
                             data.filter(recipe => {
@@ -232,15 +243,33 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                         });
 
                         this.dropdownToggleMethod()
-                        // this.dropdownInputMethod(tagTemp)
+
 
                     } else if (this._selectedRecipes.length > 0) {
 
-                        [...new Set(this._selectedRecipes)].map(n => {
-                            const templateIngredientsResult = new RecipeCard(n);
-                            this._$mainDOM.appendChild(templateIngredientsResult.ui());
+                        const filterIngredientByTag = new RecipesFactory(this._selectedRecipes, section, tagTemp);
+
+                        filterIngredientByTag.filter.map(id => {
+                            this._selectedRecipes.filter(recipe => {
+                                if (recipe.id === id) {
+
+                                    this._selectedRecipes = [];
+                                    this._selectedRecipes.push(recipe);
+                                    this._$mainDOM.innerHTML = '';
+                                    this.dropdownToggleMethod();
+                                    [...new Set(this._selectedRecipes)].map(n => {
+
+                                        const templateIngredientsResult = new RecipeCard(n);
+                                        this._$mainDOM.appendChild(templateIngredientsResult.ui());
+                                    });
+                                } else {
+                                    return
+                                };
+                            });
+
                         });
-                        this.dropdownToggleMethod()
+
+
                     }
                 } else if (this._tagsSelected.length > 0) {
                     console.log('this._selectedRecipes:', this._selectedRecipes.length)
@@ -256,28 +285,30 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                             });
                         }
                     });
-                    // this.dropdownToggleMethod()
-                    // const allRecipes = new RecipesFactory(this._recipesApi, 'ingredients', tagTemp)
-                    // this.dropdownInputMethod(tagTemp)
 
+                    //Recipes Card ui******************************************************************************
                     const filterIngredientsDropdown = new RecipesFactory(this._selectedRecipes, section, tagTemp)
-                    // filterIngredientsDropdown.filter.map(i => {
-                    //     this._selectedRecipes.filter(recipe => {
+                    filterIngredientsDropdown.filter.map(i => {
+                        this._selectedRecipes.filter(recipe => {
 
-                    //         if (recipe.id === i) {
-                    //             [...new Set(this._selectedRecipes)].push(recipe);
+                            if (recipe.id === i) {
 
-                    //             this._$mainDOM.innerHTML = null;
-                    //             [...new Set(this._selectedRecipes)].map(n => {
+                                this._selectedRecipes = [];
 
-                    //                 const templateIngredientsResult = new RecipeCard(n);
-                    //                 this._$mainDOM.appendChild(templateIngredientsResult.ui());
-                    //             });
-                    //         } else {
-                    //             return
-                    //         };
-                    //     });
-                    // });
+                                this._selectedRecipes.push(recipe);
+
+                                this._$mainDOM.innerHTML = null;
+                                this.dropdownToggleMethod();
+                                [...new Set(this._selectedRecipes)].map(n => {
+
+                                    const templateIngredientsResult = new RecipeCard(n);
+                                    this._$mainDOM.appendChild(templateIngredientsResult.ui());
+                                });
+                            } else {
+                                return
+                            };
+                        });
+                    });
                 }
 
 
@@ -288,19 +319,14 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
         });
     };
     async dropdownToggleMethod() {
-        console.log('this._selectedRecipes:', this._selectedRecipes)
-        if (this._selectedRecipes.length > 0) {
 
+        if (this._selectedRecipes.length > 0) {
             // this._selectedRecipes = []
             console.log('Tableau de recette non vide')
             //Map recipes for export ingredients 
             const i = new RecipesFactory(this._selectedRecipes, 'ingredients');
             this._$dropdownList.innerHTML = '';
-
             [...new Set(i.getListIngredients)].map((ingred) => {
-
-
-
                 // this._$dropdownList
                 const templateIng = new ingredientsDropdown(ingred);
                 this._$dropdownList.appendChild(templateIng.ui());
@@ -322,7 +348,8 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
 
             this.listingSearchDropdown(allRecipesData, 'ingredients');
         };
-    }
+    };
+
     async dropdownInputMethod(e) {
         let arrItemSelected = [];
         if (this._selectedRecipes.length > 0) {
@@ -333,9 +360,10 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
 
             // this._arrRecipeByIng = [];
             ingredients.getListIngredients.filter(n => {
-                console.log('n:', n)
+
 
                 if (n.toLowerCase().indexOf(e.toLowerCase()) !== -1) {
+                    console.log('e:', e)
 
                     arrItemSelected.push(n);
                     this._$dropdownList.innerHTML = '';
@@ -345,6 +373,9 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                         const templateIng = new ingredientsDropdown(item);
                         this._$dropdownList.appendChild(templateIng.ui());
                     });
+                } else {
+                    return
+
                 };
             });
             this.listingSearchDropdown(this._selectedRecipes, 'ingredients');
@@ -363,43 +394,30 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                         const templateIng = new ingredientsDropdown(item);
                         this._$dropdownList.appendChild(templateIng.ui());
                     });
+                    this.listingSearchDropdown(allRecipesData, 'ingredients');
+                } else {
+
+                    return
                 };
-                this.listingSearchDropdown(allRecipesData, 'ingredients');
+
             });
         }
         else if (!e) {
             // this.dropdownShow();
             console.log('liste vide')
-            // this._$dropdownList.innerHTML = '';
+            this._$dropdownList.innerHTML = '';
             const recipesData = await this._recipesApi.get();
             this._selectedRecipes = recipesData;
 
             const n = new RecipesFactory(this._selectedRecipes, 'ingredients');
             [...new Set(n.getListIngredients)].map(i => {
-
-
                 const templateIng = new ingredientsDropdown(i);
                 this._$dropdownList.appendChild(templateIng.ui());
             });
 
-
-            // this.listingSearchDropdown(this._selectedRecipes, 'ingredients');
-
-
-            // //Filter ingredients
-            // const ingredients = new RecipesFactory([...new Set(arrItemSelected)], 'ingredients');
-            // // console.log('this._arrRecipeByIng:', this._arrRecipeByIng)
-            // ingredients.getListIngredients.map(i => {
-            //     const templateIng = new ingredientsDropdown(i);
-            //     this._$dropdownList.appendChild(templateIng.ui());
-            // })
         };
     }
-    // searchByTags() {
-    //     const tags = new Tags(this._tagsSelected);
 
-
-    // }
     async recipesData() {
         const recipesData = await this._recipesApi.get();
         return recipesData;
