@@ -51,15 +51,16 @@ export class RecipesFactory {
 
 
     };
-    filterRecipeByDescription() {
-        const recipe = new Recipe(this._data, this._request);
-        return recipe.getFilterRecipesByDescription;
-    }
+    // filterRecipeByDescription() {
+    //     const recipe = new Recipe(this._data, this._request);
+    //     return recipe.getFilterRecipesByDescription;
+    // }
     //Filter Ingredients method
     filterIngredients() {
         //Call ingredients Classe
         const ingredient = new Ingredients(this._data, this._request);
         ingredient.getFilter;
+
         ingredient.getArrayId;
         // console.log('ingredient:', ingredient.getArrayId)
         // console.log('resultIngredients.getArrayId:', resultIngredients.getArrayId)
