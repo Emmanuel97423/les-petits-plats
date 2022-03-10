@@ -1,6 +1,7 @@
 export class Appliances {
-    contructor(data, request) {
+    constructor(data, request) {
         this._data = data;
+
         this._request = request;
     }
     set data(data) {
@@ -14,5 +15,20 @@ export class Appliances {
     }
     get request() {
         return this._request
+    }
+
+    get appliances() {
+        return this.aplliancesMethod()
+    }
+
+    //*******************Methods */
+
+    aplliancesMethod() {
+        console.log('Appliances method')
+
+        return this._data.map(recipe => {
+            // console.log('appliance:', recipe.appliance);
+            return recipe.appliance
+        })
     }
 }
