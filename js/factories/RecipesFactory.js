@@ -20,16 +20,17 @@ export class RecipesFactory {
     set input(input) { this._input = input };
     get input() { return this._input };
 
-    //Getter Data filter (factory)
+    //**************************Getter Data filter 
+
     get filter() {
 
         if (this._input === 'global' && this._request) {
             return this.filterRecipe();
         }
 
-        else if (this._input === 'RecipesByDescription') {
-            return this.filterRecipeByDescription();
-        }
+        // else if (this._input === 'RecipesByDescription') {
+        //     return this.filterRecipeByDescription();
+        // }
 
         else if (this._input === 'ingredients' && this._request) {
             return this.filterIngredients();
@@ -37,11 +38,17 @@ export class RecipesFactory {
             return this.filterAppliances();
         }
     };
-    //Getter listing ingredients
-    get getListIngredients() {
-        return this.listIngredients();
+
+    //****************************************Getter listing ingredients
+
+    get tagsList() {
+        if (this._input === 'ingredients') {
+            return this.tagListIngredients();
+        }
     };
-    //Filter Recipes Method
+
+    //*****************************************Filter Recipes Method
+
     filterRecipe() {
         //Call Recipe Classe
         const recipe = new Recipe(this._data, this._request);
@@ -55,19 +62,18 @@ export class RecipesFactory {
     //     const recipe = new Recipe(this._data, this._request);
     //     return recipe.getFilterRecipesByDescription;
     // }
-    //Filter Ingredients method
+    //***************************************Filter Ingredients method
     filterIngredients() {
         //Call ingredients Classe
         const ingredient = new Ingredients(this._data, this._request);
         ingredient.getFilter;
-
-        ingredient.getArrayId;
-        // console.log('ingredient:', ingredient.getArrayId)
-        // console.log('resultIngredients.getArrayId:', resultIngredients.getArrayId)
+        // ingredient.getArrayId;
         return ingredient.getArrayId
     };
-    //listing all ingrédients method
-    listIngredients() {
+
+    //***************************************listing all ingrédients method
+
+    tagListIngredients() {
         const listIngredient = new Ingredients(this._data, this._request);
         return listIngredient.getIngredients;
     }
