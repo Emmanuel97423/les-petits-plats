@@ -11,7 +11,7 @@ class App {
     constructor() {
         //Ui
 
-        //*******************************DOM elements
+        //*******************************DOM elements*************
 
         this._$mainDOM = document.getElementById('main');
         this._$searchInput = document.querySelector('.search__input');
@@ -24,15 +24,15 @@ class App {
         this._$filterBtnBlue = document.querySelector('.filter__btn--blue button:nth-child(1)');
         this._$recipeCard = document.querySelectorAll('.card');
 
-        //**********************************Data
+        //**********************************Data******************
 
         this._recipesApi = new RecipeApi(data);
 
-        //*********************************Input Button
+        //*********************************Input Button***********
 
         this._$searchInputIngredient = document.getElementById('input__ingredient');
 
-        //*******************************Tags
+        //*******************************Tags*******************
 
         this._$tagDOM = document.querySelector('.tags__section');
         this._tagsSelected = [];
@@ -43,7 +43,7 @@ class App {
         // console.log('this._btnAppliance:', this._btnAppliance.childNodes[1].childNodes[3]);
 
 
-        //**********************************Arrays datas
+        //**********************************Arrays datas***********************
 
         // this._arrRecipeByIng = [];
         this._selectedRecipes = [];
