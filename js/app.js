@@ -1,5 +1,5 @@
 //Classes
-import { RecipeCard, ingredientsDropdown, Tags } from './view/View.js'
+import { RecipeCard, ingredientsDropdown, AppliancesDropdown, Tags } from './view/View.js'
 import { RecipeApi } from "./api/Api.js"
 import { RecipesFactory } from "./factories/RecipesFactory.js"
 
@@ -18,10 +18,17 @@ class App {
         this._$searchInputGlobal = document.getElementById('search__global');
         this._$arrowDown = document.querySelector('.fa-chevron-down');
         this._$arrowUp = document.querySelector('.fa-chevron-up');
+        this._$arrowDownAppliances = document.querySelector('.fa-chevron-down--appliances');
+        this._$arrowUpAppliances = document.querySelector('.fa-chevron-up--appliances');
         this._$dropdown = document.querySelector('.dropdown');
+        this._$dropdownAppliances = document.querySelector('.dropdown__appliances');
         this._$dropdownList = document.querySelector('.dropdown__tag--links');
-        this._$filterSection = document.querySelector('.filter__btn--blue');
+
+        this._$dropdownListAppliances = document.querySelector('.dropdown__tag--links--appliances');
+        this._$filterSectionIngredients = document.querySelector('.filter__btn--blue');
         this._$filterBtnBlue = document.querySelector('.filter__btn--blue button:nth-child(1)');
+        this._$filterSectionAppliances = document.querySelector('.filter__btn--green');
+        this._$filterBtnGreen = document.querySelector('.filter__btn--green button:nth-child(1)');
         this._$recipeCard = document.querySelectorAll('.card');
 
         //**********************************Data******************
@@ -31,6 +38,7 @@ class App {
         //*********************************Input Button***********
 
         this._$searchInputIngredient = document.getElementById('input__ingredient');
+        this._$searchInputAppliances = document.getElementById('input__appliances');
 
         //*******************************Tags*******************
 
@@ -72,7 +80,7 @@ class App {
             this._$mainDOM.appendChild(template.ui());
         });
 
-        //Filter Recipes global search input******************************************
+        //********************************Filter Recipes global search input******************************************
 
         this._$searchInput.addEventListener('input', async (e) => {
             e.preventDefault();
@@ -117,60 +125,114 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
 
             }
         });
-        //Click into filter section ingredients****************************************
+
+        //******************************* Click into filter section ****************************************
+
+        //************************ ingredients */
+
         this._$searchInputIngredient.addEventListener('click', (e) => {
             e.preventDefault();
-            this.dropdownShow();
+            this.dropdownShow('ingredients');
             //Filter ingredients
 
-            this.dropdownToggleMethod()
+            this.dropdownToggleMethod('ingredients')
 
         });
-
-        //*****************************Filter Ingredients button Listen Input****************************************
-
         this._$searchInputIngredient.addEventListener('input', (e) => {
             e.preventDefault();
-            this.dropdownInputMethod(e.target.value);
+            this.dropdownInputMethod(e.target.value, 'ingredients');
 
         });
+
+        //********************Appliances */
+
+        this._$searchInputAppliances.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.dropdownShow('appliances');
+            //Filter ingredients
+
+            this.dropdownToggleMethod('appliances')
+
+        });
+        this._$searchInputAppliances.addEventListener('input', (e) => {
+            e.preventDefault();
+            this.dropdownInputMethod(e.target.value, 'appliances');
+
+        });
+        //***************************** Filter Ingredients button Listen Input ****************************************
+
+
         // const $chevronDown = this._$filterBtnBlue.childNodes[3];
 
         //***********************************show dropdown with arrow buttons*****************
 
         this._$arrowDown.addEventListener('click', (e) => {
             e.preventDefault();
-            this.dropdownShow();
+            this.dropdownShow('ingredients');
+            this.dropdownToggleMethod()
+            // if (this._selectedRecipes.length === 0) {
 
+            //     this._$mainDOM.style.marginTop = "-1176px"
+            //     const ingredients = new RecipesFactory(recipesData, 'ingredients');
+            //     ingredients.tagsList.map(i => {
+            //         const templateIng = new ingredientsDropdown(i);
+            //         this._$dropdownList.appendChild(templateIng.ui());
+            //     });
+            //     this.listingSearchDropdown(recipesData, 'ingredients');
+            // } else if (this._selectedRecipes.length > 0) {
 
+            //     this._$mainDOM.style.marginTop = "-300px"
+            //     const ingredients = new RecipesFactory(this._selectedRecipes, 'ingredients');
+
+            //     ingredients.tagsList.map(i => {
+            //         // console.log('i:', i)
+            //         const templateIng = new ingredientsDropdown(i);
+            //         this._$dropdownList.appendChild(templateIng.ui());
+            //     });
+            //     this.listingSearchDropdown(this._selectedRecipes, 'ingredients');
+            // }
+
+        });
+        this._$arrowDownAppliances.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.dropdownShow('appliances');
             if (this._selectedRecipes.length === 0) {
+                // this._$mainDOM.style.marginTop = "-1176px";
+                const appliances = new RecipesFactory(recipesData, 'appliances');
 
-                this._$mainDOM.style.marginTop = "-1176px"
-                const ingredients = new RecipesFactory(recipesData, 'ingredients');
-                ingredients.tagsList.map(i => {
-                    const templateIng = new ingredientsDropdown(i);
-                    this._$dropdownList.appendChild(templateIng.ui());
+
+                [...new Set(appliances.tagsList)].map(i => {
+
+                    const templateAppliance = new AppliancesDropdown(i);
+                    this._$dropdownListAppliances.appendChild(templateAppliance.ui());
                 });
-                this.listingSearchDropdown(recipesData, 'ingredients');
+                this.listingSearchDropdown(recipesData, 'appliances');
             } else if (this._selectedRecipes.length > 0) {
 
                 this._$mainDOM.style.marginTop = "-300px"
-                const ingredients = new RecipesFactory(this._selectedRecipes, 'ingredients');
+                const appliances = new RecipesFactory(this._selectedRecipes, 'appliances');
 
-                ingredients.tagsList.map(i => {
+                [...new Set(appliances.tagsList)].map(i => {
                     // console.log('i:', i)
-                    const templateIng = new ingredientsDropdown(i);
-                    this._$dropdownList.appendChild(templateIng.ui());
+                    const templateIng = new AppliancesDropdown(i);
+                    this._$dropdownListAppliances.appendChild(templateIng.ui());
                 });
-                this.listingSearchDropdown(this._selectedRecipes, 'ingredients');
+                // this.listingSearchDropdown(this._selectedRecipes, 'appliances');
             }
 
-        })
-        //********************Click arrow up to close filter section**************
+        });
+
+        //********************Click arrow up to close filter section*************************
 
         this._$arrowUp.addEventListener('click', (e) => {
             e.preventDefault();
-            this.dropdownHide();
+            this.dropdownHide('ingredients');
+        });
+
+        this._$arrowUpAppliances.addEventListener('click', (e) => {
+
+            e.preventDefault();
+            this.dropdownHide('appliances');
         });
 
         //*********************************CSS varations***********************************
@@ -188,30 +250,59 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
     //********************************************   methods    **************************************************
 
     //*************************DropDown show*****************************************************************************************
-    dropdownShow() {
-        this._$dropdownList.innerHTML = '';
-        this._$dropdown.style.display = 'flex';
-        this._$filterSection.style.width = '40%';
-        this._$filterBtnBlue.style.width = '100%'
-        this._$filterBtnBlue.style.justifyContent = 'space-between';
-        this._$arrowDown.style.display = 'none';
-        this._$arrowUp.style.display = 'flex';
-        this._$searchInput.placeholder = 'Recherche un ingrédient';
-        this._$searchInput.style.opacity = '50%'
-        // this._$mainDOM.style.marginTop = "-300px"
+    dropdownShow(section) {
+        if (section === 'ingredients') {
+            this._$dropdownList.innerHTML = '';
+            this._$dropdown.style.display = 'flex';
+            this._$filterSectionIngredients.style.width = '40%';
+            this._$filterBtnBlue.style.width = '100%'
+            this._$filterBtnBlue.style.justifyContent = 'space-between';
+            this._$arrowDown.style.display = 'none';
+            this._$arrowUp.style.display = 'flex';
+            // this._$searchInput.placeholder = 'Recherche un ingrédient';
+            // this._$searchInput.style.opacity = '50%'
+            // this._$mainDOM.style.marginTop = "-300px"
+        } else if (section === 'appliances') {
+            console.log('show appliances section');
+            this._$dropdownListAppliances.innerHTML = '';
+            this._$dropdownAppliances.style.display = 'flex';
+            this._$filterSectionAppliances.style.width = '40%';
+            this._$filterBtnGreen.style.width = '100%'
+            this._$filterBtnGreen.style.justifyContent = 'space-between';
+            this._$arrowDownAppliances.style.display = 'none';
+            this._$arrowUpAppliances.style.display = 'flex';
+        }
+
 
     };
-    //************************dropdown hide button**********************************************************************************
-    dropdownHide() {
-        this._$dropdownList.innerHTML = '';
-        this._$dropdown.style.display = 'none';
-        this._$arrowDown.style.display = 'flex';
-        this._$arrowUp.style.display = 'none'
-        this._$filterSection.style.width = '12%';
-        this._$searchInput.placeholder = 'Ingrédient';
-        this._$searchInputGlobal.placeholder = 'Recherche un ingrédient';
-        this._$searchInput.style.opacity = '100%';
-        this._$mainDOM.style.marginTop = "50px";
+
+    //************************* dropdown hide button**********************************************************************************
+
+    dropdownHide(section) {
+
+        if (section === 'ingredients') {
+            this._$dropdownList.innerHTML = '';
+            this._$dropdown.style.display = 'none';
+            this._$arrowDown.style.display = 'flex';
+            this._$arrowUp.style.display = 'none';
+            this._$filterSectionIngredients.style.width = '12%';
+            // this._$searchInput.placeholder = 'Ingrédient';
+            // this._$searchInputGlobal.placeholder = 'Recherche un ingrédient';
+            // this._$searchInput.style.opacity = '100%';
+            this._$mainDOM.style.marginTop = "50px";
+        } else if (section === 'appliances') {
+            this._$dropdownListAppliances.innerHTML = '';
+            this._$dropdownAppliances.style.display = 'none';
+            this._$arrowDownAppliances.style.display = 'flex';
+            this._$arrowUpAppliances.style.display = 'none';
+            this._$filterSectionAppliances.style.width = '12%';
+            // this._$searchInput.placeholder = 'Ingrédient';
+            // this._$searchInputGlobal.placeholder = 'Recherche un ingrédient';
+            // this._$searchInput.style.opacity = '100%';
+            this._$mainDOM.style.marginTop = "50px";
+        }
+
+
     };
 
     //******************listing search method in dropdown*********************************************************************
@@ -255,7 +346,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                             });
                         });
 
-                        this.dropdownToggleMethod()
+                        this.dropdownToggleMethod(section)
 
 
                     } else if (this._selectedRecipes.length > 0) {
@@ -269,7 +360,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                                     this._selectedRecipes = [];
                                     this._selectedRecipes.push(recipe);
                                     this._$mainDOM.innerHTML = '';
-                                    this.dropdownToggleMethod();
+                                    this.dropdownToggleMethod(section);
                                     [...new Set(this._selectedRecipes)].map(n => {
 
                                         const templateIngredientsResult = new RecipeCard(n);
@@ -285,7 +376,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
 
                     }
                 } else if (this._tagsSelected.length > 0) {
-                    console.log('this._selectedRecipes:', this._selectedRecipes.length)
+
                     this._tagsSelected.filter(el => {
                         if (el === tagTemp) {
                             return;
@@ -311,7 +402,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                                 this._selectedRecipes.push(recipe);
 
                                 this._$mainDOM.innerHTML = null;
-                                this.dropdownToggleMethod();
+                                this.dropdownToggleMethod(section);
                                 [...new Set(this._selectedRecipes)].map(n => {
 
                                     const templateIngredientsResult = new RecipeCard(n);
@@ -334,73 +425,90 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
 
     //********************Dropdown toggle method *********************************/
 
-    async dropdownToggleMethod() {
+    async dropdownToggleMethod(section) {
+        console.log('section:', section)
 
         if (this._selectedRecipes.length > 0) {
             // this._selectedRecipes = []
             console.log('Tableau de recette non vide')
             //Map recipes for export ingredients 
-            const i = new RecipesFactory(this._selectedRecipes, 'ingredients');
+            const i = new RecipesFactory(this._selectedRecipes, section);
             this._$dropdownList.innerHTML = '';
             [...new Set(i.tagsList)].map((ingred) => {
                 // this._$dropdownList
-                const templateIng = new ingredientsDropdown(ingred);
-                this._$dropdownList.appendChild(templateIng.ui());
+                if (section === 'ingredients') {
+                    const templateIng = new ingredientsDropdown(ingred);
+                    this._$dropdownList.appendChild(templateIng.ui());
+                }
+
+
             });
 
 
-            this.listingSearchDropdown(this._selectedRecipes, 'ingredients');
+            this.listingSearchDropdown(this._selectedRecipes, section);
 
         } else if (this._selectedRecipes.length === 0) {
             console.log('Tableau de recette vide');
             const allRecipesData = await this._recipesApi.get()
-            const n = new RecipesFactory(allRecipesData, 'ingredients');
+            const n = new RecipesFactory(allRecipesData, section);
             [...new Set(n.tagsList)].map(i => {
 
+                if (section === 'ingredients') {
+                    const templateIng = new ingredientsDropdown(i);
+                    this._$dropdownList.appendChild(templateIng.ui());
+                }
 
-                const templateIng = new ingredientsDropdown(i);
-                this._$dropdownList.appendChild(templateIng.ui());
             });
 
-            this.listingSearchDropdown(allRecipesData, 'ingredients');
+            this.listingSearchDropdown(allRecipesData, section);
         };
     };
+    async dropdownToggleMethodAppliances() {
+
+    }
 
     //*************************Dropdown input method *********************************/
 
-    async dropdownInputMethod(e) {
+    async dropdownInputMethod(e, section) {
+        console.log('section:', section)
         let arrItemSelected = [];
         if (this._selectedRecipes.length > 0) {
 
             console.log('hello tableau non vide')
             //*********************Filter ingredients********************************
-            const ingredients = new RecipesFactory(this._selectedRecipes, 'ingredients');
+            const ingredients = new RecipesFactory(this._selectedRecipes, section);
 
             // this._arrRecipeByIng = [];
             ingredients.tagsList.filter(n => {
 
 
                 if (n.toLowerCase().indexOf(e.toLowerCase()) !== -1) {
-                    console.log('e:', e)
+
 
                     arrItemSelected.push(n);
                     this._$dropdownList.innerHTML = '';
                     this._$mainDOM.style.marginTop = "50px";
                     [...new Set(arrItemSelected)].map(item => {
 
-                        const templateIng = new ingredientsDropdown(item);
-                        this._$dropdownList.appendChild(templateIng.ui());
+                        if (section === 'ingredients') {
+                            const templateIng = new ingredientsDropdown(item);
+                            this._$dropdownList.appendChild(templateIng.ui());
+                        }
+                        else if (section === 'appliances') {
+                            const templateAppliance = new AppliancesDropdown(item);
+                            this._$dropdownListAppliances.appendChild(templateAppliance.ui());
+                        }
                     });
                 } else {
                     return
 
                 };
             });
-            this.listingSearchDropdown(this._selectedRecipes, 'ingredients');
+            this.listingSearchDropdown(this._selectedRecipes, section);
         } else if (e && this._selectedRecipes.length === 0) {
             console.log('hello tableau vide')
             const allRecipesData = await this._recipesApi.get()
-            const ingredientsArrNull = new RecipesFactory(allRecipesData, 'ingredients');
+            const ingredientsArrNull = new RecipesFactory(allRecipesData, section);
             // this._arrRecipeByIng = [];
             ingredientsArrNull.tagsList.filter(n => {
                 if (n.toLowerCase().indexOf(e.toLowerCase()) !== -1) {
@@ -409,10 +517,16 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                     this._$mainDOM.style.marginTop = "50px";
                     [...new Set(arrItemSelected)].map(item => {
 
-                        const templateIng = new ingredientsDropdown(item);
-                        this._$dropdownList.appendChild(templateIng.ui());
+                        if (section === 'ingredients') {
+                            const templateIng = new ingredientsDropdown(item);
+                            this._$dropdownList.appendChild(templateIng.ui());
+                        }
+                        else if (section === 'appliances') {
+                            const templateAppliance = new AppliancesDropdown(item);
+                            this._$dropdownListAppliances.appendChild(templateAppliance.ui());
+                        }
                     });
-                    this.listingSearchDropdown(allRecipesData, 'ingredients');
+                    this.listingSearchDropdown(allRecipesData, section);
                 } else {
 
                     return

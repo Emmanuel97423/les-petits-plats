@@ -5,8 +5,6 @@ import { Appliances } from '../models/Appliances.js';
 
 export class RecipesFactory {
     constructor(data, input, request) {
-
-
         this._data = data;
         this._request = request;
         this._input = input;
@@ -27,14 +25,13 @@ export class RecipesFactory {
         if (this._input === 'global' && this._request) {
             return this.filterRecipe();
         }
-
         // else if (this._input === 'RecipesByDescription') {
         //     return this.filterRecipeByDescription();
         // }
-
         else if (this._input === 'ingredients' && this._request) {
             return this.filterIngredients();
         } else if (this._input === 'appliances') {
+            return
             return this.filterAppliances();
         }
     };
@@ -44,6 +41,8 @@ export class RecipesFactory {
     get tagsList() {
         if (this._input === 'ingredients') {
             return this.tagListIngredients();
+        } else if (this._input === 'appliances') {
+            return this.tagListAppliances();
         }
     };
 
@@ -58,11 +57,10 @@ export class RecipesFactory {
 
 
     };
-    // filterRecipeByDescription() {
-    //     const recipe = new Recipe(this._data, this._request);
-    //     return recipe.getFilterRecipesByDescription;
-    // }
+
+
     //***************************************Filter Ingredients method
+
     filterIngredients() {
         //Call ingredients Classe
         const ingredient = new Ingredients(this._data, this._request);
@@ -78,5 +76,10 @@ export class RecipesFactory {
         return listIngredient.getIngredients;
     }
     //Filter by aplliance
+    tagListAppliances() {
+        const listAppliance = new Appliances(this._data);
+        return listAppliance.appliances
+
+    }
 
 };

@@ -92,6 +92,35 @@ export class ingredientsDropdown {
         $dropdown.innerHTML = dropdownTemplate;
         return $dropdown;
     }
+};
+export class AppliancesDropdown {
+    constructor(appliances) {
+
+
+
+        this._appliances = appliances;
+    }
+    set getAppliances(appliances) {
+        this._appliances = appliances;
+    }
+    get getAppliances() {
+        return this._appliances
+    }
+    get getUi() {
+        return this.ui()
+    }
+
+    ui() {
+        const $dropdown = document.createElement('li');
+        // $dropdown.classList.add('dropdown__tag--links');
+
+        const dropdownTemplate = `       
+                            ${this._appliances}                   
+        `;
+
+        $dropdown.innerHTML = dropdownTemplate;
+        return $dropdown;
+    }
 }
 
 export class Tags {

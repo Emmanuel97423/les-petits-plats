@@ -1,4 +1,4 @@
-.dropdown {
+.dropdown, .dropdown__appliances {
   // position: absolute;
   z-index: 100;
   // width: 100%;
@@ -8,7 +8,7 @@
   flex-wrap: wrap;
   justify-content:flex-start;
   align-items: center;
-  background-color: #3282f7;
+  // background-color: #3282f7;
   border-radius: 5px;
   padding: 0 19px 23px 19px;
   &__input {
@@ -42,58 +42,8 @@
       // justify-self: space-between;
       // background-color: red;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
     }
-    &--links {
+    &--links, &--links--appliances {
       display: flex;
       justify-content:flex-start;
       align-items: center;
