@@ -5,8 +5,6 @@ export class Ingredients {
         this._arr = [];
         this._arrId = [];
     }
-
-
     set data(data) {
         this._data = data;
     }
@@ -29,39 +27,56 @@ export class Ingredients {
     get getFilter() {
         return this.filter();
     }
-    get getFilterList() {
-        return this.filterList();
-    }
+    // get getFilterList() {
+    //     return this.filterList();
+    // }
     get getArrayId() {
         return this._arrId;
     }
     //List ingredients method
     ingredients() {
 
-        // console.log(this._data.length)
-        if (this._request) {
-            console.log('this._request:', this._request)
+        this._data.map(n => {
+            const ingredients = n.ingredients;
+            ingredients.map(i => {
 
-        } else {
-            this._data.map(n => {
-                const ingredients = n.ingredients;
+                const ingredient = i.ingredient;
 
-
-                ingredients.map(i => {
-
-                    const ingredient = i.ingredient;
-
-                    if (this._arr.indexOf(ingredient.toLowerCase()) >= 1) {
-                        return false;
-                    } else {
-                        this._arr.push(ingredient.toLowerCase());
-                    }
-
-                })
+                if (this._arr.indexOf(ingredient.toLowerCase()) >= 1) {
+                    return false;
+                } else {
+                    this._arr.push(ingredient.toLowerCase());
+                }
 
             })
-            return this._arr;
-        }
+
+        })
+        return this._arr;
+
+        // // console.log(this._data.length)
+        // if (this._request) {
+        //     console.log('this._request:', this._request)
+
+        // } else {
+        //     this._data.map(n => {
+        //         const ingredients = n.ingredients;
+
+
+        //         ingredients.map(i => {
+
+        //             const ingredient = i.ingredient;
+
+        //             if (this._arr.indexOf(ingredient.toLowerCase()) >= 1) {
+        //                 return false;
+        //             } else {
+        //                 this._arr.push(ingredient.toLowerCase());
+        //             }
+
+        //         })
+
+        //     })
+        //     return this._arr;
+        // }
     }
     // Filter
     filter() {
@@ -79,8 +94,7 @@ export class Ingredients {
             const recipeId = e.id;
             return e.ingredients.filter(i => {
                 if (i.ingredient.toLowerCase() === this._request.toLowerCase()) {
-                    console.log('this._request:', this._request)
-                    console.log('recipeId:', recipeId)
+
                     this._arrId.push(recipeId);
                     return this._arrId;
                 };
@@ -88,8 +102,8 @@ export class Ingredients {
         });
     };
 
-    filterList() {
-        console.log('this._arr:', this._arr)
-    }
+    // filterList() {
+    //     console.log('this._arr:', this._arr)
+    // }
 
 }

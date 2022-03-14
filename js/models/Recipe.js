@@ -10,8 +10,7 @@ export class Recipe {
         this._appliance = data.appliance;
         this._ustensils = data.ustensils;
         this._request = request;
-        this._arr = [];
-        this._arrId = [];
+
 
     }
     get ingredient() {
@@ -33,7 +32,7 @@ export class Recipe {
         this._data = data;
     }
     get getFilterRecipes() {
-        return this.filterRecipeMethodByTitle();
+        return this.filter();
     }
     get getFilterRecipesByDescription() {
         return this.filterRecipeMethodByDescription()
@@ -42,56 +41,68 @@ export class Recipe {
     set request(request) {
         this._request = request;
     }
-
     get request() {
         return this._request;
     }
 
+
+
     // Methods
     // Filter By title
-    filterRecipeMethodByTitle() {
+    filter() {
 
-        const result = this._data.filter(el => {
-            const recipeId = el.id;
-            // return el.name.toLowerCase() === this._request.toLowerCase();
-            return el.name.toLowerCase().indexOf(this._request.toLowerCase()) !== -1;
 
-            // if (el.name.toLowerCase() === this._request.toLowerCase()) {
-            //     this._arrId.push(recipeId);
-            //     console.log('recipeId:', recipeId)
-            //     console.log('this._arrId:', this._arrId)
-            //     return this._arrId;
+
+        return this._data.filter((el) => {
+
+
+            if (el.name.toLowerCase().indexOf(this._request.toLowerCase()) !== -1 || el.description.toLowerCase().indexOf(this._request.toLowerCase()) !== -1) {
+
+                return el
+            }
+            // else if (el.description.toLowerCase().indexOf(this._request.toLowerCase()) !== -1) {
+            //     arr.push(el)
+
             // }
+
+
+
 
             // if (el.name) {
-            //     // return el.name.toLowerCase() === this._request.toLowerCase()
-            //     // return el.name.toLowerCase().indexOf(this._request.toLowerCase()) !== -1;
-
-            //     if (el.name.toLowerCase() == this._request.toLowerCase()) {
-            //         this._arrId.push(recipeId);
-            //         console.log('recipeId:', recipeId)
-            //         console.log('this._arrId:', this._arrId)
-            //         return this._arrId;
-            //     }
+            //     return el.name.toLowerCase().indexOf(this._request.toLowerCase()) !== -1;
+            // } else if (el.description) {
+            //     console.log('el.description:', el.description)
+            //     return el.description.toLowerCase().indexOf(this._request.toLowerCase()) !== -1
             // }
 
-
-        });
-
-        return result;
-
-    }
-
-    // Filter by description
-    filterRecipeMethodByDescription() {
-        return this._data.filter(el => {
-            if (el.description) {
-
-                // return el.description.toLowerCase() === this._request.toLowerCase()
-
-                return el.description.toLowerCase().indexOf(this._request.toLowerCase()) !== -1;
-            }
         })
 
+
+        // let arr = [];
+
+        // return this._data.map(recipe => {
+        //     // console.log('recipe:', recipe)
+
+        //     return recipe.filter((el) => {
+        //         return el.toLowerCase().indexOf(this_request.toLowerCase()) !== -1
+        //     })
+
+        // if (recipe.name.toLowerCase().indexOf(this._request.toLowerCase()) !== -1) {
+        //     this._array.push(recipe);
+        // } else if (recipe.description.toLowerCase().indexOf(this._request.toLowerCase()) !== -1) {
+        //     this._array.push(recipe);
+        // }
+        // console.log('arr:', [...new Set(arr)])
+        // console.log('this._array:', this._array)
+        // return this._array;
+
+
+
+
+
+
+
     }
+
+
 }

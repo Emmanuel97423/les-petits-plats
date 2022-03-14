@@ -30,13 +30,14 @@
     </header>
     <!-- search bar -->
     <div class="search">
-        <input id="search__global" class="search__input" type="text" name="search"
-            placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette">
+        <input id="search__global" class="search__input" type="text" name="search" placeholder="Rechercher une recette">
         <i class="fas fa-search"></i>
     </div>
     <!-- tag selected -->
-    <div class="tags">
-        <!-- <p>Coco</p><i class="far fa-times-circle"></i> -->
+    <div class="tags__section">
+        <!-- <div class="tag">
+            <p>Coco</p><i class="far fa-times-circle"></i>
+        </div> -->
     </div>
     <!-- Nav filter -->
     <section class="filter">
@@ -62,16 +63,17 @@
         <div class="filter__btn filter__btn--green">
             <button id="filter__appliances--btn" class="filter__btn--green">
                 <input id="input__appliances" type=text placeholder="Appareil">
-                <i class="fas fa-chevron-down"></i><i class="fas fa-chevron-up"></i>
+                <i class="fas fa-chevron-down fa-chevron-down--appliances"></i><i
+                    class="fas fa-chevron-up  fa-chevron-up--appliances"></i>
             </button>
             <!-- Filter modal -->
-            <div class="dropdown">
+            <div class="dropdown__appliances">
                 <!-- <div class="dropdown__input"><input type="text" placeholder="Recherche un ingrédient"><i
                                 class="fas fa-chevron-up"></i>
                         </div> -->
                 <div class="dropdown__tag">
                     <div class="dropdown__tag--col-1">
-                        <ul class="dropdown__tag--links">
+                        <ul class="dropdown__tag--links--appliances">
 
                         </ul>
                     </div>
