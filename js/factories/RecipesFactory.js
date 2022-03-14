@@ -31,7 +31,7 @@ export class RecipesFactory {
         else if (this._input === 'ingredients' && this._request) {
             return this.filterIngredients();
         } else if (this._input === 'appliances') {
-            return
+
             return this.filterAppliances();
         }
     };
@@ -59,15 +59,21 @@ export class RecipesFactory {
     };
 
 
-    //***************************************Filter Ingredients method
+    //***************************************Filter method
 
     filterIngredients() {
         //Call ingredients Classe
         const ingredient = new Ingredients(this._data, this._request);
         ingredient.getFilter;
         // ingredient.getArrayId;
-        return ingredient.getArrayId
+        return ingredient.getArrayId;
     };
+    filterAppliances() {
+
+        const appliances = new Appliances(this._data, this._request);
+        appliances.getFilter;
+        return appliances.getArrayId;
+    }
 
     //***************************************listing all ingrédients method
 

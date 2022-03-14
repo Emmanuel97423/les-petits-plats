@@ -88,7 +88,8 @@ class App {
             this._selectedRecipes = [];
 
             if (e.target.value.length > 2) {
-                this.dropdownHide()
+                this.dropdownHide('ingredients');
+                this.dropdownHide('appliances');
                 this._$tagDOM.innerHTML = '';
                 this._tagsSelected = [];
 
@@ -133,6 +134,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
         this._$searchInputIngredient.addEventListener('click', (e) => {
             e.preventDefault();
             this.dropdownShow('ingredients');
+            this.dropdownHide('appliances');
             //Filter ingredients
 
             this.dropdownToggleMethod('ingredients')
@@ -140,6 +142,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
         });
         this._$searchInputIngredient.addEventListener('input', (e) => {
             e.preventDefault();
+            this.dropdownHide('appliances');
             this.dropdownInputMethod(e.target.value, 'ingredients');
 
         });
@@ -149,6 +152,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
         this._$searchInputAppliances.addEventListener('click', (e) => {
             e.preventDefault();
             this.dropdownShow('appliances');
+            this.dropdownHide('ingredients');
             //Filter ingredients
 
             this.dropdownToggleMethod('appliances')
@@ -169,7 +173,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
         this._$arrowDown.addEventListener('click', (e) => {
             e.preventDefault();
             this.dropdownShow('ingredients');
-            this.dropdownToggleMethod()
+            this.dropdownToggleMethod('ingredients')
             // if (this._selectedRecipes.length === 0) {
 
             //     this._$mainDOM.style.marginTop = "-1176px"
@@ -217,7 +221,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                     const templateIng = new AppliancesDropdown(i);
                     this._$dropdownListAppliances.appendChild(templateIng.ui());
                 });
-                // this.listingSearchDropdown(this._selectedRecipes, 'appliances');
+                this.listingSearchDropdown(this._selectedRecipes, 'appliances');
             }
 
         });
@@ -309,9 +313,15 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
 
     listingSearchDropdown(data, section) {
 
+        let dropdown = "";
+        if (section === 'ingredients') {
+            dropdown = this._$dropdownList;
+        } else if (section === 'appliances') {
+            dropdown = this._$dropdownListAppliances;
+        }
         //*******************Listener tag****************************************************************************************
 
-        this._$dropdownList.childNodes.forEach(i => {
+        dropdown.childNodes.forEach(i => {
 
             i.addEventListener('click', (e) => {
 
@@ -332,9 +342,15 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
 
 
                         const filterIngredientsDropdown = new RecipesFactory(data, section, tagTemp)
+
+
                         filterIngredientsDropdown.filter.map(i => {
+
                             data.filter(recipe => {
+
+
                                 if (recipe.id === i) {
+
                                     this._selectedRecipes.push(recipe);
                                     this._$mainDOM.innerHTML = null;
                                     [...new Set(this._selectedRecipes)].map(n => {
@@ -355,6 +371,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
 
                         filterIngredientByTag.filter.map(id => {
                             this._selectedRecipes.filter(recipe => {
+                                console.log('recipe:', recipe)
                                 if (recipe.id === id) {
 
                                     this._selectedRecipes = [];
@@ -426,7 +443,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
     //********************Dropdown toggle method *********************************/
 
     async dropdownToggleMethod(section) {
-        console.log('section:', section)
+
 
         if (this._selectedRecipes.length > 0) {
             // this._selectedRecipes = []
@@ -434,11 +451,15 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
             //Map recipes for export ingredients 
             const i = new RecipesFactory(this._selectedRecipes, section);
             this._$dropdownList.innerHTML = '';
+            this._$dropdownListAppliances.innerHTML = '';
             [...new Set(i.tagsList)].map((ingred) => {
                 // this._$dropdownList
                 if (section === 'ingredients') {
                     const templateIng = new ingredientsDropdown(ingred);
                     this._$dropdownList.appendChild(templateIng.ui());
+                } else if (section === 'appliances') {
+                    const templateAppliance = new AppliancesDropdown(ingred);
+                    this._$dropdownListAppliances.appendChild(templateAppliance.ui());
                 }
 
 
@@ -456,16 +477,18 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                 if (section === 'ingredients') {
                     const templateIng = new ingredientsDropdown(i);
                     this._$dropdownList.appendChild(templateIng.ui());
+                } else if (section === 'appliances') {
+                    const templateAppliance = new AppliancesDropdown(i);
+                    this._$dropdownListAppliances.appendChild(templateAppliance.ui());
                 }
+
 
             });
 
             this.listingSearchDropdown(allRecipesData, section);
         };
     };
-    async dropdownToggleMethodAppliances() {
 
-    }
 
     //*************************Dropdown input method *********************************/
 
@@ -487,6 +510,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
 
                     arrItemSelected.push(n);
                     this._$dropdownList.innerHTML = '';
+                    this._$dropdownListAppliances.innerHTML = '';
                     this._$mainDOM.style.marginTop = "50px";
                     [...new Set(arrItemSelected)].map(item => {
 
@@ -514,6 +538,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                 if (n.toLowerCase().indexOf(e.toLowerCase()) !== -1) {
                     arrItemSelected.push(n);
                     this._$dropdownList.innerHTML = '';
+                    this._$dropdownListAppliances.innerHTML = '';
                     this._$mainDOM.style.marginTop = "50px";
                     [...new Set(arrItemSelected)].map(item => {
 

@@ -93,6 +93,7 @@ export class ingredientsDropdown {
         return $dropdown;
     }
 };
+
 export class AppliancesDropdown {
     constructor(appliances) {
 
@@ -122,9 +123,10 @@ export class AppliancesDropdown {
         return $dropdown;
     }
 }
-
 export class Tags {
     constructor(tag) {
+
+
 
 
         this._tag = tag;
@@ -143,7 +145,7 @@ export class Tags {
         $tagWrapper.classList.add('tag');
 
         const tagTemplate = `
-                <p>${this._tag}</p><i class="far fa-times-circle"></i>
+                <p>${this._tag}</p><i class="far fa-times-circle "></i>
         `;
         $tagWrapper.innerHTML = tagTemplate;
 
