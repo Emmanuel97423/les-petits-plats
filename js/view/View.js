@@ -1,8 +1,10 @@
 export class RecipeCard {
     constructor(recipes, tags) {
 
+
         this._recipes = recipes
         this._tags = tags
+
     };
     set tags(tags) {
         this.tags = tags;
@@ -129,6 +131,7 @@ export class Tags {
 
 
 
+
         this._tag = tag;
     }
     set getTag(tag) {
@@ -139,16 +142,38 @@ export class Tags {
     get getUi() {
         return this.ui()
     }
+    get getCloseTag() {
+        return this.closeTag()
+    }
 
     ui() {
         const $tagWrapper = document.createElement('div');
         $tagWrapper.classList.add('tag');
 
         const tagTemplate = `
-                <p>${this._tag}</p><i class="far fa-times-circle "></i>
+                <p id="${this._tag}">${this._tag}</p><i class="far fa-times-circle"></i>
         `;
         $tagWrapper.innerHTML = tagTemplate;
+        // this.closeTag($tagWrapper)
 
         return $tagWrapper;
+    }
+
+    async closeTag(tagWrapper) {
+
+        if (tagWrapper) {
+            const closeIcon = tagWrapper.childNodes[2];
+            const request = tagWrapper.childNodes[1].innerText
+            closeIcon.style.cursor = 'pointer';
+            closeIcon.addEventListener('click', (e) => {
+                console.log('close icon clicked')
+                // tagWrapper.style.display = 'none';
+                tagWrapper.remove()
+                console.log('this._tags:', this._tags)
+            })
+        }
+
+
+
     }
 }

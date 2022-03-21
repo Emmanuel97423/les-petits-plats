@@ -57,6 +57,12 @@ class App {
         this._selectedRecipes = [];
         this._selectedIngredients = [];
 
+        //******************** Tags */
+        // this._$iconClosedTagDOM.addEventListener('click', (e) => {
+        //     this.closeTag(e)
+        // })
+
+
 
 
 
@@ -250,9 +256,133 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
             this._$searchInput.style.opacity = '50%'
             this._$searchInput.placeholder = 'Recherche un ingrédient';
         });
+        // this._$tagsCloseIcon = null;
+        // this.closeTag();
+
     };
     //********************************************   methods    **************************************************
+    //**************Close Tags**** */
+    async closeTag() {
+        setTimeout(() => {
+            this._$tagsCloseIcon = document.querySelectorAll('.fa-times-circle');
+            if (this._$tagsCloseIcon.length > 0) {
+                this._$tagsCloseIcon.forEach((closeTag) => {
+                    closeTag.addEventListener('click', (e) => {
 
+                        textElementIngredient(closeTag);
+                        // const $textDOM = document.querySelectorAll('.tag>p')
+                        // $textDOM.forEach((textElement) => {
+                        //     console.log('textElement:', textElement)
+
+
+
+                        // })
+                    });
+
+
+                })
+            };
+        }, 1000);
+        const textElementIngredient = async (el) => {
+            const recipesData = await this._recipesApi.get();
+
+            el.parentNode.remove();
+            const result = this._tagsSelected.filter(tag =>
+                tag.toLowerCase() !== el.previousSibling.innerText.toLowerCase()
+                // console.log('tag:', tag.length)
+
+            );
+
+            // console.log('result:', [...new Set(result)]);
+            this._tagsSelected = [...new Set(result)];
+
+            this._tagsSelected.map(tag => {
+                console.log('tag:', tag);
+                const recipes = new RecipesFactory(recipesData, 'global', tag);
+                console.log('recipes.getFilterByTag:', recipes.filter)
+                if (recipes.getFilterByTag) {
+
+                    recipes.getFilterByTag.map(recipe => {
+                        console.log('recipe:', recipe)
+
+                    })
+                }
+
+            })
+
+
+
+            // el.forEach((tag) => {
+            //     console.log('tag:', tag.previousSibling)
+
+            // })
+
+        }
+
+
+        // // console.log('Tags', [...new Set(this._tagsSelected)])
+        // this._$tagsCloseIcon = document.querySelectorAll('.fa-times-circle');
+        // this._$textTag = document.querySelectorAll('.tag > p')
+        // console.log('this._$textTag:', this._$textTag);
+
+        // // console.log('this._$tagsCloseIcon:', this._$tagsCloseIcon);
+        // this._$tagsCloseIcon.forEach((icon) => {
+
+
+        //     icon.addEventListener('click', (e) => {
+        //         let tagsSelected;
+        //         // console.log('e:', e.target);
+        //         // console.log('index:', index);
+        //         this._$textTag.forEach(text => {
+
+        //             // console.log('this._tagsSelected.indexOf(text.innerText):', [...new Set(this._tagsSelected)].indexOf(text.innerText))
+        //             // console.log('text:', text.innerText);
+        //             tagsSelected = [...new Set(this._tagsSelected)].filter(item => {
+
+        //                 return item.toLowerCase() !== text.innerText.toLowerCase()
+        //                 // console.log('item.indexOf(text.innerText) === 1:', item.indexOf(text.innerText) === -1)
+        //                 // return item.indexOf(text.innerText) === 1;
+
+
+
+
+
+        //             });
+
+        //         });
+
+        //         this._tagsSelected = tagsSelected
+        //         console.log('tagsSelected:', tagsSelected)
+
+        //     });
+
+
+        // })
+        // if (this._$tagsCloseIcon.length > 1) {
+
+        //     this._$tagsCloseIcon.NodeList.map(icon => {
+        //         console.log('icon:', icon)
+        //         icon.addEventListener('click', (e) => {
+        //             console.log('click', e.target.value)
+        //         })
+
+        //     })
+        // } if (this._$tagsCloseIcon.length < 1) {
+        //     this._$tagsCloseIcon.addEventListener('click', (e) => {
+        //         console.log('click', e.target.value)
+        //     })
+        // }
+        // console.log('Tags', [...new Set(this._tagsSelected)]);
+
+        // console.log('this._tagsSelected:', this._tagsSelected)
+        // const closeTagClass = new Tags();
+        // closeTagClass.getCloseTag
+        // console.log('closeTagClass.getCloseTag:', closeTagClass.getCloseTag)
+        // if (closeTagClass.getCloseTag) {
+
+        //     console.log('close tag app')
+        // }
+    };
     //*************************DropDown show*****************************************************************************************
     dropdownShow(section) {
         if (section === 'ingredients') {
@@ -309,6 +439,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
 
     };
 
+
     //******************listing search method in dropdown*********************************************************************
 
     listingSearchDropdown(data, section) {
@@ -336,6 +467,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                 if (this._tagsSelected.length === 0) {
                     this._tagsSelected.push(tagTemp);
                     const tagsTemplate = new Tags(this._tagsSelected);
+                    this.closeTag();
                     this._$tagDOM.appendChild(tagsTemplate.getUi)
 
                     if (this._selectedRecipes.length === 0) {
@@ -402,7 +534,8 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                             this._$tagDOM.innerHTML = "";
                             [...new Set(this._tagsSelected)].map(tag => {
                                 const tagsTemplate = new Tags(tag);
-                                this._$tagDOM.appendChild(tagsTemplate.getUi)
+                                this._$tagDOM.appendChild(tagsTemplate.getUi);
+                                this.closeTag();
                             });
                         }
                     });
@@ -497,7 +630,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
         let arrItemSelected = [];
         if (this._selectedRecipes.length > 0) {
 
-            console.log('hello tableau non vide')
+            console.log('hello tableau non vide');
             //*********************Filter ingredients********************************
             const ingredients = new RecipesFactory(this._selectedRecipes, section);
 

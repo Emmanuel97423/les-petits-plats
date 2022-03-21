@@ -33,6 +33,9 @@ export class Recipe {
     }
     get getFilterRecipes() {
         return this.filter();
+    };
+    get getFilterByTag() {
+        return this.filterByTag();
     }
     get getFilterRecipesByDescription() {
         return this.filterRecipeMethodByDescription()
@@ -60,48 +63,22 @@ export class Recipe {
 
                 return el
             }
-            // else if (el.description.toLowerCase().indexOf(this._request.toLowerCase()) !== -1) {
-            //     arr.push(el)
 
-            // }
-
-
-
-
-            // if (el.name) {
-            //     return el.name.toLowerCase().indexOf(this._request.toLowerCase()) !== -1;
-            // } else if (el.description) {
-            //     console.log('el.description:', el.description)
-            //     return el.description.toLowerCase().indexOf(this._request.toLowerCase()) !== -1
-            // }
 
         })
 
-
-        // let arr = [];
-
-        // return this._data.map(recipe => {
-        //     // console.log('recipe:', recipe)
-
-        //     return recipe.filter((el) => {
-        //         return el.toLowerCase().indexOf(this_request.toLowerCase()) !== -1
-        //     })
-
-        // if (recipe.name.toLowerCase().indexOf(this._request.toLowerCase()) !== -1) {
-        //     this._array.push(recipe);
-        // } else if (recipe.description.toLowerCase().indexOf(this._request.toLowerCase()) !== -1) {
-        //     this._array.push(recipe);
-        // }
-        // console.log('arr:', [...new Set(arr)])
-        // console.log('this._array:', this._array)
-        // return this._array;
+    };
+    filterByTag() {
+        return this._data.filter((el) => {
 
 
+            if (el.name.toLowerCase().indexOf(this._request.toLowerCase()) !== -1 || el.description.toLowerCase().indexOf(this._request.toLowerCase()) !== -1) {
+
+                return el
+            }
 
 
-
-
-
+        })
     }
 
 
