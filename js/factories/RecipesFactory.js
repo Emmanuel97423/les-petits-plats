@@ -5,6 +5,8 @@ import { Appliances } from '../models/Appliances.js';
 
 export class RecipesFactory {
     constructor(data, input, request) {
+        console.log('request:', request)
+
         this._data = data;
         this._request = request;
         this._input = input;
@@ -45,17 +47,13 @@ export class RecipesFactory {
             return this.tagListAppliances();
         }
     };
-
     //*****************************************Filter Recipes Method
 
     filterRecipe() {
         //Call Recipe Classe
         const recipe = new Recipe(this._data, this._request);
-
+        console.log('recipe:', recipe)
         return recipe.getFilterRecipes;
-
-
-
     };
 
 
