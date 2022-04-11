@@ -52,16 +52,39 @@ export class Recipe {
     // Methods
     // Filter By title
     filter() {
+        let recipeArr = [];
 
+        this._data.filter((el) => {
 
-        return this._data.filter((el) => {
 
             if (el.name.toLowerCase().indexOf(this._request.toLowerCase()) !== -1 || el.description.toLowerCase().indexOf(this._request.toLowerCase()) !== -1) {
-                return el
+                recipeArr.push(el);
+                // return el
+
+            }
+            else if (el.ingredients.length > 0) {
+
+
+                el.ingredients.filter(ingr => {
+
+
+                    if (ingr.ingredient.toLowerCase().indexOf(this._request.toLowerCase()) !== -1) {
+
+                        recipeArr.push(el)
+                        // return el
+
+                    }
+
+                })
             }
 
 
-        })
+
+
+        });
+
+        return recipeArr;
+
 
     }
     filterByTag() {
