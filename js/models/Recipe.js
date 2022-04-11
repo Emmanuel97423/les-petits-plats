@@ -1,5 +1,6 @@
 export class Recipe {
     constructor(data, request) {
+
         this._data = data;
         this._id = data.id;
         this._name = data.name;
@@ -10,8 +11,6 @@ export class Recipe {
         this._appliance = data.appliance;
         this._ustensils = data.ustensils;
         this._request = request;
-
-
     }
     get ingredient() {
         return this._ingredients.ingredient ? this._ingredients.engredient : null;
@@ -33,7 +32,7 @@ export class Recipe {
     }
     get getFilterRecipes() {
         return this.filter();
-    };
+    }
     get getFilterByTag() {
         return this.filterByTag();
     }
@@ -55,25 +54,21 @@ export class Recipe {
     filter() {
 
 
-
         return this._data.filter((el) => {
 
-
             if (el.name.toLowerCase().indexOf(this._request.toLowerCase()) !== -1 || el.description.toLowerCase().indexOf(this._request.toLowerCase()) !== -1) {
-
                 return el
             }
 
 
         })
 
-    };
+    }
     filterByTag() {
+        console.log('hello filter by tag')
         return this._data.filter((el) => {
-
-
+            console.log('el:', el)
             if (el.name.toLowerCase().indexOf(this._request.toLowerCase()) !== -1 || el.description.toLowerCase().indexOf(this._request.toLowerCase()) !== -1) {
-
                 return el
             }
 

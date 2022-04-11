@@ -5,20 +5,20 @@ export class RecipeCard {
         this._recipes = recipes
         this._tags = tags
 
-    };
+    }
     set tags(tags) {
         this.tags = tags;
     }
     get tags() { return this._tags }
     set getRecipes(recipes) {
         this._recipes = recipes;
-    };
+    }
     get getRecipes() {
         return this._recipes;
-    };
+    }
     get getUi() {
         return this.ui();
-    };
+    }
 
     ui() {
         const $wrapper = document.createElement('div');
@@ -33,7 +33,7 @@ export class RecipeCard {
                 ingredientTemplate += `<li><span>${i.ingredient}: </span>${i.quantity}</li>`;
             } else {
                 ingredientTemplate += `<li><span>${i.ingredient}</li>`;
-            };
+            }
 
         });
         //View recipe card
@@ -71,6 +71,7 @@ export class ingredientsDropdown {
     constructor(ingredients) {
 
 
+
         this._ingredients = ingredients;
     }
     set getIngredient(ingredients) {
@@ -94,7 +95,7 @@ export class ingredientsDropdown {
         $dropdown.innerHTML = dropdownTemplate;
         return $dropdown;
     }
-};
+}
 
 export class AppliancesDropdown {
     constructor(appliances) {
@@ -127,17 +128,12 @@ export class AppliancesDropdown {
 }
 export class Tags {
     constructor(tag) {
-
-
-
-
-
         this._tag = tag;
     }
     set getTag(tag) {
         this._tag = tag;
     }
-    get getTag() { return this._tag };
+    get getTag() { return this._tag }
 
     get getUi() {
         return this.ui()
@@ -163,9 +159,9 @@ export class Tags {
 
         if (tagWrapper) {
             const closeIcon = tagWrapper.childNodes[2];
-            const request = tagWrapper.childNodes[1].innerText
+            // const request = tagWrapper.childNodes[1].innerText
             closeIcon.style.cursor = 'pointer';
-            closeIcon.addEventListener('click', (e) => {
+            closeIcon.addEventListener('click', () => {
                 console.log('close icon clicked')
                 // tagWrapper.style.display = 'none';
                 tagWrapper.remove()

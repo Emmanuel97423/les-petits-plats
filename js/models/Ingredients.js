@@ -97,10 +97,10 @@ export class Ingredients {
 
                     this._arrId.push(recipeId);
                     return this._arrId;
-                };
+                }
             });
         });
-    };
+    }
 
     // filterList() {
     //     console.log('this._arr:', this._arr)

@@ -5,20 +5,20 @@ import { Appliances } from '../models/Appliances.js';
 
 export class RecipesFactory {
     constructor(data, input, request) {
-        console.log('request:', request)
+
 
         this._data = data;
         this._request = request;
         this._input = input;
     }
-    set data(data) { this._data = data };
-    get data() { return this._data };
+    set data(data) { this._data = data }
+    get data() { return this._data }
 
-    set request(request) { this._request = request };
-    get request() { return this._request };
+    set request(request) { this._request = request }
+    get request() { return this._request }
 
-    set input(input) { this._input = input };
-    get input() { return this._input };
+    set input(input) { this._input = input }
+    get input() { return this._input }
 
     //**************************Getter Data filter 
 
@@ -36,7 +36,13 @@ export class RecipesFactory {
 
             return this.filterAppliances();
         }
-    };
+    }
+    // get filterByTag() {
+
+    //     if (this._input === 'global' && this._request) {
+    //         return this.filterRecipe();
+    //     };
+    // };
 
     //****************************************Getter listing ingredients
 
@@ -46,15 +52,14 @@ export class RecipesFactory {
         } else if (this._input === 'appliances') {
             return this.tagListAppliances();
         }
-    };
+    }
     //*****************************************Filter Recipes Method
 
     filterRecipe() {
         //Call Recipe Classe
         const recipe = new Recipe(this._data, this._request);
-        console.log('recipe:', recipe)
         return recipe.getFilterRecipes;
-    };
+    }
 
 
     //***************************************Filter method
@@ -65,7 +70,7 @@ export class RecipesFactory {
         ingredient.getFilter;
         // ingredient.getArrayId;
         return ingredient.getArrayId;
-    };
+    }
     filterAppliances() {
 
         const appliances = new Appliances(this._data, this._request);
@@ -86,4 +91,4 @@ export class RecipesFactory {
 
     }
 
-};
+}

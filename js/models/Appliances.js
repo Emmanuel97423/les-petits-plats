@@ -12,12 +12,12 @@ export class Appliances {
         return this._data
     }
     set request(request) {
-        this.request = request; data;
+        this.request = request;
     }
     get request() {
         return this._request
     }
-    get arr() { return this._arr };
+    get arr() { return this._arr }
 
     get getArrayId() {
         return this._arrId;
@@ -40,7 +40,7 @@ export class Appliances {
 
             return recipe.appliance
         })
-    };
+    }
     filter() {
 
         return this._data.map(e => {
@@ -50,7 +50,7 @@ export class Appliances {
 
                 this._arrId.push(recipeId);
                 return this._arrId;
-            };
+            }
 
         });
     }
