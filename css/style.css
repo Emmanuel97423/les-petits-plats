@@ -454,8 +454,20 @@ ul li span {
   letter-spacing: 1px;
 }
 
-.tag__appliances {
+.tag-appliances {
   background-color: #68D9A4;
+  width: 150px;
+  height: 37px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px 10px;
+  border-radius: 5px;
+  color: #fff;
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1px;
 }
 
 .fa-times-circle {

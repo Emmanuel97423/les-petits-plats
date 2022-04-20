@@ -9,6 +9,7 @@ export class RecipesFactory {
 
 
 
+
         this._data = data;
         this._request = request;
         this._input = input;
@@ -34,10 +35,10 @@ export class RecipesFactory {
         // }
         else if (this._input === 'ingredients' && this._request) {
             return this.filterIngredients();
-        } else if (this._input === 'appliances') {
+        } else if (this._input === 'appliances' && this._request) {
 
             return this.filterAppliances();
-        }
+        } else { return null }
     }
     // get filterByTag() {
 
@@ -54,6 +55,7 @@ export class RecipesFactory {
         } else if (this._input === 'appliances') {
             return this.tagListAppliances();
         }
+        else { return null }
     }
     //*****************************************Filter Recipes Method
 

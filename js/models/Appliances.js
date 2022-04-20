@@ -1,5 +1,6 @@
 export class Appliances {
     constructor(data, request) {
+        console.log('request:', request)
         this._data = data;
         this._request = request;
         this._arr = [];
@@ -45,9 +46,10 @@ export class Appliances {
 
         return this._data.map(e => {
 
+
             const recipeId = e.id;
             if (e.appliance.toLowerCase() === this._request.toLowerCase()) {
-
+                console.log('e:', e)
                 this._arrId.push(recipeId);
                 return this._arrId;
             }

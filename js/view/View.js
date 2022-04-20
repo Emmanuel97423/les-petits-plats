@@ -128,8 +128,10 @@ export class AppliancesDropdown {
     }
 }
 export class Tags {
-    constructor(tag) {
+    constructor(tag, section) {
+        console.log('section:', section)
         this._tag = tag;
+        this._section = section;
     }
     set getTag(tag) {
         this._tag = tag;
@@ -139,22 +141,41 @@ export class Tags {
     get getUi() {
         return this.ui()
     }
+    get getUiAppliances() {
+        return this.uiAppliances()
+    }
     get getCloseTag() {
         return this.closeTag()
     }
 
     ui() {
         const $tagWrapper = document.createElement('div');
-        $tagWrapper.classList.add('tag');
+        if (this._section === "ingredients") {
+            $tagWrapper.classList.add('tag');
+        } else if (this._section === "appliances") {
+            $tagWrapper.classList.add('tag-appliances');
+        }
 
         const tagTemplate = `
                 <p id="${this._tag}">${this._tag}</p><i class="far fa-times-circle"></i>
         `;
-        $tagWrapper.innerHTML = tagTemplate;
+        $tagWrapper.innerHTML += tagTemplate;
         // this.closeTag($tagWrapper)
 
         return $tagWrapper;
     }
+    // uiAppliances() {
+    //     const $tagWrapperAppliances = document.createElement('div');
+    //     $tagWrapperAppliances.classList.add('tag-appliances');
+
+    //     const tagTemplateApliances = `
+    //             <p id="${this._tag}">${this._tag}</p><i class="far fa-times-circle"></i>
+    //     `;
+    //     $tagWrapperAppliances.innerHTML = tagTemplateApliances;
+    //     // this.closeTag($tagWrapper)
+
+    //     return $tagWrapperAppliances;
+    // }
 
     async closeTag(tagWrapper) {
 
