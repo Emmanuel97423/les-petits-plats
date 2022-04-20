@@ -1,5 +1,6 @@
 export class Ingredients {
     constructor(data, request) {
+        console.log('request:', request)
         this._data = data;
         this._request = request;
         this._arr = [];

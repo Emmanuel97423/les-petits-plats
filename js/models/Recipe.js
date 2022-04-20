@@ -1,5 +1,6 @@
 export class Recipe {
     constructor(data, request) {
+        
 
         this._data = data;
         this._id = data.id;
@@ -59,7 +60,7 @@ export class Recipe {
 
             if (el.name.toLowerCase().indexOf(this._request.toLowerCase()) !== -1 || el.description.toLowerCase().indexOf(this._request.toLowerCase()) !== -1) {
                 recipeArr.push(el);
-                // return el
+
 
             }
             else if (el.ingredients.length > 0) {
@@ -71,7 +72,7 @@ export class Recipe {
                     if (ingr.ingredient.toLowerCase().indexOf(this._request.toLowerCase()) !== -1) {
 
                         recipeArr.push(el)
-                        // return el
+
 
                     }
 

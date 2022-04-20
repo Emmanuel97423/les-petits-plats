@@ -271,42 +271,63 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
             }
         });
     }
-    async closeTag() {
-        const recipesData = await this._recipesApi.get();
-        setTimeout(() => {
+    closeTag() {
+        // const recipesData = await this._recipesApi.get();
+        this._$tagsCloseIcon = document.querySelectorAll('.fa-times-circle');
 
-            this._$tagsCloseIcon = document.querySelectorAll('.fa-times-circle');
-            if (this._tagsSelected.length > 0) {
-                this._$tagsCloseIcon.forEach((closeTag) => {
-                    closeTag.addEventListener('click', (e) => {
-                        textElementIngredient(closeTag);
-                        hideTagSelected(e);
-                    });
+
+        if (this._tagsSelected) {
+
+            this._$tagsCloseIcon.forEach((closeTag) => {
+                closeTag.addEventListener('click', (e) => {
+
+                    textElementIngredient(closeTag);
+                    hideTagSelected(e);
                 });
+            });
 
-            }
-            // else if (this._tagsSelected.length === 0) {
-            //     console.log('this._tagsSelected.length:', this._tagsSelected.length)
+        }
+        // else if (this._tagsSelected.length === 0) {
+        //     console.log('this._tagsSelected.length:', this._tagsSelected.length)
 
-            //     recipesData.map(recipe => {
-            //         new RecipesFactory(recipe, 'global');
-            //         const template = new RecipeCard(recipe);
-            //         template.ui();
-            //         this._$mainDOM.appendChild(template.ui());
-            //     });
-            // };
-        }, 1000);
-        const textElementIngredient = async (el) => {
-            if (this._tagsSelected.length === 0) {
+        //     recipesData.map(recipe => {
+        //         new RecipesFactory(recipe, 'global');
+        //         const template = new RecipeCard(recipe);
+        //         template.ui();
+        //         this._$mainDOM.appendChild(template.ui());
+        //     });
+        // };
+
+        const textElementIngredient = (el) => {
+            console.log('this._tagsSelected.length:', this._tagsSelected.length)
+            if (this._tagsSelected.length < 1) {
+
+                el.parentNode.remove();
+                this._tagsSelected = [];
+                console.log('No tags selected')
                 this._$mainDOM.innerHTML = "";
-                this._selectedRecipes = [];
-                recipesData.map(recipe => {
-                    this._selectedRecipes.push(recipe);
-                    new RecipesFactory(recipe, 'global', this._globalRequest);
-                    const template = new RecipeCard(recipe);
-                    template.ui();
-                    this._$mainDOM.appendChild(template.ui());
+                // this._selectedRecipes = [];
+                this.recipesData().then((recipe) => {
+                    recipe.map(recipe => {
+                        this._selectedRecipes.push(recipe);
+                        new RecipesFactory(recipe, 'global', this._globalRequest);
+                        const template = new RecipeCard(recipe);
+                        template.ui();
+                        this._$mainDOM.appendChild(template.ui());
+                    });
+
                 });
+                this.dropdownToggleMethod('ingredients');
+                this.dropdownHide('ingredients');
+
+
+                // this.recipesData().map(recipe => {
+                //     this._selectedRecipes.push(recipe);
+                //     new RecipesFactory(recipe, 'global', this._globalRequest);
+                //     const template = new RecipeCard(recipe);
+                //     template.ui();
+                //     this._$mainDOM.appendChild(template.ui());
+                // });
                 // this.searchGlobal();
                 // if (this._globalRequest.length > 3) {
                 //     console.log('this._globalReques:', this._globalRequest)
@@ -334,37 +355,48 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
 
                 // }
                 this.dropdownToggleMethod('ingredients');
-            } else {
+            } else if (this._tagsSelected.length >= 1) {
+                console.log('Tags selected remove');
+
                 el.parentNode.remove();
-                const result = this._tagsSelected.filter(tag =>
-                    tag.toLowerCase() !== el.previousSibling.innerText.toLowerCase()
-                    // console.log('tag:', tag.length)
-                );
+                const result = this._tagsSelected.filter(tag => {
+
+                    return tag.toLowerCase() !== el.previousSibling.innerText.toLowerCase()
+
+                });
+
 
 
                 this._tagsSelected = [...new Set(result)];
+                console.log('result:', [...new Set(result)])
+
 
                 this._tagsSelected.map(tag => {
 
+                    this.recipesData().then((result) => {
 
-                    const recipes = new RecipesFactory(recipesData, 'global', tag);
+                        const recipes = new RecipesFactory(result, 'global', tag);
 
 
-                    if (recipes.filter !== 'undefined') {
-                        this._$mainDOM.innerHTML = '';
+                        if (recipes.filter !== 'undefined') {
+                            this._$mainDOM.innerHTML = '';
 
-                        this._selectedRecipes = [];
+                            this._selectedRecipes = [];
 
-                        recipes.filter.map(recipe => {
-                            this._selectedRecipes.push(recipe);
-                            const template = new RecipeCard(recipe);
-                            template.ui();
-                            this._$mainDOM.appendChild(template.ui());
-                        });
-                        this.dropdownToggleMethod('ingredients')
-                    }
+                            recipes.filter.map(recipe => {
+                                this._selectedRecipes.push(recipe);
+                                const template = new RecipeCard(recipe);
+                                template.ui();
+                                this._$mainDOM.appendChild(template.ui());
+                            });
+                            this.dropdownToggleMethod('ingredients');
+                            this.dropdownHide('ingredients');
+                        }
+                    })
+
 
                 });
+
             }
 
 
@@ -374,9 +406,8 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
         };
         //****** hide selected tag */
         const hideTagSelected = (tag) => {
-            console.log('tag:', tag.target.previousSibling.innerText)
-
-            console.log('this._arrItemSelected:', this._arrItemSelected)
+            // console.log('tag:', tag.target.previousSibling.innerText)
+            // console.log('this._arrItemSelected:', this._arrItemSelected)
         }
 
 
@@ -517,22 +548,27 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
             i.addEventListener('click', (e) => {
 
                 e.preventDefault();
+
                 this._$mainDOM.innerHTML = null;
 
 
                 let tagTemp = e.target.innerText;
 
+
+
                 //**********Check if tags empty*********************************************************************
 
                 if (this._tagsSelected.length === 0) {
+
                     this._tagListArr.filter(tag => {
                         return tag !== tagTemp;
                     })
                     this._tagsSelected.push(tagTemp);
-                    console.log('tagTemp:', tagTemp)
+
                     const tagsTemplate = new Tags(this._tagsSelected);
-                    this.closeTag();
+
                     this._$tagDOM.appendChild(tagsTemplate.getUi);
+                    this.closeTag();
 
                     if (this._selectedRecipes.length === 0) {
 
@@ -558,7 +594,9 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                             });
                         });
 
-                        this.dropdownToggleMethod(section)
+                        this.dropdownToggleMethod(section, tagTemp);
+
+
 
 
                     } else if (this._selectedRecipes.length > 0) {
@@ -573,7 +611,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                                     this._selectedRecipes = [];
                                     this._selectedRecipes.push(recipe);
                                     this._$mainDOM.innerHTML = '';
-                                    this.dropdownToggleMethod(section);
+                                    this.dropdownToggleMethod(section, tagTemp);
                                     [...new Set(this._selectedRecipes)].map(n => {
 
                                         const templateIngredientsResult = new RecipeCard(n);
@@ -588,6 +626,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
 
 
                     }
+
                 } else if (this._tagsSelected.length > 0) {
 
                     this._tagsSelected.filter(el => {
@@ -616,7 +655,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                                 this._selectedRecipes.push(recipe);
 
                                 this._$mainDOM.innerHTML = null;
-                                this.dropdownToggleMethod(section);
+                                this.dropdownToggleMethod(section, tagTemp);
                                 [...new Set(this._selectedRecipes)].map(n => {
 
                                     const templateIngredientsResult = new RecipeCard(n);
@@ -627,7 +666,9 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                             }
                         });
                     });
+
                 }
+
 
 
 
@@ -639,21 +680,36 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
 
     //********************Dropdown toggle method *********************************/
 
-    async dropdownToggleMethod(section) {
+    async dropdownToggleMethod(section, tagClicked) {
+        console.log('tagClicked:', tagClicked)
 
 
         if (this._selectedRecipes.length > 0) {
+
             // this._selectedRecipes = []
             console.log('Tableau de recette non vide')
             //Map recipes for export ingredients 
             const i = new RecipesFactory(this._selectedRecipes, section);
+
             this._$dropdownList.innerHTML = '';
             this._$dropdownListAppliances.innerHTML = '';
 
             this._tagListArr = [];
-            [...new Set(i.tagsList)].map((ingred) => {
-                this._tagListArr.push(ingred)
 
+            // [...new Set(i.tagsList)].filter(tag => {
+            //     this._tagsSelected.map(tagSelect => {
+
+            //         if (tag.toLowerCase() !== tagSelect.toLowerCase()) {
+            //             if (section === 'ingredients') {
+            //                 const templateIng = new ingredientsDropdown(tag);
+            //                 this._$dropdownList.appendChild(templateIng.ui());
+            //             }
+            //         }
+            //     })
+            // });
+
+            [...new Set(i.tagsList)].map((ingred) => {
+                this._tagListArr.push(ingred);
                 // this._$dropdownList
                 if (section === 'ingredients') {
                     const templateIng = new ingredientsDropdown(ingred);
@@ -663,7 +719,16 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                     this._$dropdownListAppliances.appendChild(templateAppliance.ui());
                 }
             });
-            console.log('this._tagListArr:', this._tagListArr)
+            // this._tagListArr.filter((tag) => {
+            //     if (tag.toLowerCase() !== tagClicked.toLowerCase()) {
+
+            //         if (section === 'ingredients') {
+            //             const templateIng = new ingredientsDropdown(tag);
+            //             this._$dropdownList.appendChild(templateIng.ui());
+            //         }
+            //     }
+            // })
+
 
             this.listingSearchDropdown(this._selectedRecipes, section);
 
@@ -672,8 +737,10 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
             const allRecipesData = await this._recipesApi.get()
             const n = new RecipesFactory(allRecipesData, section);
             this._tagListArr = [];
+
             [...new Set(n.tagsList)].map(i => {
                 this._tagListArr.push(i)
+
                 if (section === 'ingredients') {
                     const templateIng = new ingredientsDropdown(i);
                     this._$dropdownList.appendChild(templateIng.ui());
@@ -684,7 +751,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
 
 
             });
-            console.log('this._tagListArr:', this._tagListArr)
+
 
             this.listingSearchDropdown(allRecipesData, section);
         }
@@ -694,9 +761,13 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
     //*************************Dropdown input method *********************************/
 
     async dropdownInputMethod(e, section) {
-        console.log('section:', section)
+        console.log('e:', e)
+
+
         // let this._arrItemSelected = [];
+        this._arrItemSelected = []
         if (this._selectedRecipes.length > 0) {
+
 
             console.log('hello tableau non vide');
             //*********************Filter ingredients********************************
@@ -731,13 +802,18 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
             });
             this.listingSearchDropdown(this._selectedRecipes, section);
         } else if (e && this._selectedRecipes.length === 0) {
+
             console.log('hello tableau vide')
             const allRecipesData = await this._recipesApi.get()
             const ingredientsArrNull = new RecipesFactory(allRecipesData, section);
             // this._arrRecipeByIng = [];
+            this._arrItemSelected = []
             ingredientsArrNull.tagsList.filter(n => {
+
                 if (n.toLowerCase().indexOf(e.toLowerCase()) !== -1) {
+
                     this._arrItemSelected.push(n);
+
                     this._$dropdownList.innerHTML = '';
                     this._$dropdownListAppliances.innerHTML = '';
                     this._$mainDOM.style.marginTop = "50px";
@@ -754,8 +830,8 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                     });
                     this.listingSearchDropdown(allRecipesData, section);
                 } else {
+                    this._arrItemSelected = []
 
-                    return
                 }
 
             });

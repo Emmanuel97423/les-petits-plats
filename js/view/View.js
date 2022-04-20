@@ -72,6 +72,7 @@ export class ingredientsDropdown {
 
 
 
+
         this._ingredients = ingredients;
     }
     set getIngredient(ingredients) {
