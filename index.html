@@ -41,6 +41,7 @@
     </div>
     <!-- Nav filter -->
     <section class="filter">
+        <!--Ingredient dropdown -->
         <div class="filter__btn filter__btn--blue">
             <button id="filter__ingredients--btn" class="filter__btn--blue">
                 <input id="input__ingredient" type=text placeholder="Ingredient">
@@ -60,6 +61,7 @@
                 </div>
             </div>
         </div>
+        <!--Appliances dropdown -->
         <div class="filter__btn filter__btn--green">
             <button id="filter__appliances--btn" class="filter__btn--green">
                 <input id="input__appliances" type=text placeholder="Appareil">
@@ -87,10 +89,31 @@
                 <h2>Appareil</h2><i class="fas fa-chevron-down"></i>
             </button>
         </div> -->
-        <div class="filter__btn ">
+        <!--Ustensiles dropdown -->
+        <!-- <div class="filter__btn ">
             <button class="filter__btn--red">
                 <h2>Ustensiles</h2><i class="fas fa-chevron-down"></i>
             </button>
+        </div> -->
+        <div class="filter__btn filter__btn--red">
+            <button id="filter__ustensiles--btn" class="filter__btn--red">
+                <input id="input__ustensiles" type=text placeholder="Ustensiles">
+                <i class="fas fa-chevron-down fa-chevron-down--ustensiles"></i><i
+                    class="fas fa-chevron-up  fa-chevron-up--ustensiles"></i>
+            </button>
+            <!-- Filter modal -->
+            <div class="dropdown__ustensiles">
+                <!-- <div class="dropdown__input"><input type="text" placeholder="Recherche un ingrédient"><i
+                                        class="fas fa-chevron-up"></i>
+                                </div> -->
+                <div class="dropdown__tag">
+                    <div class="dropdown__tag--col-1">
+                        <ul class="dropdown__tag--links--ustensiles">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
