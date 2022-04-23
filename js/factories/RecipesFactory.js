@@ -6,7 +6,6 @@ import { Ustensiles } from '../models/Ustensiles.js';
 
 export class RecipesFactory {
     constructor(data, input, request) {
-
         this._data = data;
         this._request = request;
         this._input = input;
@@ -36,7 +35,8 @@ export class RecipesFactory {
 
             return this.filterAppliances();
         }
-        else if (this._input === 'ustensiles') {
+        else if (this._input === 'ustensiles' && this._request) {
+
 
 
             return this.filterUstensiles();
@@ -59,7 +59,11 @@ export class RecipesFactory {
         } else if (this._input === 'appliances') {
             return this.tagListAppliances();
         }
-        else { return null }
+        else if (this._input === 'ustensiles') {
+            return this.tagListUstensiles();
+        } else {
+            return null;
+        }
     }
     //*****************************************Filter Recipes Method
 
@@ -88,10 +92,12 @@ export class RecipesFactory {
     filterUstensiles() {
 
         const ustensiles = new Ustensiles(this._data, this._request);
-
-        return ustensiles.getFilter;
+        ustensiles.getFilter;
+        // return ustensiles.getFilter;
+        console.log('ustensiles.getArrayId:', ustensiles.getArrayId);
 
         return ustensiles.getArrayId;
+
     }
 
     //***************************************listing all ingrédients method
@@ -104,6 +110,11 @@ export class RecipesFactory {
     tagListAppliances() {
         const listAppliance = new Appliances(this._data);
         return listAppliance.appliances
+
+    }
+    tagListUstensiles() {
+        const listUstensiles = new Ustensiles(this._data);
+        return listUstensiles.getUstensiles;
 
     }
 

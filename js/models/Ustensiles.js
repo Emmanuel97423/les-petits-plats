@@ -1,6 +1,5 @@
 export class Ustensiles {
     constructor(data, request) {
-
         this._data = data;
         this._request = request;
         this._arr = [];
@@ -28,7 +27,7 @@ export class Ustensiles {
     }
 
     get getUstensiles() {
-        return this.ustensilesMethod()
+        return this.ustensiles()
     }
 
     //*******************Methods */
@@ -36,32 +35,39 @@ export class Ustensiles {
     ustensiles() {
 
         this._data.map(ustensilesArray => {
-            console.log('ustensilesArray:', ustensilesArray)
+
             const ustensiles = ustensilesArray.ustensils;
-            // ustensiles.map(item => {
+            ustensiles.map(item => {
 
-            //     const ustensile = item.ustensil;
 
-            //     if (this._arr.indexOf(ingredient.toLowerCase()) >= 1) {
-            //         return false;
-            //     } else {
-            //         this._arr.push(ingredient.toLowerCase());
-            //     }
+                if (this._arr.indexOf(item.toLowerCase()) >= 1) {
+                    return false;
+                } else {
+                    this._arr.push(item.toLowerCase());
+                }
 
-            // })
+            })
 
         })
+
         return this._arr;
+
     }
     filter() {
 
-        let ustensilesArray = [];
-        this._data.map(e => {
-            e.ustensils.map(ustensile => {
+        return this._data.filter(recipe => {
 
-                ustensilesArray.push(ustensile)
-            });
+            const recipeId = recipe.id;
+            recipe.ustensils.map(ustensile => {
+                if (ustensile.toLowerCase() === this._request.toLowerCase()) {
+                    console.log('recipe:', recipe)
+                    this._arrId.push(recipeId);
+                    return this._arrId;
+                }
+
+            })
+
+
         });
-        return ustensilesArray
     }
 }
