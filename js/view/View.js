@@ -127,9 +127,35 @@ export class AppliancesDropdown {
         return $dropdown;
     }
 }
+export class UstensilesDropdown {
+    constructor(ustensiles) {
+        this._ustensiles = ustensiles;
+    }
+    // set ustensiles(ustensiles) {
+    //     this._ustensiles = ustensiles;
+    // }
+    get getUstensiles() {
+        return this._ustensiles
+    }
+    get getUi() {
+        return this.ui()
+    }
+
+    ui() {
+        const $dropdown = document.createElement('li');
+        // $dropdown.classList.add('dropdown__tag--links');
+
+        const dropdownTemplate = `       
+                            ${this._ustensiles}                   
+        `;
+
+        $dropdown.innerHTML = dropdownTemplate;
+        return $dropdown;
+    }
+}
 export class Tags {
     constructor(tag, section) {
-        console.log('section:', section)
+
         this._tag = tag;
         this._section = section;
     }
@@ -153,6 +179,8 @@ export class Tags {
         if (this._section === "ingredients") {
             $tagWrapper.classList.add('tag');
         } else if (this._section === "appliances") {
+            $tagWrapper.classList.add('tag-appliances');
+        } else if (this._section === "ustensiles") {
             $tagWrapper.classList.add('tag-appliances');
         }
 

@@ -6,6 +6,7 @@
 
   &__btn {
     position: relative;
+
     // display: flex;
     button {
       //   width: 170px;
@@ -19,27 +20,33 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
+
       i {
         color: #fff;
       }
     }
+
     &:nth-child(n) {
       margin: 0 20px 0 0;
       // background-color: red;
     }
+
     &--blue {
       // display: none !important;
       background-color: #3282f7;
       border-radius: 5px;
     }
+
     &--green {
       background-color: #68d9a4;
       border-radius: 5px;
     }
+
     &--red {
       background-color: #ed6454;
       border-radius: 5px;
     }
+
     input[type="text"] {
       width: 100%;
       background-color: #3282f7;
@@ -51,22 +58,30 @@
       font-size: 18px;
       font-weight: 700;
       letter-spacing: .5px;
+
       &::placeholder {
         color: #fff;
         font-family: "Lato", sans-serif;
         font-weight: 700;
         font-size: 18px;
-        
+
       }
+
       &:focus::placeholder {
         color: transparent;
       }
     }
   }
 }
+
 .fa-chevron-up {
   display: none;
 }
-#input__appliances{
-  background-color:#68d9a4;
+
+#input__appliances {
+  background-color: #68d9a4;
+}
+
+#input__ustensiles {
+  background-color: #ed6454;
 }
