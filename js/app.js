@@ -361,11 +361,14 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
         const tagsCloseIcon = document.querySelectorAll('.fa-times-circle');
 
 
+
         tagsCloseIcon.forEach((closeTag) => {
             closeTag.addEventListener('click', () => {
-
+                console.log('this._tagsSelected.length:', this._tagsSelected.length)
                 // textElementIngredient(closeTag);
-                if (this._tagsSelected.length === 0) {
+
+                if (this._tagsSelected.length == 0) {
+
                     closeTag.parentNode.remove();
                     // this._tagsSelected = [];
                     this._$mainDOM.innerHTML = "";
@@ -795,15 +798,19 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
 
             this._tagListArr = [];
 
-            [...new Set(i.tagsList)].map((ingred) => {
-                this._tagListArr.push(ingred);
+            [...new Set(i.tagsList)].map((tag) => {
+
+                this._tagListArr.push(tag);
                 // this._$dropdownList
                 if (section === 'ingredients') {
-                    const templateIng = new ingredientsDropdown(ingred);
+                    const templateIng = new ingredientsDropdown(tag);
                     this._$dropdownList.appendChild(templateIng.ui());
                 } else if (section === 'appliances') {
-                    const templateAppliance = new AppliancesDropdown(ingred);
+                    const templateAppliance = new AppliancesDropdown(tag);
                     this._$dropdownListAppliances.appendChild(templateAppliance.ui());
+                } else if (section === 'ustensiles') {
+                    const templateUstensiles = new AppliancesDropdown(tag);
+                    this._$dropdownListUstensiles.appendChild(templateUstensiles.ui());
                 }
             });
             this.listingSearchDropdown(this._selectedRecipes, section);
@@ -888,8 +895,6 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
         // let this._arrItemSelected = [];
         this._arrItemSelected = []
         if (this._selectedRecipes.length > 0) {
-
-            console.log('hello tableau non vide');
             //*********************Filter ingredients********************************
             const ingredients = new RecipesFactory(this._selectedRecipes, section);
 
@@ -925,8 +930,6 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
             });
             this.listingSearchDropdown(this._selectedRecipes, section);
         } else if (e && this._selectedRecipes.length === 0) {
-
-            console.log('hello tableau vide')
             const allRecipesData = await this._recipesApi.get()
             const ingredientsArrNull = new RecipesFactory(allRecipesData, section);
             // this._arrRecipeByIng = [];
@@ -941,7 +944,6 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                     this._$dropdownListAppliances.innerHTML = '';
                     this._$mainDOM.style.marginTop = "50px";
                     [...new Set(this._arrItemSelected)].map(item => {
-
                         if (section === 'ingredients') {
                             const templateIng = new ingredientsDropdown(item);
                             this._$dropdownList.appendChild(templateIng.ui());

@@ -60,7 +60,6 @@ export class Ustensiles {
             const recipeId = recipe.id;
             recipe.ustensils.map(ustensile => {
                 if (ustensile.toLowerCase() === this._request.toLowerCase()) {
-                    console.log('recipe:', recipe)
                     this._arrId.push(recipeId);
                     return this._arrId;
                 }

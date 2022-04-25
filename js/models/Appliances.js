@@ -47,7 +47,6 @@ export class Appliances {
         return this._data.filter(e => {
             const recipeId = e.id;
             if (e.appliance.toLowerCase() === this._request.toLowerCase()) {
-                console.log('e:', e)
                 this._arrId.push(recipeId);
                 return this._arrId;
             }

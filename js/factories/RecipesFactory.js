@@ -94,8 +94,6 @@ export class RecipesFactory {
         const ustensiles = new Ustensiles(this._data, this._request);
         ustensiles.getFilter;
         // return ustensiles.getFilter;
-        console.log('ustensiles.getArrayId:', ustensiles.getArrayId);
-
         return ustensiles.getArrayId;
 
     }
