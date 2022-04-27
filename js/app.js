@@ -201,7 +201,7 @@ class App {
                 this.listingSearchDropdown(recipesData, 'appliances');
             } else if (this._selectedRecipes.length > 0) {
 
-                this._$mainDOM.style.marginTop = "-300px"
+                // this._$mainDOM.style.marginTop = "-300px";
                 const appliances = new RecipesFactory(this._selectedRecipes, 'appliances');
 
                 [...new Set(appliances.tagsList)].map(i => {
@@ -233,7 +233,7 @@ class App {
             } else if (this._selectedRecipes.length > 0) {
                 console.log('this._selectedRecipes:', this._selectedRecipes)
 
-                this._$mainDOM.style.marginTop = "-300px"
+                // this._$mainDOM.style.marginTop = "-300px"
                 const ustensiles = new RecipesFactory(this._selectedRecipes, 'ustensiles');
 
                 [...new Set(ustensiles.tagsList)].map(ustensileTag => {
@@ -506,7 +506,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
         if (section === 'ingredients') {
             this._$dropdownList.innerHTML = '';
             this._$dropdown.style.display = 'flex';
-            this._$filterSectionIngredients.style.width = '40%';
+            // this._$filterSectionIngredients.style.width = '50%';
             this._$filterBtnBlue.style.width = '100%'
             this._$filterBtnBlue.style.justifyContent = 'space-between';
             this._$arrowDown.style.display = 'none';
@@ -517,7 +517,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
         } else if (section === 'appliances') {
             this._$dropdownListAppliances.innerHTML = '';
             this._$dropdownAppliances.style.display = 'flex';
-            this._$filterSectionAppliances.style.width = '40%';
+            // this._$filterSectionAppliances.style.width = '40%';
             this._$filterBtnGreen.style.width = '100%'
             this._$filterBtnGreen.style.justifyContent = 'space-between';
             this._$arrowDownAppliances.style.display = 'none';
@@ -526,14 +526,12 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
         else if (section === 'ustensiles') {
             this._$dropdownListUstensiles.innerHTML = '';
             this._$dropdownUstensiles.style.display = 'flex';
-            this._$filterSectionUstensiles.style.width = '40%';
+            // this._$filterSectionUstensiles.style.width = '40%';
             this._$filterBtnRed.style.width = '100%'
             this._$filterBtnRed.style.justifyContent = 'space-between';
             this._$arrowDownUstensiles.style.display = 'none';
             this._$arrowUpUstensiles.style.display = 'flex';
         }
-
-
 
     }
 
@@ -546,7 +544,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
             this._$dropdown.style.display = 'none';
             this._$arrowDown.style.display = 'flex';
             this._$arrowUp.style.display = 'none';
-            this._$filterSectionIngredients.style.width = '12%';
+            // this._$filterSectionIngredients.style.width = '30%';
             // this._$searchInput.placeholder = 'Ingrédient';
             // this._$searchInputGlobal.placeholder = 'Recherche un ingrédient';
             // this._$searchInput.style.opacity = '100%';
@@ -556,7 +554,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
             this._$dropdownAppliances.style.display = 'none';
             this._$arrowDownAppliances.style.display = 'flex';
             this._$arrowUpAppliances.style.display = 'none';
-            this._$filterSectionAppliances.style.width = '12%';
+            // this._$filterSectionAppliances.style.width = '30%';
             // this._$searchInput.placeholder = 'Ingrédient';
             // this._$searchInputGlobal.placeholder = 'Recherche un ingrédient';
             // this._$searchInput.style.opacity = '100%';
@@ -566,7 +564,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
             this._$dropdownUstensiles.style.display = 'none';
             this._$arrowDownUstensiles.style.display = 'flex';
             this._$arrowUpUstensiles.style.display = 'none';
-            this._$filterSectionUstensiles.style.width = '12%';
+            // this._$filterSectionUstensiles.style.width = '30%';
             // this._$searchInput.placeholder = 'Ingrédient';
             // this._$searchInputGlobal.placeholder = 'Recherche un ingrédient';
             // this._$searchInput.style.opacity = '100%';

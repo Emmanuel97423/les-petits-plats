@@ -54,10 +54,13 @@
     &--links,
     &--links--appliances,
     &--links--ustensiles {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      flex-wrap: wrap;
+      // display: flex;
+      // justify-content: flex-start;
+      // align-items: center;
+      // flex-wrap: wrap;
+      -webkit-column-count: 3;
+      -moz-column-count: 3;
+      column-count: 3;
 
       // background-color:green;
       li {

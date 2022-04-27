@@ -1,4 +1,7 @@
 .filter {
+  width: 70%;
+  position: absolute;
+  z-index: 2;
   display: flex;
   justify-content: flex-start;
   align-items: start;
@@ -7,9 +10,10 @@
   &__btn {
     position: relative;
 
+
     // display: flex;
     button {
-      //   width: 170px;
+      // width: 200px;
       //   height: 69px;
 
       display: flex;

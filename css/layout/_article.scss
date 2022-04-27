@@ -1,4 +1,5 @@
 @import "../components/card";
+
 #main {
   // z-index: -1;
   display: flex;
@@ -6,10 +7,11 @@
   align-items: center;
   margin-top: 50px;
   flex-wrap: wrap;
+  transform: translateY(55px);
   // :nth-child(n){
   //   // flex: 10%;
   //   background-color: red;
-    
+
   // }
   // div:nth-child(n + 2) {
   //   background-color: red;
