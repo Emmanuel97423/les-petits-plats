@@ -129,6 +129,7 @@ export class AppliancesDropdown {
 }
 export class UstensilesDropdown {
     constructor(ustensiles) {
+
         this._ustensiles = ustensiles;
     }
     // set ustensiles(ustensiles) {

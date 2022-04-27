@@ -101,7 +101,9 @@ export class RecipesFactory {
     //***************************************listing all ingrédients method
 
     tagListIngredients() {
+
         const listIngredient = new Ingredients(this._data, this._request);
+
         return listIngredient.getIngredients;
     }
     //Filter by aplliance
