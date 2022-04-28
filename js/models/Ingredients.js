@@ -1,5 +1,6 @@
 export class Ingredients {
     constructor(data, request) {
+
         this._data = data;
         this._request = request;
         this._arr = [];
@@ -97,10 +98,10 @@ export class Ingredients {
 
                     this._arrId.push(recipeId);
                     return this._arrId;
-                };
+                }
             });
         });
-    };
+    }
 
     // filterList() {
     //     console.log('this._arr:', this._arr)

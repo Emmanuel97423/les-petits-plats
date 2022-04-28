@@ -5,20 +5,20 @@ export class RecipeCard {
         this._recipes = recipes
         this._tags = tags
 
-    };
+    }
     set tags(tags) {
         this.tags = tags;
     }
     get tags() { return this._tags }
     set getRecipes(recipes) {
         this._recipes = recipes;
-    };
+    }
     get getRecipes() {
         return this._recipes;
-    };
+    }
     get getUi() {
         return this.ui();
-    };
+    }
 
     ui() {
         const $wrapper = document.createElement('div');
@@ -33,7 +33,7 @@ export class RecipeCard {
                 ingredientTemplate += `<li><span>${i.ingredient}: </span>${i.quantity}</li>`;
             } else {
                 ingredientTemplate += `<li><span>${i.ingredient}</li>`;
-            };
+            }
 
         });
         //View recipe card
@@ -71,6 +71,8 @@ export class ingredientsDropdown {
     constructor(ingredients) {
 
 
+
+
         this._ingredients = ingredients;
     }
     set getIngredient(ingredients) {
@@ -94,7 +96,7 @@ export class ingredientsDropdown {
         $dropdown.innerHTML = dropdownTemplate;
         return $dropdown;
     }
-};
+}
 
 export class AppliancesDropdown {
     constructor(appliances) {
@@ -125,22 +127,49 @@ export class AppliancesDropdown {
         return $dropdown;
     }
 }
+export class UstensilesDropdown {
+    constructor(ustensiles) {
+
+        this._ustensiles = ustensiles;
+    }
+    // set ustensiles(ustensiles) {
+    //     this._ustensiles = ustensiles;
+    // }
+    get getUstensiles() {
+        return this._ustensiles
+    }
+    get getUi() {
+        return this.ui()
+    }
+
+    ui() {
+        const $dropdown = document.createElement('li');
+        // $dropdown.classList.add('dropdown__tag--links');
+
+        const dropdownTemplate = `       
+                            ${this._ustensiles}                   
+        `;
+
+        $dropdown.innerHTML = dropdownTemplate;
+        return $dropdown;
+    }
+}
 export class Tags {
-    constructor(tag) {
-
-
-
-
+    constructor(tag, section) {
 
         this._tag = tag;
+        this._section = section;
     }
     set getTag(tag) {
         this._tag = tag;
     }
-    get getTag() { return this._tag };
+    get getTag() { return this._tag }
 
     get getUi() {
         return this.ui()
+    }
+    get getUiAppliances() {
+        return this.uiAppliances()
     }
     get getCloseTag() {
         return this.closeTag()
@@ -148,24 +177,42 @@ export class Tags {
 
     ui() {
         const $tagWrapper = document.createElement('div');
-        $tagWrapper.classList.add('tag');
+        if (this._section === "ingredients") {
+            $tagWrapper.classList.add('tag');
+        } else if (this._section === "appliances") {
+            $tagWrapper.classList.add('tag-appliances');
+        } else if (this._section === "ustensiles") {
+            $tagWrapper.classList.add('tag-appliances');
+        }
 
         const tagTemplate = `
                 <p id="${this._tag}">${this._tag}</p><i class="far fa-times-circle"></i>
         `;
-        $tagWrapper.innerHTML = tagTemplate;
+        $tagWrapper.innerHTML += tagTemplate;
         // this.closeTag($tagWrapper)
 
         return $tagWrapper;
     }
+    // uiAppliances() {
+    //     const $tagWrapperAppliances = document.createElement('div');
+    //     $tagWrapperAppliances.classList.add('tag-appliances');
+
+    //     const tagTemplateApliances = `
+    //             <p id="${this._tag}">${this._tag}</p><i class="far fa-times-circle"></i>
+    //     `;
+    //     $tagWrapperAppliances.innerHTML = tagTemplateApliances;
+    //     // this.closeTag($tagWrapper)
+
+    //     return $tagWrapperAppliances;
+    // }
 
     async closeTag(tagWrapper) {
 
         if (tagWrapper) {
             const closeIcon = tagWrapper.childNodes[2];
-            const request = tagWrapper.childNodes[1].innerText
+            // const request = tagWrapper.childNodes[1].innerText
             closeIcon.style.cursor = 'pointer';
-            closeIcon.addEventListener('click', (e) => {
+            closeIcon.addEventListener('click', () => {
                 console.log('close icon clicked')
                 // tagWrapper.style.display = 'none';
                 tagWrapper.remove()

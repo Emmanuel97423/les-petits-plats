@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "sass": "sass --watch ./css/main.scss ./css/style.css "
+    "sass": "sass --watch ./css/main.scss ./css/style.css ",
+    "lint": "eslint ."
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "eslint": "^8.12.0"
+  }
 }

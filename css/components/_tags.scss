@@ -1,12 +1,12 @@
-.tags__section{
-display:flex;
-flex-wrap: wrap;
+.tags__section {
+    display: flex;
+    flex-wrap: wrap;
 
 }
 
-.tag{
-    width:150px;
-    height:37px;
+.tag {
+    width: 150px;
+    height: 37px;
     background-color: #3282f7;
     display: flex;
     justify-content: space-around;
@@ -19,9 +19,25 @@ flex-wrap: wrap;
     font-size: 14px;
     letter-spacing: 1px;
 }
-.tag__appliances{
-    background-color: #68D9A4;
+
+.tag-appliances {
+    background-color: #3282f7;
+    width: 150px;
+    height: 37px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 20px 10px;
+    border-radius: 5px;
+    color: #fff;
+    font-family: "Lato",
+        sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+
 }
-.fa-times-circle{
+
+.fa-times-circle {
     cursor: pointer;
 }

@@ -1,5 +1,6 @@
 export class Appliances {
     constructor(data, request) {
+
         this._data = data;
         this._request = request;
         this._arr = [];
@@ -12,12 +13,12 @@ export class Appliances {
         return this._data
     }
     set request(request) {
-        this.request = request; data;
+        this.request = request;
     }
     get request() {
         return this._request
     }
-    get arr() { return this._arr };
+    get arr() { return this._arr }
 
     get getArrayId() {
         return this._arrId;
@@ -40,17 +41,15 @@ export class Appliances {
 
             return recipe.appliance
         })
-    };
+    }
     filter() {
 
-        return this._data.map(e => {
-
+        return this._data.filter(e => {
             const recipeId = e.id;
             if (e.appliance.toLowerCase() === this._request.toLowerCase()) {
-
                 this._arrId.push(recipeId);
                 return this._arrId;
-            };
+            }
 
         });
     }
