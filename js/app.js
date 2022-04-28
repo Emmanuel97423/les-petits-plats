@@ -33,11 +33,11 @@ class App {
         this._$dropdownListUstensiles = document.querySelector('.dropdown__tag--links--ustensiles');
 
         this._$filterSectionIngredients = document.querySelector('.filter__btn--blue');
-        this._$filterBtnBlue = document.querySelector('.filter__btn--blue button:nth-child(1)');
+        this._$filterBtnBlue = document.querySelector('.filter__btn--blue div:nth-child(1)');
         this._$filterSectionAppliances = document.querySelector('.filter__btn--green');
-        this._$filterBtnGreen = document.querySelector('.filter__btn--green button:nth-child(1)');
+        this._$filterBtnGreen = document.querySelector('.filter__btn--green div:nth-child(1)');
         this._$filterSectionUstensiles = document.querySelector('.filter__btn--red');
-        this._$filterBtnRed = document.querySelector('.filter__btn--red button:nth-child(1)');
+        this._$filterBtnRed = document.querySelector('.filter__btn--red div:nth-child(1)');
 
         this._$recipeCard = document.querySelectorAll('.card');
 
@@ -390,18 +390,24 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                     });
 
                     this._tagsSelected = [...new Set(result)];
-                    console.log('this._tagsSelected:', this._tagsSelected)
+
                     this._tagsSelected.map(tag => {
+                        console.log('tag:', tag)
                         this.recipesData().then((result) => {
+
                             if (result.length > 0) {
+                                console.log('result.length:', result.length)
+
                                 const recipes = new RecipesFactory(result, 'global', tag);
+
                                 if (recipes.filter !== 'undefined') {
+                                    console.log('recipes.filter:', recipes.filter)
                                     this._$mainDOM.innerHTML = '';
-
                                     this._selectedRecipes = [];
-
                                     recipes.filter.map(recipe => {
+
                                         this._selectedRecipes.push(recipe);
+
                                         const template = new RecipeCard(recipe);
                                         template.ui();
                                         this._$mainDOM.appendChild(template.ui());
@@ -409,6 +415,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
 
                                 }
                             } else {
+                                console.log('result.length:', result.length)
                                 this._$mainDOM.innerHTML = `<h4>« Aucune recette ne correspond à votre critère… vous pouvez
 chercher « tarte aux pommes », « poisson ».</h4>`;
                             }
@@ -442,7 +449,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
             this._$dropdownList.innerHTML = '';
             this._$dropdown.style.display = 'flex';
             // this._$filterSectionIngredients.style.width = '50%';
-            this._$filterBtnBlue.style.width = '100%'
+            // this._$filterBtnBlue.style.width = '100%'
             this._$filterBtnBlue.style.justifyContent = 'space-between';
             this._$arrowDown.style.display = 'none';
             this._$arrowUp.style.display = 'flex';
@@ -453,7 +460,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
             this._$dropdownListAppliances.innerHTML = '';
             this._$dropdownAppliances.style.display = 'flex';
             // this._$filterSectionAppliances.style.width = '40%';
-            this._$filterBtnGreen.style.width = '100%'
+            // this._$filterBtnGreen.style.width = '100%'
             this._$filterBtnGreen.style.justifyContent = 'space-between';
             this._$arrowDownAppliances.style.display = 'none';
             this._$arrowUpAppliances.style.display = 'flex';
@@ -462,7 +469,7 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
             this._$dropdownListUstensiles.innerHTML = '';
             this._$dropdownUstensiles.style.display = 'flex';
             // this._$filterSectionUstensiles.style.width = '40%';
-            this._$filterBtnRed.style.width = '100%'
+            // this._$filterBtnRed.style.width = '100%'
             this._$filterBtnRed.style.justifyContent = 'space-between';
             this._$arrowDownUstensiles.style.display = 'none';
             this._$arrowUpUstensiles.style.display = 'flex';
@@ -549,20 +556,20 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
 
                         const tagsTemplateAppliances = new Tags(this._tagsSelected, "appliances");
                         this._$tagDOM.appendChild(tagsTemplateAppliances.getUi);
-                        // this.closeTag(section);
+                        this.closeTag(section);
                     } else if (section === "ingredients") {
 
                         const tagsTemplateIngredients = new Tags(this._tagsSelected, "ingredients");
                         this._$tagDOM.appendChild(tagsTemplateIngredients.getUi);
 
-                        // this.closeTag(section);
+                        this.closeTag(section);
 
                     }
                     else if (section === "ustensiles") {
 
                         const tagsTemplateUstensiles = new Tags(this._tagsSelected, "ustensiles");
                         this._$tagDOM.appendChild(tagsTemplateUstensiles.getUi);
-                        // this.closeTag(section);
+                        this.closeTag(section);
 
                     }
                     // this.closeTag(section);
@@ -636,15 +643,15 @@ chercher « tarte aux pommes », « poisson ».</h4>`;
                                 if (section === "appliances") {
                                     const tagsTemplateAppliances = new Tags(tag, "appliances");
                                     this._$tagDOM.appendChild(tagsTemplateAppliances.getUi);
-                                    // this.closeTag(section);
+                                    this.closeTag(section);
                                 } else if (section === "ingredients") {
                                     const tagsTemplateIngredients = new Tags(tag, "ingredients");
                                     this._$tagDOM.appendChild(tagsTemplateIngredients.getUi);
-                                    // this.closeTag(section);
+                                    this.closeTag(section);
                                 } else if (section === "ustensiles") {
                                     const tagsTemplateUstensiles = new Tags(tag, "ustensiles");
                                     this._$tagDOM.appendChild(tagsTemplateUstensiles.getUi);
-                                    // this.closeTag(section);
+                                    this.closeTag(section);
                                 }
                                 // const tagsTemplate = new Tags(tag);
                                 // this._$tagDOM.appendChild(tagsTemplate.getUi);

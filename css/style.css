@@ -242,7 +242,9 @@ ul li span {
 .filter__btn {
   position: relative;
 }
-.filter__btn button {
+.filter__btn .filter__btn--blue,
+.filter__btn .filter__btn--green,
+.filter__btn .filter__btn--red {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -251,7 +253,9 @@ ul li span {
   border-radius: 5px;
   cursor: pointer;
 }
-.filter__btn button i {
+.filter__btn .filter__btn--blue i,
+.filter__btn .filter__btn--green i,
+.filter__btn .filter__btn--red i {
   color: #fff;
 }
 .filter__btn:nth-child(n) {
