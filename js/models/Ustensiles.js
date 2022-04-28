@@ -56,7 +56,7 @@ export class Ustensiles {
     filter() {
 
         return this._data.filter(recipe => {
-            console.log('recipe:', recipe)
+
 
             const recipeId = recipe.id;
             recipe.ustensils.map(ustensile => {
